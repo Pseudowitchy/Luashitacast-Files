@@ -135,10 +135,6 @@ local sets = {
     Precast_Summoning = {
 
     },
-
-    Midcast = {
-        waist = "Heko Obi +1",
-    },
     
     Enmity = { --midcast -enmity gear
         head  = "Crow Beret",
@@ -148,26 +144,33 @@ local sets = {
         feet  = "Crow Gaiters"
     },
 
-    Cure = {
+    Midcast = {
+        waist = "Heko Obi +1",
+    },
+    
+    Midcast_Cure = {
         neck  = "Justice Badge",
+        body  = "Errant Hpl.",
+        legs  = "Errant Slops",
+        feet  = "Errant Pigaches"
     },
     
-    Enhancing = {
+    Midcast_Enhancing = {
 
     },
     
-    Stoneskin = {
+    Midcast_Stoneskin = {
 
     },
 
-    Enfeebling = {
+    Midcast_Enfeebling = {
         neck  = "Checkered Scarf",
         body  = "Errant Hpl.",
         hands = "Errant Cuffs",
         legs  = "Errant Slops",
     },
 
-    Enfeebling_MND = {
+    Midcast_Enfeebling_MND = {
         neck  = "Justice Badge",
         body  = "Errant Hpl.",
         legs  = "Errant Slops",
@@ -175,19 +178,7 @@ local sets = {
     },
     
 	TP = {
-        ammo  = "Phtm. Tathlum",
-        head  = "",
-        neck  = "Uggalepih Pendant",
-        ear1  = "Phantom Earring",
-        ear2  = "Phantom Earring",
-        body  = "Vermillion Cloak",
-        hands = "Errant Cuffs",
-        ring1 = "Ether Ring",
-        ring2 = "Evoker's Ring",
-        back  = "Summoner's Cape",
-        waist = "Hierarch Belt",
-        legs  = "Evoker's Spats",
-        feet  = "Summoner's Pgch."
+
     },
 
     Avatar_TP = {
@@ -396,7 +387,7 @@ profile.HandleAbility = function()
 	local ability = gData.GetAction();
     local pet = gData.GetPet();
 
-    if (ability.Name == 'Release' and pet == nil) then
+    if (ability.Name == 'Release' and pet == nil) then -- Catches a bug on Horizon allowing pet commands while pet is dead
         gFunc.CancelAction();
         return
     elseif (ability.Name == 'Release') then
@@ -418,11 +409,6 @@ profile.HandleWeaponskill = function()
     elseif (action.Name == "Retribution") then
         gFunc.EquipSet(sets.Retribution);
     end
-end
-
-profile.HandleItem = function()
-	local item = gData.GetAction();
-	if string.match(item.Name, 'Holy Water') then gFunc.EquipSet(includes.sets.Holy_Water) end
 end
 
 profile.HandlePrecast = function()
@@ -447,12 +433,12 @@ profile.HandleMidcast = function()
         if player.MPP <= 85 then
             gFunc.EquipSet(sets.Enmity);
         end
-        gFunc.EquipSet(sets.Cure);
+        gFunc.EquipSet(sets.Midcast_Cure);
     elseif (spell.Skill == 'Enfeebling Magic') then
         if (spell.Name == "Paralyze" or spell.Name == "Slow" or spell.Name == "Silence") then
-            gFunc.EquipSet(sets.Enfeebling_MND);
+            gFunc.EquipSet(sets.Midcast_Enfeebling_MND);
         else
-            gFunc.EquipSet(sets.Enfeebling);
+            gFunc.EquipSet(sets.Midcast_Enfeebling);
         end
     end
     
