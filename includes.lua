@@ -3,6 +3,8 @@ local includes = T{};
 includes.Clam = false;
 includes.WeaponsLocked = false;
 includes.cutsceneSkip = false;
+includes.util1 = ''; -- Overwritten by job files
+includes.util2 = '';
 
 EarthStaff = "Earth Staff";
 WaterStaff = "Neptune's Staff";
