@@ -49,19 +49,23 @@ local sets = {
 
     WS_SpiritTaker = {}, -- add WS specific sets here
 
-    Berserk = {
+    Boost = {
 
     },
 
-    Warcry = {
+    Chakra = {
 
     },
 
-    Aggressor = {
+    Dodge = {
         
     },
 
-    Provoke = { -- Enmity+
+    Focus = {
+
+    },
+
+    Counterstance = {
 
     },
 
@@ -123,14 +127,16 @@ end
 profile.HandleAbility = function()
 	local ability = gData.GetAction();
 
-    if (ability.Name == 'Berserk') then
-        gFunc.EquipSet(sets.Berserk);
-    elseif (ability.Name == 'Warcry') then
-        gFunc.EquipSet(sets.Warcry);
-    elseif (ability.Name == 'Aggressor') then
-        gFunc.EquipSet(sets.Aggressor);
-    elseif (ability.Name == 'Provoke') then
-        gFunc.EquipSet(sets.Provoke);
+    if (ability.Name == 'Boost') then
+        gFunc.EquipSet(sets.Boost);
+    elseif (ability.Name == 'Chakra') then
+        gFunc.EquipSet(sets.Chakra);
+    elseif (ability.Name == 'Dodge') then
+        gFunc.EquipSet(sets.Dodge);
+    elseif (ability.Name == 'Focus') then
+        gFunc.EquipSet(sets.Focus);
+    elseif (ability.Name == 'Counterstance') then
+        gFunc.EquipSet(sets.Counterstance);
     end
 end
 
