@@ -11,6 +11,8 @@ lockstyleSet = 197; -- which macro equipset do you use for lockstyle
 util1     = 'Paralyna';
 util2     = 'Blink';
 
+test update
+
 Wand = "Rose Wand +1"
 Sword = "Knight's Sword +1"
 NinSword = "Buzzard Tuck"
