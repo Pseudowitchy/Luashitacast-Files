@@ -1,5 +1,6 @@
 local includes = T{};
 
+includes.Craft = false;
 includes.Clam = false;
 includes.WeaponsLocked = false;
 includes.cutsceneSkip = false;
@@ -35,6 +36,10 @@ local LockableEquipment = {
 }
 
 includes.sets = T{
+    Craft = {
+        head = "Magnifying Specs.",
+    },
+
     Clam = {
         body  = "Tarutaru Top +1",
         hands = "",
@@ -87,6 +92,7 @@ includes.Dark = T{'Drain', 'Aspir', 'Bio', 'Bio II', 'Sleep', 'Sleep II', 'Blind
 
 function includes.OnLoad()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /warp /lac fwd warp');
+    AshitaCore:GetChatManager():QueueCommand(1, '/alias /craft /lac fwd craft');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /clam /lac fwd clam');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /cs /lac fwd cs');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /update /lac fwd update');
@@ -97,6 +103,7 @@ end
 
 function includes.OnUnload()
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /warp');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /craft');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /clam');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /cs');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /update');
@@ -127,6 +134,7 @@ end
 function includes.CheckDefaults()
 	includes.SetTownGear();    
 	if (includes.Clam == true) then gFunc.EquipSet(includes.sets.Clam) end
+	if (includes.Craft == true) then gFunc.EquipSet(includes.sets.Craft) end
     
     gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
 end
@@ -136,6 +144,8 @@ function includes.HandleCommands(args)
         includes.Warp();
     elseif (args[1] == 'lock') then
         includes.LockWeapons();
+    elseif (args[1] == 'craft') then
+		includes.Craft = not includes.Craft;
     elseif (args[1] == 'clam') then
 		includes.Clam = not includes.Clam;
     elseif (args[1] == 'sjbutton') then
