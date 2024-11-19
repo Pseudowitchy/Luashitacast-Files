@@ -16,6 +16,17 @@ ThunderStaff = "Thunder Staff";
 LightStaff = "Light Staff";
 DarkStaff = "Dark Staff";
 
+includes.elementColors = {
+    dark    = '|cFF919191|Dark|r',
+    light   = '|cFFFFFFFF|Light|r',
+    fire    = '|cFFCC0000|Fire|r',
+    water   = '|cFF0066CC|Water|r',
+    thunder = '|cFF9366FA|Thnd.|r', -- maybe hard to read 6600CC
+    earth   = '|cFF8B8B13|Earth|r',
+    wind    = '|cFF0BDE27|Wind|r',
+    ice     = '|cFF00CCCC|Ice|r',
+}
+
 local LockableEquipment = {
     ['Main']  = T{'Warp Cudgel', 'Rep. Signet Staff', 'Kgd. Signet Staff', 'Fed. Signet Staff', 'Treat Staff II', 'Trick Staff II'},
     ['Sub']   = T{},
@@ -99,6 +110,8 @@ function includes.OnLoad()
     
     AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. /lac fwd sjbutton');
     AshitaCore:GetChatManager():QueueCommand(1, '/bind f12 /lac fwd lock');
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind pageup /lac fwd util1');
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind pagedown /lac fwd util2');
 end
 
 function includes.OnUnload()
@@ -108,12 +121,14 @@ function includes.OnUnload()
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /cs');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /update');
 
-
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind numpad.');
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind f12');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind pageup');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind pagedown');
     
     if (includes.cutsceneSkip) then 
         AshitaCore:GetChatManager():QueueCommand(1, '/unbind numpad. up');
+        AshitaCore:GetChatManager():QueueCommand(1, '/addon unload enternity');
     end
 end
 

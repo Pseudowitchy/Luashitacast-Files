@@ -1,5 +1,6 @@
 local profile = {};
 includes = gFunc.LoadFile('includes.lua');
+display = gFunc.LoadFile('display.lua');
 
 tTimers = true; -- Do you use TTimers addon? Tracks avatar buff durations into the Custom timers section.
 
@@ -12,6 +13,10 @@ lockstyleSet = 196; -- which macro equipset do you use for lockstyle
 -- Change default spells below, or leave blank: ''
 util1     = '';
 util2     = '';
+
+maneuvers = T{ 'dark', 'light', 'fire', 'water', 'thunder', 'earth', 'wind', 'ice' };
+
+jobText = 'Maneuvers: ';
 
 local sets = {
     Idle = {
@@ -173,21 +178,21 @@ local DamageModeTable = {  -- Determines who to prioritize while TPing, shared g
     [2] = 'Automaton'
 };
 
-local AccModeTable = {  -- Determines who to prioritize while TPing, shared gear, master only, automaton only
+local AccModeTable = {  -- Which of the player sets to use depending on acc requirements
     [0] = 'Standard',
     [1] = 'Acc',
     [2] = 'Fodder'
 };
 
-local ManeuverTable = {  -- Determines who to prioritize while TPing, shared gear, master only, automaton only
-    [0] = 'Fire',
-    [1] = 'Thunder',
-    [2] = 'Earth',
-    [3] = 'Wind',
-    [4] = 'Ice',
-    [5] = 'Water',
-    [6] = 'Light',
-    [7] = 'Dark'
+local ManeuverTable = {
+    [0] = 'fire',
+    [1] = 'thunder',
+    [2] = 'earth',
+    [3] = 'wind',
+    [4] = 'ice',
+    [5] = 'water',
+    [6] = 'light',
+    [7] = 'dark'
 };
 
 local ManeuverSet = { -- Tracks last 3 tracked Maneuvers from above table
@@ -206,22 +211,28 @@ local Settings = { -- Default setting, change damage mode to match above for pre
 profile.OnLoad = function()
     (function() includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet) end):once(5);
 
+    AshitaCore:GetChatManager():QueueCommand(1, '/alias /man /lac fwd manadd'); -- add maneuvers to queue: /man fire earth thunder
+    AshitaCore:GetChatManager():QueueCommand(1, '/alias /manuse /lac fwd manuse'); -- use next manuever in queue
+
     AshitaCore:GetChatManager():QueueCommand(1, '/bind f11 /lac fwd DamageMode'); -- Cycle TP Priority
     AshitaCore:GetChatManager():QueueCommand(1, '/bind f10 /lac fwd AccMode'); -- Cycle Acc Type
-    AshitaCore:GetChatManager():QueueCommand(1, '/bind end /lac fwd ManFwd'); -- Cycle Selected Maneuver Forwards
-    AshitaCore:GetChatManager():QueueCommand(1, '/bind delete /lac fwd ManBack'); -- Cycle Selected Maneuver Backwards
-    AshitaCore:GetChatManager():QueueCommand(1, '/bind pagedown /lac fwd ManAdd'); -- Adds selected Maneuver to current Maneuver set
 
     includes.OnLoad();
+    display.Load();
+    display.CreateToggle('Weapon Lock', true);
+    display.CreateCycle('Damage Mode', {[1] = 'MasterAuto', [2] = 'Master', [3] = 'Automaton' });
+    --display.CreateCycle('Current Maneuver', {[1] = 'Fire', [2] = 'Water', [3] = 'Thunder', [4] = 'Earth', [5] = 'Wind', [6] = 'Ice', [7] = 'Light', [8] = 'Dark' });
+    display.CreateCycle('Acc Mode', {[1] = 'Standard', [2] = 'Acc', [3] = 'Fodder' });
 end
 
 profile.OnUnload = function()
+    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /man');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /manuse');
+
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind f11');
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind f10');
-    AshitaCore:GetChatManager():QueueCommand(1, '/unbind end');
-    AshitaCore:GetChatManager():QueueCommand(1, '/unbind delete');  
-    AshitaCore:GetChatManager():QueueCommand(1, '/unbind pagedown');  
 
+    display.Unload();
     includes.OnUnload();
 end
 
@@ -236,25 +247,22 @@ profile.HandleDefault = function()
     end
         
     if (player.Status == 'Engaged') then
-        if (pet == nil) then
-            gFunc.EquipSet(sets.TP_Master);
-        elseif (pet.Status == 'Idle') then
-            gFunc.EquipSet(sets.TP_Master);            
+        if (pet == nil or pet.Status == 'Idle') then
+            gFunc.EquipSet('TP_Master_' .. display.GetCycle('Acc Mode'));         
         else
-            gFunc.EquipSet('TP_' .. DamageModeTable[Settings.DamageMode] .. '_' .. AccModeTable[Settings.AccMode]);
+            --gFunc.EquipSet('TP_' .. DamageModeTable[Settings.DamageMode] .. '_' .. AccModeTable[Settings.AccMode]);
+            gFunc.EquipSet('TP_' .. display.GetCycle('Damage Mode') .. '_' .. display.GetCycle('Acc Mode'));
         end
     end
     
     if (player.Status == 'Idle') then
-        if (pet == nil) then
-            gFunc.EquipSet(sets.Idle);
-        elseif (pet.Status == 'Idle') then
+        if (pet == nil or pet.Status == 'Idle') then
             gFunc.EquipSet(sets.Idle);
         elseif (pet.Status == 'Engaged' and (Settings.DamageMode ~= 'Master')) then
-            gFunc.EquipSet(sets.TP_Auto);
+            gFunc.EquipSet('TP_Auto_' .. display.GetCycle('Acc Mode'));
         end
     end
-        
+
 	if (player.IsMoving == true) then
 		gFunc.EquipSet(sets.Movement);
 	end
@@ -298,9 +306,8 @@ end
 
 profile.HandleWeaponskill = function()
     local action = gData.GetAction();
- 
     gFunc.EquipSet(sets.WS);
- 
+
     if (action.Name == "Stringing Pummel") then
         gFunc.EquipSet(sets.StringingPummel);
     end    
@@ -354,54 +361,56 @@ end
 
 profile.HandleCommand = function(args)
     if (args[1] == 'DamageMode') then
-        Settings.DamageMode = Settings.DamageMode + 1;
-        if (Settings.DamageMode > #DamageModeTable) then
-            Settings.DamageMode = 0;
-        end
-        includes.echoToChat('TP Set Preference: ', DamageModeTable[Settings.DamageMode]);
+        display.AdvanceCycle('Damage Mode');
     elseif (args[1] == 'AccMode') then
-        Settings.AccMode = Settings.AccMode + 1;
-        if (Settings.AccMode > #AccModeTable) then
-            Settings.AccMode = 0;
+        display.AdvanceCycle('Acc Mode');
+    elseif (string.lower(args[1]) == 'manadd') then
+        local textError = false;
+        if (args[4] ~= nil) then
+            if (maneuvers:contains(string.lower(args[2])) and maneuvers:contains(string.lower(args[3])) and maneuvers:contains(string.lower(args[4]))) then
+                ManAdd(string.lower(args[2]), string.lower(args[3]), string.lower(args[4]));
+            else textError = true;
+            end
+        elseif (args[3] ~= nil) then
+            if (maneuvers:contains(string.lower(args[2])) and maneuvers:contains(string.lower(args[3]))) then
+                ManAdd(string.lower(args[2]), string.lower(args[3]));
+            else textError = true;
+            end
+        elseif (args[2] ~= nil) then
+            if (maneuvers:contains(string.lower(args[2]))) then
+                ManAdd(string.lower(args[2]));
+            else textError = true;
+            end
         end
-        includes.echoToChat('Accuracy Preference: ', AccModeTable[Settings.AccMode]);
-    elseif (args[1] == 'ManFwd') then
-        Settings.Maneuver = Settings.Maneuver + 1;
-        if (Settings.Maneuver > #ManeuverTable) then
-            Settings.Maneuver = 0;
+        if (textError) then
+            includes.echoToChat('Invalid maneuvers. Ensure spelling is correct (case does not matter.) ', 'ex: /lac fwd manadd Fire fire wind')
         end
-        includes.echoToChat('Selected Maneuver: ', ManeuverTable[Settings.Maneuver]);
-    elseif (args[1] == 'ManBack') then
-        Settings.Maneuver = Settings.Maneuver - 1;
-        if (Settings.Maneuver < 0) then
-            Settings.Maneuver = #ManeuverTable;
-        end
-        includes.echoToChat('Selected Maneuver: ', ManeuverTable[Settings.Maneuver]);
-    elseif (args[1] == 'ManAdd') then
-        ManAdd();
     elseif (args[1] == 'ManUse') then
         ManUse();
     else includes.HandleCommands(args);
     end    
 end
 
-function ManAdd()
-    ManeuverSet[2] = ManeuverSet[1];
-    ManeuverSet[1] = ManeuverSet[0];
-    ManeuverSet[0] = ManeuverTable[Settings.Maneuver];
-    
-    local ManeuverString = ManeuverSet[0];
-    if (ManeuverSet[2] ~= 'None') then
-        ManeuverString = ManeuverString .. ' ' .. ManeuverSet[1] .. ' ' .. ManeuverSet[2];         
-    elseif (ManeuverSet[1] ~= 'None') then
-        ManeuverString = ManeuverString .. ' ' .. ManeuverSet[1];
+function ManAdd(manOne, manTwo, manThree)        
+    if (manThree ~= nil and maneuvers:contains(manThree)) then
+        ManeuverSet[2] = manThree;
+        ManeuverSet[1] = manTwo;
+        ManeuverSet[0] = manOne;
+    elseif (manTwo ~= nil and maneuvers:contains(manTwo)) then
+        ManeuverSet[2] = ManeuverSet[0];
+        ManeuverSet[1] = manTwo;
+        ManeuverSet[0] = manOne;
+    elseif (maneuvers:contains(manOne)) then
+        ManeuverSet[2] = ManeuverSet[1];
+        ManeuverSet[1] = ManeuverSet[0];
+        ManeuverSet[0] = manOne;
     end
     
-    includes.echoToChat(ManeuverSet[0], ' added to Maneuver Set.');
-    includes.echoToChat('Current Maneuver Set: ', ManeuverString);
-
-    if (Settings.ManeuverSlot < 2) then
-        Settings.ManeuverSlot = Settings.ManeuverSlot + 1;
+    jobText = 'Maneuvers: ';
+    for x = 0, 2 do
+        if (ManeuverSet[x] ~= 'None') then
+            jobText = jobText ..  includes.elementColors[ManeuverSet[x]] .. ' ';
+        end
     end
 end
 
@@ -409,9 +418,9 @@ function ManUse()
     local pet = gData.GetPet();
     local maneuverCD = 0;
 
-    if (pet ~= nil) then
-        for x = 0, 31 do -- This loop searches player abilities to find any off cooldown, and then checks if 'Maneuver' is part of the name~
-            local id = AshitaCore:GetMemoryManager():GetRecast():GetAbilityTimerId(x);
+ -- This loop searches player abilities to find any off cooldown, and then checks if 'Maneuver' is part of the name~
+     if (pet ~= nil) then
+        for x = 0, 31 do            local id = AshitaCore:GetMemoryManager():GetRecast():GetAbilityTimerId(x);
             local timer = AshitaCore:GetMemoryManager():GetRecast():GetAbilityTimer(x);
             
             if ((id ~= 0) and timer > 0) then
@@ -425,25 +434,25 @@ function ManUse()
             end
         end
 
+    -- if the above loop does not find any maneuvers on cooldown then proceeds to use the maneuver.s
         if (maneuverCD == 0) then
-            if (ManeuverSet[0] == 'None' and ManeuverSet[1] == 'None' and ManeuverSet[2] == 'None') then
-                AshitaCore:GetChatManager():QueueCommand(1, '/echo No Maneuver Set defined, use \'ManAdd\' to add maneuvers to the set.');
-                return
-            elseif (ManeuverSet[Settings.ManeuverSlot] == 'None') then
-                if (ManeuverSet[Settings.ManeuverSlot - 1] == 'None') then
-                    ManeuverSet[Settings.ManeuverSlot] = ManeuverSet[Settings.ManeuverSlot - 2]; 
-                    Settings.ManeuverSlot = Settings.ManeuverSlot - 2;
-                else 
-                    ManeuverSet[Settings.ManeuverSlot] = ManeuverSet[Settings.ManeuverSlot - 1]; 
-                    Settings.ManeuverSlot = Settings.ManeuverSlot - 1;
-                end
+            local usedManeuver = ManeuverSet[0];
+         
+            if (ManeuverSet[0] == 'None') then
+                AshitaCore:GetChatManager():QueueCommand(1, '/echo No Maneuvers defined, use \'/man\' to add maneuvers to the queue.');
+                return;
             end
 
-            AshitaCore:GetChatManager():QueueCommand(1, '/ja "' .. ManeuverSet[Settings.ManeuverSlot] .. ' Maneuver" <me>'); 
-            
-            Settings.ManeuverSlot = Settings.ManeuverSlot - 1;
-            if (Settings.ManeuverSlot < 0) then
-                Settings.ManeuverSlot = #ManeuverSet;
+            --AshitaCore:GetChatManager():QueueCommand(1, '/ja "' .. ManeuverSet[0] .. ' Maneuver" <me>'); 
+            AshitaCore:GetChatManager():QueueCommand(1, '/echo /ja "' .. ManeuverSet[0] .. ' Maneuver" <me>'); 
+
+            if (ManeuverSet[2] ~= 'None') then
+                ManeuverSet[0] = ManeuverSet[1]; 
+                ManeuverSet[1] = ManeuverSet[2];
+                ManeuverSet[2] = usedManeuver;
+            elseif (ManeuverSet[1] ~= 'None') then
+                ManeuverSet[0] = ManeuverSet[1]; 
+                ManeuverSet[1] = usedManeuver;
             end
         else
             includes.echoToChat('Maneuvers on cooldown. ', '');
@@ -451,6 +460,13 @@ function ManUse()
     else
         includes.echoToChat('No active pet. ', 'Please activate your Automaton.')
         return
+    end
+
+    jobText = 'Maneuvers: ';
+    for x = 0, 2 do
+        if (ManeuverSet[x] ~= 'None') then
+            jobText = jobText ..  includes.elementColors[ManeuverSet[x]] .. ' ';
+        end
     end
 end
 

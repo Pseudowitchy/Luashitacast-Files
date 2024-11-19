@@ -10,8 +10,8 @@ lockstyleSet = 200; -- which macro equipset do you use for lockstyle
 -- Util spells, usable via /lac fwd (util1/util2) (optional spell name to update spell)
 -- Utilizes shortcuts addon to input via // commands
 -- Change default spells below, or leave blank: ''
-util1     = 'Paralyna';
-util2     = 'Blink';
+util1     = 'Blink';
+util2     = 'Stoneskin';
 
 avatarElement = ''; -- For comparing current weather with pet element for -perp gear, leave blank
 
