@@ -218,10 +218,9 @@ profile.OnLoad = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/bind f10 /lac fwd AccMode'); -- Cycle Acc Type
 
     includes.OnLoad();
+
     display.Load();
-    display.CreateToggle('Weapon Lock', true);
     display.CreateCycle('Damage Mode', {[1] = 'MasterAuto', [2] = 'Master', [3] = 'Automaton' });
-    --display.CreateCycle('Current Maneuver', {[1] = 'Fire', [2] = 'Water', [3] = 'Thunder', [4] = 'Earth', [5] = 'Wind', [6] = 'Ice', [7] = 'Light', [8] = 'Dark' });
     display.CreateCycle('Acc Mode', {[1] = 'Standard', [2] = 'Acc', [3] = 'Fodder' });
 end
 
@@ -385,7 +384,7 @@ profile.HandleCommand = function(args)
         if (textError) then
             includes.echoToChat('Invalid maneuvers. Ensure spelling is correct (case does not matter.) ', 'ex: /lac fwd manadd Fire fire wind')
         end
-    elseif (args[1] == 'ManUse') then
+    elseif (args[1] == 'manuse') then
         ManUse();
     else includes.HandleCommands(args);
     end    
@@ -420,7 +419,8 @@ function ManUse()
 
  -- This loop searches player abilities to find any off cooldown, and then checks if 'Maneuver' is part of the name~
      if (pet ~= nil) then
-        for x = 0, 31 do            local id = AshitaCore:GetMemoryManager():GetRecast():GetAbilityTimerId(x);
+        for x = 0, 31 do
+            local id = AshitaCore:GetMemoryManager():GetRecast():GetAbilityTimerId(x);
             local timer = AshitaCore:GetMemoryManager():GetRecast():GetAbilityTimer(x);
             
             if ((id ~= 0) and timer > 0) then
@@ -434,7 +434,6 @@ function ManUse()
             end
         end
 
-    -- if the above loop does not find any maneuvers on cooldown then proceeds to use the maneuver.s
         if (maneuverCD == 0) then
             local usedManeuver = ManeuverSet[0];
          
@@ -455,7 +454,7 @@ function ManUse()
                 ManeuverSet[1] = usedManeuver;
             end
         else
-            includes.echoToChat('Maneuvers on cooldown. ', '');
+            includes.echoToChat('Maneuvers on cooldown.', '');
         end
     else
         includes.echoToChat('No active pet. ', 'Please activate your Automaton.')

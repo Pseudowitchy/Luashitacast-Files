@@ -100,7 +100,7 @@ display.Load = function()
 			if (value == true) then
 				outText = outText .. '|cFF0BDE27|Enabled|r';
 			else
-				outText = outText .. '|cFFCC0000|Disabled|r';
+				outText = outText .. '|cFFDD0000|Disabled|r';
 			end
 		end
 
