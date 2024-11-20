@@ -107,6 +107,8 @@ function includes.OnLoad()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /clam /lac fwd clam');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /cs /lac fwd cs');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /update /lac fwd update');
+    AshitaCore:GetChatManager():QueueCommand(1, '/alias /util1 /lac fwd util1');
+    AshitaCore:GetChatManager():QueueCommand(1, '/alias /util2 /lac fwd util2');
     
     AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. /lac fwd sjbutton');
     AshitaCore:GetChatManager():QueueCommand(1, '/bind f12 /lac fwd lock');
@@ -120,6 +122,8 @@ function includes.OnUnload()
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /clam');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /cs');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /update');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /util1');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /util2');
 
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind numpad.');
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind f12');
@@ -173,20 +177,28 @@ function includes.HandleCommands(args)
         if (args[2] == nil and includes.util1 == '') then
             return
         elseif (args[2] == nil and includes.util1 ~= '') then
-            AshitaCore:GetChatManager():QueueCommand(1, '//' .. includes.util1);
+            AshitaCore:GetChatManager():QueueCommand(1, includes.util1);
         elseif (args[2] ~= nil) then
-            includes.util1 = args[2];
-            includes.echoToChat('Util1 updated: now inputting //', includes.util1);
+            if (args[3] ~= nil) then
+                includes.util1 = includes.utilBuilder(args[2], args[3]);
+            else
+                includes.util1 = includes.utilBuilder(args[2]);
+            end                
+            includes.echoToChat('Util1 updated: now inputting ', includes.util1);
         end
     elseif (args[1] == 'util2') then
         if (args[2] == nil and includes.util2 == '') then
             return
         elseif (args[2] == nil and includes.util2 ~= '') then
-            AshitaCore:GetChatManager():QueueCommand(1, '//' .. includes.util2);
+            AshitaCore:GetChatManager():QueueCommand(1, includes.util2);
         elseif (args[2] ~= nil) then
-            includes.util2 = args[2];
-            includes.echoToChat('Util2 updated: now inputting //', includes.util2);
-        end    
+            if (args[3] ~= nil) then
+                includes.util2 = includes.utilBuilder(args[2], args[3]);
+            else
+                includes.util2 = includes.utilBuilder(args[2]);
+            end                
+            includes.echoToChat('Util2 updated: now inputting ', includes.util2);
+        end 
     end
 end
 
@@ -194,11 +206,20 @@ function includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet)
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book ' .. macroBook);
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set ' .. macroSet);
 
-    includes.util1 = util1;
-    includes.util2 = util2;
+    includes.util1 = includes.utilBuilder(util1);
+    includes.util2 = includes.utilBuilder(util2);
 
     AshitaCore:GetChatManager():QueueCommand(1, '/lockstyleset ' .. lockstyleSet);
     (function() AshitaCore:GetChatManager():QueueCommand(1, '/sl blink') end):once(3);
+end
+
+function includes.utilBuilder(termOne, termTwo)
+    if (termTwo ~= nil) then
+        termTwo = ' ' .. termTwo;
+    else termTwo = '';
+    end
+    utilString = '/ma "' .. termOne .. termTwo .. '"';
+    return utilString;
 end
 
 local restTimer = 0;

@@ -417,7 +417,6 @@ function ManUse()
     local pet = gData.GetPet();
     local maneuverCD = 0;
 
- -- This loop searches player abilities to find any off cooldown, and then checks if 'Maneuver' is part of the name~
      if (pet ~= nil) then
         for x = 0, 31 do
             local id = AshitaCore:GetMemoryManager():GetRecast():GetAbilityTimerId(x);
