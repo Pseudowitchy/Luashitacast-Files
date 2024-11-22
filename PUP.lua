@@ -15,7 +15,6 @@ util1     = '';
 util2     = '';
 
 maneuvers = T{ 'dark', 'light', 'fire', 'water', 'thunder', 'earth', 'wind', 'ice' };
-
 jobText = 'Maneuvers: ';
 
 local sets = {
@@ -237,6 +236,7 @@ end
 
 profile.HandleDefault = function()
     local player = gData.GetPlayer();
+    local playerAction = gData.GetAction();
     local pet = gData.GetPet();
     local petAction = gData.GetPetAction();
 
@@ -249,8 +249,11 @@ profile.HandleDefault = function()
         if (pet == nil or pet.Status == 'Idle') then
             gFunc.EquipSet('TP_Master_' .. display.GetCycle('Acc Mode'));         
         else
-            --gFunc.EquipSet('TP_' .. DamageModeTable[Settings.DamageMode] .. '_' .. AccModeTable[Settings.AccMode]);
             gFunc.EquipSet('TP_' .. display.GetCycle('Damage Mode') .. '_' .. display.GetCycle('Acc Mode'));
+        end
+
+        if (playerAction == nil) then
+            manualManeuver = true;
         end
     end
     
@@ -259,6 +262,10 @@ profile.HandleDefault = function()
             gFunc.EquipSet(sets.Idle);
         elseif (pet.Status == 'Engaged' and (Settings.DamageMode ~= 'Master')) then
             gFunc.EquipSet('TP_Auto_' .. display.GetCycle('Acc Mode'));
+        end
+
+        if (playerAction == nil) then
+            manualManeuver = true;
         end
     end
 
@@ -281,7 +288,7 @@ profile.HandleAbility = function()
     
     if (ability.Name == "Repair") then
         gFunc.EquipSet(sets.Repair);
-    elseif string.contains(ability.Name, "Maneuver") then    
+    elseif string.contains(ability.Name, "Maneuver") then
         if (ability.Name == 'Fire Maneuver') then
             gFunc.EquipSet(sets.Maneuver_Fire);
         elseif (ability.Name == 'Thunder Maneuver') then
@@ -300,6 +307,12 @@ profile.HandleAbility = function()
             gFunc.EquipSet(sets.Maneuver_Dark);
         end
         gFunc.EquipSet(sets.Maneuver);
+
+        if (manualManeuver == true) then
+            manElement = playerAction.Name; -- this may or may not work, who knows? :3 defines manElement by its
+            manElement = match("^([%w]+)"); -- first word in the string to then send to ManAdd function.
+            ManAdd(manElement);
+        end
     end
 end
 
@@ -413,9 +426,11 @@ function ManAdd(manOne, manTwo, manThree)
     end
 end
 
+manualManeuver = true;
 function ManUse()
     local pet = gData.GetPet();
     local maneuverCD = 0;
+    manualManeuver = false;
 
      if (pet ~= nil) then
         for x = 0, 31 do

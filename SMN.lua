@@ -10,8 +10,8 @@ lockstyleSet = 200; -- which macro equipset do you use for lockstyle
 -- Util spells, usable via /lac fwd (util1/util2) (optional spell name to update spell)
 -- Utilizes shortcuts addon to input via // commands
 -- Change default spells below, or leave blank: ''
-util1     = 'Blink';
-util2     = 'Stoneskin';
+util1     = 'Erase';
+util2     = 'Paralyna';
 
 avatarElement = ''; -- For comparing current weather with pet element for -perp gear, leave blank
 
@@ -71,7 +71,7 @@ local sets = {
         ring2 = "Evoker's Ring",
     },
     
-    Pet_Idle_Day = {},
+    Pet_Idle_Day = {head = "Austere Hat", body = "Summoner's Dblt."},
     Pet_Idle_Weather = {},
 
     Pet_Idle_Carby = {hands = "Carbuncle Mitts"},
@@ -88,6 +88,7 @@ local sets = {
 	SmnPhysical = { -- Avatar ATK + ACC
         head  = "Evoker's Horn",
         neck  = "Smn. Torque",
+        body  = "Summoner's Dblt.",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
         legs = "Evoker's Spats",
@@ -96,6 +97,7 @@ local sets = {
 	SmnMagical = { -- Avatar MACC + MATK
         head  = "Evoker's Horn",
         neck  = "Smn. Torque",
+        body  = "Summoner's Dblt.",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },
@@ -124,6 +126,7 @@ local sets = {
     SmnHybrid = { -- Avatar MATK + ATK 100% Accuracy naturally
         head  = "Evoker's Horn",
         neck  = "Smn. Torque",
+        body  = "Summoner's Dblt.",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },

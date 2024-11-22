@@ -51,11 +51,12 @@ local sets = {
 
     TP_DW = {
         main  = "Joyeuse",
-        sub   = "Hornetneedle",
+        sub   = "Thanatos Baselard",
     },
 
     WS = {
         range = "Frenzy Fife",
+        body  = "Bard's Jstcorps"
     },
 
     Precast = { -- FastCast
