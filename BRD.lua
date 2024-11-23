@@ -8,8 +8,8 @@ lockstyleSet = 199; -- which macro equipset do you use for lockstyle
 -- Util spells, usable via /lac fwd (util1/util2) (optional spell name to update spell)
 -- Utilizes shortcuts addon to input via // commands
 -- Change default spells below, or leave blank: ''
-util1     = '';
-util2     = '';
+util1     = 'Erase';
+util2     = 'Stoneskin';
 
 local sets = {
     Idle = {

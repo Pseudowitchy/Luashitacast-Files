@@ -75,7 +75,12 @@ local sets = {
     Pet_Idle_Weather = {},
 
     Pet_Idle_Carby = {hands = "Carbuncle Mitts"},
-    Spirits = {},
+    Spirits = { -- SMN skill for cast rate, -perp
+        head  = "Evoker's Horn",
+        neck  = "Smn. Torque",
+        hands = "Austere Cuffs",
+        ring2 = "Evoker's Ring",
+    },
 
     BP = { --I/II cap at 15, max skill afterwards
         head  = "Austere Hat",

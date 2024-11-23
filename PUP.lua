@@ -78,6 +78,14 @@ local sets = {
 
     },
 
+    RagingFists = {
+
+    },
+
+    DragonKick = {
+
+    },
+
     StringingPummel = {
 
     },
@@ -170,29 +178,6 @@ local sets = {
 };
 
 profile.Sets = sets;
-
-local DamageModeTable = {  -- Determines who to prioritize while TPing, shared gear, master only, automaton only
-    [0] = 'MasterAuto',
-    [1] = 'Master',
-    [2] = 'Automaton'
-};
-
-local AccModeTable = {  -- Which of the player sets to use depending on acc requirements
-    [0] = 'Standard',
-    [1] = 'Acc',
-    [2] = 'Fodder'
-};
-
-local ManeuverTable = {
-    [0] = 'fire',
-    [1] = 'thunder',
-    [2] = 'earth',
-    [3] = 'wind',
-    [4] = 'ice',
-    [5] = 'water',
-    [6] = 'light',
-    [7] = 'dark'
-};
 
 local ManeuverSet = { -- Tracks last 3 tracked Maneuvers from above table
     [0] = 'None',
@@ -320,7 +305,11 @@ profile.HandleWeaponskill = function()
     local action = gData.GetAction();
     gFunc.EquipSet(sets.WS);
 
-    if (action.Name == "Stringing Pummel") then
+    if (action.Name == "Raging Fists") then
+        gFunc.EquipSet(sets.RagingFists);
+    elseif (action.Name == "Dragon Kick") then
+        gFunc.EquipSet(sets.DragonKick);
+    elseif (action.Name == "Stringing Pummel") then
         gFunc.EquipSet(sets.StringingPummel);
     end    
 end
@@ -396,23 +385,24 @@ profile.HandleCommand = function(args)
         end
         if (textError) then
             includes.echoToChat('Invalid maneuvers. Ensure spelling is correct (case does not matter.) ', 'ex: /lac fwd manadd Fire fire wind')
+            return;
         end
     elseif (args[1] == 'manuse') then
         ManUse();
     else includes.HandleCommands(args);
-    end    
+    end
 end
 
 function ManAdd(manOne, manTwo, manThree)        
-    if (manThree ~= nil and maneuvers:contains(manThree)) then
+    if (manThree ~= nil) then
         ManeuverSet[2] = manThree;
         ManeuverSet[1] = manTwo;
         ManeuverSet[0] = manOne;
-    elseif (manTwo ~= nil and maneuvers:contains(manTwo)) then
+    elseif (manTwo ~= nil) then
         ManeuverSet[2] = ManeuverSet[0];
         ManeuverSet[1] = manTwo;
         ManeuverSet[0] = manOne;
-    elseif (maneuvers:contains(manOne)) then
+    else
         ManeuverSet[2] = ManeuverSet[1];
         ManeuverSet[1] = ManeuverSet[0];
         ManeuverSet[0] = manOne;
@@ -450,14 +440,14 @@ function ManUse()
 
         if (maneuverCD == 0) then
             local usedManeuver = ManeuverSet[0];
+            local capElement = string.upper(string.sub(ManeuverSet[0], 1, 1)) .. string.lower(string.sub(ManeuverSet[0], 2, -1))
          
             if (ManeuverSet[0] == 'None') then
-                AshitaCore:GetChatManager():QueueCommand(1, '/echo No Maneuvers defined, use \'/man\' to add maneuvers to the queue.');
+                AshitaCore:GetChatManager():QueueCommand(1, '/echo No Maneuvers defined, use \'/man (fire dark earth)\' to add maneuvers to the queue.');
                 return;
             end
 
-            --AshitaCore:GetChatManager():QueueCommand(1, '/ja "' .. ManeuverSet[0] .. ' Maneuver" <me>'); 
-            AshitaCore:GetChatManager():QueueCommand(1, '/echo /ja "' .. ManeuverSet[0] .. ' Maneuver" <me>'); 
+            AshitaCore:GetChatManager():QueueCommand(1, '/echo /ja "' .. capElement .. ' Maneuver" <me>'); 
 
             if (ManeuverSet[2] ~= 'None') then
                 ManeuverSet[0] = ManeuverSet[1]; 
