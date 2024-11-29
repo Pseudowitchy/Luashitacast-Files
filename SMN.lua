@@ -71,13 +71,14 @@ local sets = {
         ring2 = "Evoker's Ring",
     },
     
-    Pet_Idle_Day = {head = "Austere Hat", body = "Summoner's Dblt."},
+    Pet_Idle_Day = {head = "Green Ribbon +1", body = "Summoner's Dblt."},
     Pet_Idle_Weather = {},
 
     Pet_Idle_Carby = {hands = "Carbuncle Mitts"},
     Spirits = { -- SMN skill for cast rate, -perp
         head  = "Evoker's Horn",
         neck  = "Smn. Torque",
+        body  = "Austere Robe",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },
@@ -136,8 +137,8 @@ local sets = {
         ring2 = "Evoker's Ring",
     },
     
-    Precast = {
-
+    Precast = { -- Fast Cast
+        feet = "Rostrum Pumps"
     },
     
     Precast_Summoning = {
@@ -224,7 +225,7 @@ local sets = {
       
     Resting = {
         main  = DarkStaff,
-        head  = "Evoker's Horn",
+        head = "Green Ribbon +1",
         neck  = "Checkered Scarf",
         body  = "Errant Hpl.",
         waist = "Hierarch Belt",
@@ -233,6 +234,7 @@ local sets = {
 
 	Town = {
         ear1  = "Beastly Earring",
+        feet = "Rostrum Pumps"
     },
     
 	Movement = {},
@@ -374,15 +376,17 @@ profile.HandleDefault = function()
             gFunc.EquipSet(sets.Avatar_TP);
         end
         
-        if (avatarElement == environment.DayElement) then
-            gFunc.EquipSet(sets.Pet_Idle_Day)
-        end
+        if (pet.Name ~= 'Carbuncle') then
+            if (avatarElement == environment.DayElement) then
+                gFunc.EquipSet(sets.Pet_Idle_Day)
+            end
 
-        if (avatarElement == environment.WeatherElement) then
-            gFunc.EquipSet(sets.Pet_Idle_Weather)
+            if (avatarElement == environment.WeatherElement) then
+                gFunc.EquipSet(sets.Pet_Idle_Weather)
+            end
         end
 	end
-	
+
 	if (player.IsMoving == true) then
 		gFunc.EquipSet(sets.Movement);
 	end

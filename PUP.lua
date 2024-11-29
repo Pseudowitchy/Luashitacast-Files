@@ -224,6 +224,7 @@ profile.HandleDefault = function()
     local playerAction = gData.GetAction();
     local pet = gData.GetPet();
     local petAction = gData.GetPetAction();
+    local zone = gData.GetEnvironment();
 
     if (petAction ~= nil) then
         HandlePetAction(petAction);
@@ -235,6 +236,10 @@ profile.HandleDefault = function()
             gFunc.EquipSet('TP_Master_' .. display.GetCycle('Acc Mode'));         
         else
             gFunc.EquipSet('TP_' .. display.GetCycle('Damage Mode') .. '_' .. display.GetCycle('Acc Mode'));
+        end
+
+        if (player.MainJobSync >= 70 and (zone.Time > 6 and zone.Time < 18))
+            gFunc.Equip(ear2, "Fenrir's Earring");
         end
 
         if (playerAction == nil) then
@@ -303,6 +308,7 @@ end
 
 profile.HandleWeaponskill = function()
     local action = gData.GetAction();
+    local zone = gData.GetEnvironment();
     gFunc.EquipSet(sets.WS);
 
     if (action.Name == "Raging Fists") then
@@ -312,6 +318,10 @@ profile.HandleWeaponskill = function()
     elseif (action.Name == "Stringing Pummel") then
         gFunc.EquipSet(sets.StringingPummel);
     end    
+
+    if (player.MainJobSync >= 70 and (zone.Time > 6 and zone.Time < 18))
+        gFunc.Equip(ear2, "Fenrir's Earring");
+    end
 end
 
 local function HandlePetAction(PetAction)

@@ -14,18 +14,19 @@ util2     = 'Stoneskin';
 local sets = {
     Idle = {
         main = EarthStaff,
-        head  = "Crow Beret",
-        neck  = "Bird Whistle",
-        ear1  = "Beastly Earring",
-        ear2  = "Melody Earring",
+        range = "Mythic Harp +1",
+        head  = "Green Ribbon +1",
+        neck  = "Jeweled Collar",
+        ear1  = "Merman's Earring",
+        ear2  = "Merman's Earring",
         body  = "Scorpion Harness",
-        hands = "Crow Bracers",
+        hands = "Darksteel Mittens",
         ring1 = "Merman's Ring",
         ring2 = "Merman's Ring",
-        back  = "Jester's Cape +1",
+        back  = "Cheviot Cape",
         waist = "Gleeman's Belt",
-        legs  = "Crow Hose",
-        feet  = "Crow Gaiters",
+        legs  = "Darksteel Subligar",
+        feet  = "Dst. Leggings"
     },
     
     Resting = {
@@ -34,14 +35,18 @@ local sets = {
     
     TP = {
         range = "Oliphant",
-        head  = "Crow Beret",
+        head  = "Optical Hat",
+        neck  = "Jeweled Collar",
+        ear1  = "Merman's Earring",
+        ear2  = "Merman's Earring",
         body  = "Scorpion Harness",
-        hands = "Crow Bracers",
+        hands = "Darksteel Mittens",
         ring1 = "Woodsman Ring",
         ring2 = "Woodsman Ring",
+        back  = "Cheviot Cape",
         waist = "Gleeman's Belt",
-        legs  = "Crow Hose",
-        feet  = "Crow Gaiters"
+        legs  = "Darksteel Subligar",
+        feet  = "Dst. Leggings"
     },
 
     TP_SW = {
@@ -56,11 +61,13 @@ local sets = {
 
     WS = {
         range = "Frenzy Fife",
+        ear1  = "Merman's Earring",
+        ear2  = "Merman's Earring",
         body  = "Bard's Jstcorps"
     },
 
     Precast = { -- FastCast
-
+        feet = "Rostrum Pumps"
     },
 
     Precast_Songs = { -- Minstrel Ring & +HP to trigger latent effect, FastCast to fill
@@ -80,23 +87,33 @@ local sets = {
     },
 
     Midcast = {
-        head  = "Crow Beret",
+        range = "Mythic Harp +1",
+        head  = "Green Ribbon +1",
+        ear1  = "Merman's Earring",
+        ear2  = "Merman's Earring",
         body  = "Crow Jupon",
-        hands = "Crow Bracers",
+        hands = "Darksteel Mittens",
         ring1 = "Merman's Ring",
         ring2 = "Merman's Ring",
+        back  = "Cheviot Cape",
         waist = "Heko Obi +1",
-        legs  = "Crow Hose",
-        feet  = "Crow Gaiters"
+        legs  = "Darksteel Subligar",
+        feet  = "Dst. Leggings"
     },
 
     Midcast_Songs_Buffs = { -- Max Singing Skill, CHR irrelevent 
         main  = "Chanter's Staff",
         range = "Oliphant",
         head  = "Bard's Roundlet",
+        ear1  = "Merman's Earring",
+        ear2  = "Merman's Earring",
         hands = "Choral Cuffs",
         ring1 = "Merman's Ring",
         ring2 = "Merman's Ring",
+        back  = "Cheviot Cape",
+        legs  = "Darksteel Subligar",
+        feet  = "Dst. Leggings"
+
     },
     
     Midcast_Songs_Debuffs = { -- Singing Skill followed by CHR and MACC, Overwritten below for specific songs
@@ -135,17 +152,18 @@ local sets = {
     Town = {
         main  = "Chanter's Staff",
         range = "Military Harp",
-        head  = "Opo-opo Crown",
+        head  = "Green Ribbon +1",
+        neck  = "Jeweled Collar",
         ear1  = "Beastly Earring",
         ear2  = "Melody Earring",
         body  = "Sha'ir Manteel",
-        hands = "Choral Cuffs",
+        hands = "Darksteel Mittens",
         ring1 = "Minstrel's Ring",
         ring2 = "Allure Ring",
         back  = "Jester's Cape +1",
         waist = "Gleeman's Belt",
         legs  = "Sha'ir Seraweels",
-        feet  = "Crow Gaiters"
+        feet = "Rostrum Pumps"
     },
 
     Movement = {},
