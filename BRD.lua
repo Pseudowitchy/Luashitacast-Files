@@ -67,7 +67,8 @@ local sets = {
     },
 
     Precast = { -- FastCast
-        feet = "Rostrum Pumps"
+        back  = "Gigant Mantle",
+        feet  = "Rostrum Pumps"
     },
 
     Precast_Songs = { -- Minstrel Ring & +HP to trigger latent effect, FastCast to fill
@@ -89,6 +90,7 @@ local sets = {
     Midcast = {
         range = "Mythic Harp +1",
         head  = "Green Ribbon +1",
+        neck  = "Jeweled Collar",
         ear1  = "Merman's Earring",
         ear2  = "Merman's Earring",
         body  = "Crow Jupon",
@@ -105,6 +107,7 @@ local sets = {
         main  = "Chanter's Staff",
         range = "Oliphant",
         head  = "Bard's Roundlet",
+        neck  = "Jeweled Collar",
         ear1  = "Merman's Earring",
         ear2  = "Merman's Earring",
         hands = "Choral Cuffs",
@@ -159,11 +162,11 @@ local sets = {
         body  = "Sha'ir Manteel",
         hands = "Darksteel Mittens",
         ring1 = "Minstrel's Ring",
-        ring2 = "Allure Ring",
-        back  = "Jester's Cape +1",
+        ring2 = "Bomb Queen Ring",
+        back  = "Cheviot Cape",
         waist = "Gleeman's Belt",
-        legs  = "Sha'ir Seraweels",
-        feet = "Rostrum Pumps"
+        legs  = "Darksteel Subligar",
+        feet  = "Rostrum Pumps"
     },
 
     Movement = {},
@@ -201,7 +204,7 @@ profile.HandleDefault = function()
         if (player.SubJob == 'WHM' or player.SubJob == 'RDM' or player.SubJob == 'BLM') then
             if (player.MP < 49) then
                 gFunc.Equip('body', 'Gaudy Harness');
-            elseif (player.MPP < 95) then
+            elseif (player.MP < 174) then
                 gFunc.Equip('head', '');
                 gFunc.Equip('body', 'Vermillion Cloak');
             end
@@ -331,13 +334,13 @@ function DoMinuet()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(394);
 	
     if (player.MainJobSync >= 63 and recast4 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet IV" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet IV" <me>');
     elseif (player.MainJobSync >= 43 and recast3 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet III" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet III" <me>');
     elseif (player.MainJobSync >= 23 and recast2 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet II" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet II" <me>');
     elseif (recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Valor Minuet" <me>');
     end
 end
 
@@ -374,9 +377,9 @@ function DoMadrigal()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(399);
 	
     if (player.MainJobSync >= 51 and recast2 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blade Madrigal" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blade Madrigal" <me>');
     elseif (recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sword Madrigal" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sword Madrigal" <me>');
     end
 end
 
@@ -386,9 +389,9 @@ function DoMarch()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(419);
 	
     if (player.MainJobSync >= 60 and recast2 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Victory March" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Victory March" <me>');
     elseif (recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Advancing March" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Advancing March" <me>');
     end
 end
 
@@ -398,9 +401,9 @@ function DoMambo()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(403);
 	
     if (player.MainJobSync >= 53 and recast2 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Dragonfoe Mambo" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Dragonfoe Mambo" <me>');
     elseif (recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sheepfoe Mambo" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sheepfoe Mambo" <me>');
     end
 end
 
@@ -410,9 +413,9 @@ function DoBallad()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(386);
 	
     if (player.MainJobSync >= 55 and recast2 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Mage\'s Ballad II" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Mage\'s Ballad II" <me>');
     elseif (recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Mage\'s Ballad" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Mage\'s Ballad" <me>');
     end
 end
 
@@ -424,13 +427,13 @@ function DoMinne()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(389);
 	
     if (player.MainJobSync >= 61 and recast4 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne IV" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne IV" <me>');
     elseif (player.MainJobSync >= 41 and recast3 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne III" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne III" <me>');
     elseif (player.MainJobSync >= 21 and recast2 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne II" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne II" <me>');
     elseif (recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Knight\'s Minne" <me>');
     end
 end
 
@@ -443,15 +446,15 @@ function DoPaeon()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(378);
 
     if (player.MainJobSync >= 65 and recast5 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon V" <stpc>');	
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon V" <me>');	
     elseif (player.MainJobSync >= 45 and recast4 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon IV" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon IV" <me>');
     elseif (player.MainJobSync >= 35 and recast3 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon III" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon III" <me>');
     elseif (player.MainJobSync >= 15 and recast2 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon II" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon II" <me>');
     elseif (recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon" <stpc>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon" <me>');
     end
 end
 

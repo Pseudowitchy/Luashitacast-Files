@@ -84,6 +84,13 @@ local sets = {
 
     },
 
+    Tame = {
+
+    },
+
+    Reward = {
+
+    },
     
     Precast = { -- Fast Cast
     
@@ -118,18 +125,18 @@ profile.HandleDefault = function()
     local player = gData.GetPlayer();
     
     if (player.Status == 'Engaged') then
-        if (player.SubJob == 'WHM') then
-            gFunc.EquipSet(sets.TP_WHM);
-        else 
+        if (player.SubJob == 'NIN') then
             gFunc.EquipSet(sets.TP_NIN);
+        else 
+            gFunc.EquipSet(sets.TP_WHM);
         end
     elseif (player.Status == 'Resting') then
         gFunc.EquipSet(sets.Resting);
     else
-        if (player.SubJob == 'WHM') then
-            gFunc.EquipSet(sets.Idle_WHM);
-        else 
+        if (player.SubJob == 'NIN') then
             gFunc.EquipSet(sets.Idle_NIN);
+        else 
+            gFunc.EquipSet(sets.Idle_WHM);
         end
     end
 
@@ -153,6 +160,10 @@ profile.HandleAbility = function()
 
     if (ability.Name == 'Charm') then
         gFunc.EquipSet(sets.Charm);
+    elseif (ability.Name == 'Tame') then
+        gFunc.EquipSet(sets.Tame);
+    elseif (ability.Name == 'Reward') then
+        gFunc.EquipSet(sets.Reward);
     end
 end
 

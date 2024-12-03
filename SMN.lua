@@ -138,6 +138,7 @@ local sets = {
     },
     
     Precast = { -- Fast Cast
+        back  = "Gigant Mantle",
         feet = "Rostrum Pumps"
     },
     

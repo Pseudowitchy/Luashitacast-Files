@@ -1,4 +1,4 @@
-local includes = T{};
+local includes = {};
 
 includes.Craft = false;
 includes.Clam = false;
