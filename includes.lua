@@ -16,12 +16,12 @@ ThunderStaff = "Thunder Staff";
 LightStaff = "Light Staff";
 DarkStaff = "Dark Staff";
 
-includes.elementColors = {
+includes.elementColors = T{
     dark    = '|cFF919191|Dark|r',
     light   = '|cFFFFFFFF|Light|r',
     fire    = '|cFFDD0000|Fire|r',
     water   = '|cFF0066CC|Water|r',
-    thunder = '|cFF9366FA|Thnd.|r', -- maybe hard to read 6600CC
+    thunder = '|cFF9366FA|Thnd.|r',
     earth   = '|cFF8B8B13|Earth|r',
     wind    = '|cFF0BDE27|Wind|r',
     ice     = '|cFF00CCCC|Ice|r',

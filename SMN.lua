@@ -30,7 +30,7 @@ local sets = {
         back  = "Summoner's Cape",
         waist = "Hierarch Belt",
         legs  = "Evoker's Spats",
-        feet  = "Summoner's Pgch."
+        feet  = "Evk. Pigaches +1"
     },
 
     Idle_50 = {
@@ -69,6 +69,7 @@ local sets = {
     Pet_Idle = {
         body  = "Vermillion Cloak",
         ring2 = "Evoker's Ring",
+        feet  = "Evk. Pigaches +1"
     },
     
     Pet_Idle_Day = {head = "Green Ribbon +1", body = "Summoner's Dblt."},
@@ -81,6 +82,7 @@ local sets = {
         body  = "Austere Robe",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
+        feet  = "Evk. Pigaches +1"
     },
 
     BP = { --I/II cap at 15, max skill afterwards
@@ -97,7 +99,8 @@ local sets = {
         body  = "Summoner's Dblt.",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
-        legs = "Evoker's Spats",
+        legs  = "Evoker's Spats",
+        feet  = "Summoner's Pigaches"
     },
     
 	SmnMagical = { -- Avatar MACC + MATK
@@ -135,6 +138,7 @@ local sets = {
         body  = "Summoner's Dblt.",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
+        feet  = "Summoner's Pigaches"
     },
     
     Precast = { -- Fast Cast
@@ -194,7 +198,6 @@ local sets = {
     Avatar_TP = {
         ear1  = "Beastly Earring",
         legs  = "Evoker's Spats",
-        feet  = "Summoner's Pgch."
     },
 
 	WS = {
@@ -235,7 +238,6 @@ local sets = {
 
 	Town = {
         ear1  = "Beastly Earring",
-        feet = "Rostrum Pumps"
     },
     
 	Movement = {},

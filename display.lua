@@ -30,6 +30,18 @@ function display.AdvanceCycle(name)
     end
 end
 
+function display.AdvanceCycleBack(name)
+    local ctable = Cycles[name];
+    if (type(ctable) ~= 'table') then
+        return;
+    end
+
+    ctable.Index = ctable.Index - 1;
+    if (ctable.Index == 0) then
+        ctable.Index = #ctable.Array;
+    end
+end
+
 function display.AdvanceToggle(name)
     if (type(Toggles[name]) ~= 'boolean') then
         return
@@ -92,7 +104,11 @@ display.Load = function()
         end
 
         for key, value in pairs(Cycles) do
-            outText = outText .. '\n ' .. key .. ': ' .. '|cFF0BDE27|' .. value.Array[value.Index] .. '|r';
+--            if (includes.elementColors:contains(value.Array[value.Index])) then
+--                outText = outText .. '\n ' .. key .. ': ' .. includes.elementColors[value.Array[value.Index]];
+--            else
+                outText = outText .. '\n ' .. key .. ': ' .. '|cFF0BDE27|' .. value.Array[value.Index] .. '|r';
+--          end
         end
 
 		for key, value in pairs(Toggles) do

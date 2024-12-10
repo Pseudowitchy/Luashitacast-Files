@@ -15,7 +15,7 @@ util1     = '';
 util2     = '';
 
 maneuvers = T{ 'dark', 'light', 'fire', 'water', 'thunder', 'earth', 'wind', 'ice' };
-jobText = 'Maneuvers: ';
+jobText = 'Maneuvers:';
 
 local sets = {
     Idle = {
@@ -238,7 +238,7 @@ profile.HandleDefault = function()
             gFunc.EquipSet('TP_' .. display.GetCycle('Damage Mode') .. '_' .. display.GetCycle('Acc Mode'));
         end
 
-        if (player.MainJobSync >= 70 and (zone.Time > 6 and zone.Time < 18))
+        if (player.MainJobSync >= 70 and (zone.Time > 6 and zone.Time < 18)) then
             gFunc.Equip(ear2, "Fenrir's Earring");
         end
 
@@ -319,7 +319,7 @@ profile.HandleWeaponskill = function()
         gFunc.EquipSet(sets.StringingPummel);
     end    
 
-    if (player.MainJobSync >= 70 and (zone.Time > 6 and zone.Time < 18))
+    if (player.MainJobSync >= 70 and (zone.Time > 6 and zone.Time < 18)) then
         gFunc.Equip(ear2, "Fenrir's Earring");
     end
 end
@@ -418,10 +418,10 @@ function ManAdd(manOne, manTwo, manThree)
         ManeuverSet[0] = manOne;
     end
     
-    jobText = 'Maneuvers: ';
+    jobText = 'Maneuvers:';
     for x = 0, 2 do
         if (ManeuverSet[x] ~= 'None') then
-            jobText = jobText ..  includes.elementColors[ManeuverSet[x]] .. ' ';
+            jobText = jobText .. ' ' .. includes.elementColors[ManeuverSet[x]];
         end
     end
 end
@@ -450,7 +450,7 @@ function ManUse()
 
         if (maneuverCD == 0) then
             local usedManeuver = ManeuverSet[0];
-            local capElement = string.upper(string.sub(ManeuverSet[0], 1, 1)) .. string.lower(string.sub(ManeuverSet[0], 2, -1))
+            local capElement = string.upper(string.sub(ManeuverSet[0], 1, 1)) .. string.lower(string.sub(ManeuverSet[0], 2, -1));
          
             if (ManeuverSet[0] == 'None') then
                 AshitaCore:GetChatManager():QueueCommand(1, '/echo No Maneuvers defined, use \'/man (fire dark earth)\' to add maneuvers to the queue.');
@@ -475,10 +475,10 @@ function ManUse()
         return
     end
 
-    jobText = 'Maneuvers: ';
+    jobText = 'Maneuvers:';
     for x = 0, 2 do
         if (ManeuverSet[x] ~= 'None') then
-            jobText = jobText ..  includes.elementColors[ManeuverSet[x]] .. ' ';
+            jobText = jobText .. ' ' .. includes.elementColors[ManeuverSet[x]];
         end
     end
 end

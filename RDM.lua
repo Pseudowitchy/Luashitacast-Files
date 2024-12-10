@@ -45,7 +45,7 @@ local sets = {
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
-        waist = "Sarashi",
+        waist = "Ryl.Kgt. Belt",
         legs  = "Crow Hose",
         feet  = "Crow Gaiters",
     },    
@@ -138,7 +138,7 @@ local sets = {
         main  = "Buzzard Tuck",
     },
     
-    Enhancing_Stoneskin = {
+    Midcast_Stoneskin = {
         main  = "Rose Wand +1",
         head  = "Traveler's Hat",
         body  = "Ryl.Sqr. Robe +2",
@@ -169,7 +169,7 @@ local sets = {
     
     TP_NIN = {
         main  = Sword,
-        sub   = Shield,
+        sub   = NinSword,
         head  = "Cotton Headband",
         neck  = "Spike Necklace",
         ear1  = "Beetle Earring +1",
@@ -179,7 +179,7 @@ local sets = {
         ring1 = "Courage Ring",
         ring2 = "Courage Ring",
         back  = "Nomad's Mantle",
-        waist = "Sarashi",
+        waist = "Ryl.Kgt. Belt",
         legs  = "Beetle Subligar +1",
         feet  = "Warlock's Boots"
     },    
@@ -231,11 +231,7 @@ profile.HandleDefault = function()
     local player = gData.GetPlayer();
     
     if (player.Status == 'Engaged') then
-        if (player.SubJob == "NIN") then
-            gFunc.EquipSet(sets.TP_NIN);
-        else
-            gFunc.EquipSet(sets.TP);
-        end
+        gFunc.EquipSet(sets.TP);
     elseif (player.Status == 'Resting') then        
         if (player.MainJobSync < 51) then
             gFunc.Equip('main', "Pilgrim's Wand");                
@@ -245,11 +241,6 @@ profile.HandleDefault = function()
         end
     else
 		gFunc.EquipSet(sets.Idle);
-        if (player.SubJob == "NIN") then
-            gFunc.EquipSet(sets.Idle_NIN);
-        elseif (player.SubJob == "WHM") then
-            gFunc.Equip('waist', "Healer's Belt");
-        end
     end
 
 	if (player.IsMoving == true) then
@@ -283,32 +274,23 @@ profile.HandleMidcast = function()
 
     if (spell.Skill == 'Elemental Magic') then
         gFunc.EquipSet(sets.Nuke);
-        if (player.SubJob == "WHM") then
-            gFunc.Equip('waist', "Healer's Belt");
-        end
     elseif (spell.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Dark);
     elseif (spell.Skill == 'Enfeebling Magic') then
-        if (string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') or string.contains(spell.Name, 'Silence')) then
+        if (string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow')
+         or string.contains(spell.Name, 'Silence')) then
             gFunc.EquipSet(sets.Mnd_Enfeebling);
         else
             gFunc.EquipSet(sets.Enfeebling);
-
         end
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Cure);
-        if (player.SubJob == "WHM") then
-            gFunc.Equip('waist', "Healer's Belt");
-        end
-        if string.match(spell.Name, 'Cursna') then
-            gFunc.EquipSet(sets.Cursna);
-        end
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing);
         if string.contains(spell.Name, 'En') then
             gFunc.EquipSet(sets.Enhancing_Enspell);
         elseif (spell.Name == 'Stoneskin') then
-            gFunc.EquipSet(sets.Enhancing_Stoneskin);
+            gFunc.EquipSet(sets.Midcast_Stoneskin);
         end    
     end
     

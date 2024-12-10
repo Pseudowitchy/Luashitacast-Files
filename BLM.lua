@@ -1,5 +1,6 @@
 local profile = {};
 includes = gFunc.LoadFile('includes.lua');
+display = gFunc.LoadFile('display.lua');
 
 macroBook = 2;
 macroSet  = 1; -- Page within book
@@ -10,23 +11,24 @@ lockstyleSet = 198; -- which macro equipset do you use for lockstyle
 -- Change default spells below, or leave blank: ''
 util1     = 'Aquaveil';
 util2     = 'Blink';
+jobText = '';
 
 local sets = {
     Idle = {
         main  = EarthStaff,
         ammo  = "Sweet Sachet",
         head  = "Seer's Crown +1",
-        neck  = "Black Neckerchief",
+        neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
         ear2  = "Morion Earring",
         body  = "Ryl.Sqr. Robe +2",
         hands = "Sly Gauntlets",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
-        back  = "Black Cape +1",
+        back  = "Red Cape +1",
         waist = "Mrc.Cpt. Belt",
         legs  = "Seer's Slacks +1",
-        feet  = "Mage's Sandals"
+        feet  = "Wizard's Sabots"
     },
     
     Resting = {
@@ -44,28 +46,38 @@ local sets = {
         feet  = "Wizard's Sabots"
     },
     
-    Nuke = {
+    Midcast_Elemental = {
         ear1  = "Moldavite Earring",
         hands = "Wizard's Gloves",
     },
     
-    Dark = {
+    Midcast_Elemental_MB = {
+        ear1  = "Moldavite Earring",
+        hands = "Wizard's Gloves",
+    },
+
+    Midcast_Dark = {
         legs  = "Wizard's Tonban",
     },
     
-    Enfeebling = {
+    Midcast_Enfeebling = {
         ear1  = "Morion Earring",
         body  = "Wizard's Coat",
     },
 
-    Enfeebling_Potency = {
+    Midcast_Enfeebling_Potency = { -- MAB gear for DoTs
         ear1  = "Morion Earring",
         body  = "Wizard's Coat",
     },
     
-    Mnd_Enfeebling = {
+    Midcast_Enfeebling_Mnd = {
+        head  = "Traveler's Hat",
         neck  = "Justice Badge",
         body  = "Wizard's Coat",
+        hands = "Seer's Mitts +1",
+        ring1 = "Solace Ring",
+        ring2 = "Solace Ring",
+        feet  = "Seet's Pumps +1"
     },
     
     TP = {
@@ -94,8 +106,12 @@ profile.OnLoad = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /sleepga /lac fwd sleepga');
     
     AshitaCore:GetChatManager():QueueCommand(1, '/bind !` /ma "Stun" <t>');
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind home /lac fwd mb');
 
     includes.OnLoad();
+
+    display.Load();
+    display.CreateToggle('Magic Burst', false);
 end
 
 profile.OnUnload = function()
@@ -108,8 +124,11 @@ profile.OnUnload = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /sleepga');
     
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind !`');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind home');
     
     includes.OnUnload();
+
+    display.Unload();
 end
 
 local EleDoTs = T{ 'Burn', 'Frost', 'Choke', 'Rasp', 'Shock', 'Drown' }
@@ -153,15 +172,19 @@ profile.HandleMidcast = function()
     gFunc.EquipSet(sets.Midcast);
 
     if (spell.Skill == 'Elemental Magic') then
-        gFunc.EquipSet(sets.Nuke);
+        if (display.GetToggle('Magic Burst') == true) then
+            gFunc.EquipSet(sets.Midcast_Elemental_MB);
+        else
+            gFunc.EquipSet(sets.Midcast_Elemental);
+        end
     elseif (spell.Skill == 'Dark Magic') then
-        gFunc.EquipSet(sets.Dark);
-    elseif (spell.Skill == 'Enfeebling Magic') then
-        gFunc.EquipSet(sets.Enfeebling);
+        gFunc.EquipSet(sets.Midcast_Dark);
+    elseif (spell.Skill == 'Midcast_Enfeebling Magic') then
+        gFunc.EquipSet(sets.Midcast_Enfeebling);
         if (EleDoTs:contains(spell.Name)) then
-            gFunc.EquipSet(sets.Enfeebling_Potency);
+            gFunc.EquipSet(sets.Midcast_Enfeebling_Potency);
         elseif string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') then
-            gFunc.EquipSet(sets.Mnd_Enfeebling);
+            gFunc.EquipSet(sets.Midcast_Enfeebling_Mnd);
         end
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Cure);
@@ -192,6 +215,8 @@ profile.HandleCommand = function(args)
         DoSleep();
     elseif args[1] == 'sleepga' then
         DoSleepga();
+    elseif args[1] == 'mb' then
+        display.AdvanceToggle('Magic Burst');
     else includes.HandleCommands(args);
     end
 end
@@ -221,7 +246,7 @@ function DoWater()
 	
     if (player.MainJobSync >= 70 and recast4 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water IV" <t>');
-    elseif (player.MainJobSync >= 55 and recast3 == 0) then
+    elseif (player.MainJobSync >= 55 and recast3 == 0 and player.MP >= 98) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water III" <t>');
     elseif (player.MainJobSync >= 30 and recast2 == 0 and player.MP >= 51) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water II" <t>');
