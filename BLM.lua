@@ -17,11 +17,10 @@ local sets = {
     Idle = {
         main  = EarthStaff,
         ammo  = "Sweet Sachet",
-        head  = "Seer's Crown +1",
         neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
         ear2  = "Morion Earring",
-        body  = "Ryl.Sqr. Robe +2",
+        body  = "Vermillion Cloak",
         hands = "Sly Gauntlets",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
@@ -34,7 +33,7 @@ local sets = {
     Resting = {
         main  = DarkStaff,
         neck  = "Checkered Scarf",
-        body  = "Seer's Tunic +1",
+        body  = "Vermillion Cloak",
         legs  = "Baron's Slops",
     },
     
@@ -43,31 +42,88 @@ local sets = {
     },
     
     Midcast = { -- Spell Interruption Rate
+        waist = "Heko Obi +1",
         feet  = "Wizard's Sabots"
     },
     
     Midcast_Elemental = {
+        ammo  = "Sweet Sachet",
+        head  = "Seer's Crown +1",
+        neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
         hands = "Wizard's Gloves",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Seer's Slacks +1",
+        feet  = "Wizard's Sabots"
     },
     
     Midcast_Elemental_MB = {
+        ammo  = "Sweet Sachet",
+        head  = "Seer's Crown +1",
+        neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
         hands = "Wizard's Gloves",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Seer's Slacks +1",
+        feet  = "Wizard's Sabots"
+    },
+    
+    Midcast_Elemental_DoTs = { -- INT gear for DoTs
+        ammo  = "Sweet Sachet",
+        head  = "Seer's Crown +1",
+        neck  = "Checkered Scarf",
+        ear1  = "Morion Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
+        hands = "Sly Gauntlets",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Seer's Slacks +1",
+        feet  = "Wizard's Sabots"
     },
 
     Midcast_Dark = {
+        ammo  = "Sweet Sachet",
+        head  = "Seer's Crown +1",
+        neck  = "Checkered Scarf",
+        ear1  = "Moldavite Earring",
+        ear2  = "Morion Earring",
+        body  = "Wizard's Coat",
+        hands = "Sly Gauntlets",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
         legs  = "Wizard's Tonban",
+        feet  = "Wizard's Sabots"
     },
     
-    Midcast_Enfeebling = {
+    Midcast_Enfeebling = { -- INT & MACC first
+        ammo  = "Sweet Sachet",
+        head  = "Seer's Crown +1",
+        neck  = "Checkered Scarf",
         ear1  = "Morion Earring",
+        ear2  = "Morion Earring",
         body  = "Wizard's Coat",
-    },
-
-    Midcast_Enfeebling_Potency = { -- MAB gear for DoTs
-        ear1  = "Morion Earring",
-        body  = "Wizard's Coat",
+        hands = "Sly Gauntlets",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Seer's Slacks +1",
+        feet  = "Wizard's Sabots"
     },
     
     Midcast_Enfeebling_Mnd = {
@@ -86,7 +142,6 @@ local sets = {
     
     Town = {
         main  = "Mandibular Sickle",
-        ear1  = "Moldavite Earring",
     },
 
     Movement = {},
@@ -138,9 +193,17 @@ profile.HandleDefault = function()
     
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.TP);
+    elseif (player.Status == 'Resting') then
+        if (player.MainJobSync < 59) then
+            gFunc.Equip('body', "Seer's Tunic +1");
+        elseif (player.MainJobSync < 51) then
+            gFunc.Equip('main', "Pilgrim's Wand");
+            gFunc.Equip('body', "Seer's Tunic +1");
+        end
     else
 		gFunc.EquipSet(sets.Idle);
     end
+    
 
 	if (player.IsMoving == true) then
 		gFunc.EquipSet(sets.Movement);
@@ -177,13 +240,15 @@ profile.HandleMidcast = function()
         else
             gFunc.EquipSet(sets.Midcast_Elemental);
         end
+        
+        if (EleDoTs:contains(spell.Name)) then
+            gFunc.EquipSet(sets.Midcast_Elemental_DoTs);
+        end
     elseif (spell.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Midcast_Dark);
-    elseif (spell.Skill == 'Midcast_Enfeebling Magic') then
+    elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Midcast_Enfeebling);
-        if (EleDoTs:contains(spell.Name)) then
-            gFunc.EquipSet(sets.Midcast_Enfeebling_Potency);
-        elseif string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') then
+        if string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') then
             gFunc.EquipSet(sets.Midcast_Enfeebling_Mnd);
         end
     elseif (spell.Skill == 'Healing Magic') then
@@ -338,10 +403,10 @@ function DoSleepga()
 	local player = gData.GetPlayer()
 	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(274);
 
-    if (player.MainJobSync >= 56 and recast1 == 0 and player.MP >= 100) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep II" <t>');	
+    if (player.MainJobSync >= 56 and recast1 == 0 and player.MP >= 58) then
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga II" <t>');	
     else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep" <t>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga" <t>');
     end
 end
 
