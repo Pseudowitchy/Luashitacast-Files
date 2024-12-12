@@ -1,6 +1,7 @@
 local profile = {};
 includes = gFunc.LoadFile('includes.lua');
 display = gFunc.LoadFile('display.lua');
+conquest = gFunc.LoadFile('conquest.lua');
 
 macroBook = 2;
 macroSet  = 1; -- Page within book
@@ -19,7 +20,7 @@ local sets = {
         ammo  = "Sweet Sachet",
         neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
-        ear2  = "Morion Earring",
+        ear2  = "Phantom Earring",
         body  = "Vermillion Cloak",
         hands = "Sly Gauntlets",
         ring1 = "Wisdom Ring",
@@ -48,11 +49,11 @@ local sets = {
     
     Midcast_Elemental = {
         ammo  = "Sweet Sachet",
-        head  = "Seer's Crown +1",
+        head  = "Wizard's Petasos",
         neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
-        ear2  = "Morion Earring",
-        body  = "Ryl.Sqr. Robe +2",
+        ear2  = "Phantom Earring",
+        body  = "Black Cotehardie",
         hands = "Wizard's Gloves",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
@@ -64,11 +65,11 @@ local sets = {
     
     Midcast_Elemental_MB = {
         ammo  = "Sweet Sachet",
-        head  = "Seer's Crown +1",
+        head  = "Wizard's Petasos",
         neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
-        ear2  = "Morion Earring",
-        body  = "Ryl.Sqr. Robe +2",
+        ear2  = "Phantom Earring",
+        body  = "Black Cotehardie",
         hands = "Wizard's Gloves",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
@@ -80,11 +81,11 @@ local sets = {
     
     Midcast_Elemental_DoTs = { -- INT gear for DoTs
         ammo  = "Sweet Sachet",
-        head  = "Seer's Crown +1",
+        head  = "Wizard's Petasos",
         neck  = "Checkered Scarf",
-        ear1  = "Morion Earring",
-        ear2  = "Morion Earring",
-        body  = "Ryl.Sqr. Robe +2",
+        ear1  = "Phantom Earring",
+        ear2  = "Phantom Earring",
+        body  = "Black Cotehardie",
         hands = "Sly Gauntlets",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
@@ -96,11 +97,11 @@ local sets = {
 
     Midcast_Dark = {
         ammo  = "Sweet Sachet",
-        head  = "Seer's Crown +1",
+        head  = "Wizard's Petasos",
         neck  = "Checkered Scarf",
         ear1  = "Moldavite Earring",
-        ear2  = "Morion Earring",
-        body  = "Wizard's Coat",
+        ear2  = "Phantom Earring",
+        body  = "Black Cotehardie",
         hands = "Sly Gauntlets",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
@@ -112,10 +113,10 @@ local sets = {
     
     Midcast_Enfeebling = { -- INT & MACC first
         ammo  = "Sweet Sachet",
-        head  = "Seer's Crown +1",
+        head  = "Wizard's Petasos",
         neck  = "Checkered Scarf",
-        ear1  = "Morion Earring",
-        ear2  = "Morion Earring",
+        ear1  = "Phantom Earring",
+        ear2  = "Phantom Earring",
         body  = "Wizard's Coat",
         hands = "Sly Gauntlets",
         ring1 = "Wisdom Ring",
@@ -190,7 +191,7 @@ local EleDoTs = T{ 'Burn', 'Frost', 'Choke', 'Rasp', 'Shock', 'Drown' }
 
 profile.HandleDefault = function()
     local player = gData.GetPlayer();
-    
+
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.TP);
     elseif (player.Status == 'Resting') then
@@ -202,8 +203,7 @@ profile.HandleDefault = function()
         end
     else
 		gFunc.EquipSet(sets.Idle);
-    end
-    
+    end    
 
 	if (player.IsMoving == true) then
 		gFunc.EquipSet(sets.Movement);
@@ -244,8 +244,16 @@ profile.HandleMidcast = function()
         if (EleDoTs:contains(spell.Name)) then
             gFunc.EquipSet(sets.Midcast_Elemental_DoTs);
         end
+
+        if (conquest.GetInsideControl()) then
+            gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
+        end
     elseif (spell.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Midcast_Dark);
+
+        if (conquest.GetInsideControl()) then
+            gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
+        end
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Midcast_Enfeebling);
         if string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') then
