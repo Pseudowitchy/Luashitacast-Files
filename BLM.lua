@@ -394,7 +394,7 @@ function DoBlizzard()
 	
     if (player.MainJobSync >= 74 and recast4 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard IV" <t>');
-    elseif (player.MainJobSync >= 64 and recast3 == 0) then
+    elseif (player.MainJobSync >= 64 and recast3 == 0 and player.MP >= 120) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard III" <t>');
     elseif (player.MainJobSync >= 42 and recast2 == 0 and player.MP >= 77) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard II" <t>');
