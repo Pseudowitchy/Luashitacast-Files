@@ -73,7 +73,7 @@ local sets = {
     },
     
     Pet_Idle_Day = {head = "Green Ribbon +1", body = "Summoner's Dblt."},
-    Pet_Idle_Weather = {},
+    Pet_Idle_Weather = {head = "Summoner's Horn"},
 
     Pet_Idle_Carby = {hands = "Carbuncle Mitts"},
     Spirits = { -- SMN skill for cast rate, -perp
@@ -86,7 +86,7 @@ local sets = {
     },
 
     BP = { --I/II cap at 15, max skill afterwards
-        head  = "Austere Hat",
+        head = "Summoner's Horn",
         neck  = "Smn. Torque",
         body  = "Austere Robe",
         hands = "Austere Cuffs",

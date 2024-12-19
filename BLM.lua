@@ -30,23 +30,23 @@ local sets = {
         legs  = "Seer's Slacks +1",
         feet  = "Wizard's Sabots"
     },
-    
+
     Resting = {
         main  = DarkStaff,
         neck  = "Checkered Scarf",
         body  = "Vermillion Cloak",
         legs  = "Baron's Slops",
     },
-    
+
     Precast = { -- Fast Cast
     
     },
-    
+
     Midcast = { -- Spell Interruption Rate
         waist = "Heko Obi +1",
         feet  = "Wizard's Sabots"
     },
-    
+
     Midcast_Elemental = {
         ammo  = "Sweet Sachet",
         head  = "Wizard's Petasos",
@@ -59,10 +59,10 @@ local sets = {
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
         waist = "Mrc.Cpt. Belt",
-        legs  = "Seer's Slacks +1",
+        legs  = "Druid's Slops",
         feet  = "Wizard's Sabots"
     },
-    
+
     Midcast_Elemental_MB = {
         ammo  = "Sweet Sachet",
         head  = "Wizard's Petasos",
@@ -75,10 +75,10 @@ local sets = {
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
         waist = "Mrc.Cpt. Belt",
-        legs  = "Seer's Slacks +1",
+        legs  = "Druid's Slops",
         feet  = "Wizard's Sabots"
     },
-    
+
     Midcast_Elemental_DoTs = { -- INT gear for DoTs
         ammo  = "Sweet Sachet",
         head  = "Wizard's Petasos",
@@ -91,7 +91,7 @@ local sets = {
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
         waist = "Mrc.Cpt. Belt",
-        legs  = "Seer's Slacks +1",
+        legs  = "Druid's Slops",
         feet  = "Wizard's Sabots"
     },
 
@@ -110,7 +110,23 @@ local sets = {
         legs  = "Wizard's Tonban",
         feet  = "Wizard's Sabots"
     },
-    
+
+    Midcast_Stun = {
+        ammo  = "Sweet Sachet",
+        head  = "Wizard's Petasos",
+        neck  = "Checkered Scarf",
+        ear1  = "Moldavite Earring",
+        ear2  = "Phantom Earring",
+        body  = "Black Cotehardie",
+        hands = "Sly Gauntlets",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Wizard's Tonban",
+        feet  = "Wizard's Sabots"
+    },
+
     Midcast_Enfeebling = { -- INT & MACC first
         ammo  = "Sweet Sachet",
         head  = "Wizard's Petasos",
@@ -126,9 +142,9 @@ local sets = {
         legs  = "Seer's Slacks +1",
         feet  = "Wizard's Sabots"
     },
-    
+
     Midcast_Enfeebling_Mnd = {
-        head  = "Traveler's Hat",
+        head  = "Republic Circlet",
         neck  = "Justice Badge",
         body  = "Wizard's Coat",
         hands = "Seer's Mitts +1",
@@ -136,11 +152,15 @@ local sets = {
         ring2 = "Solace Ring",
         feet  = "Seet's Pumps +1"
     },
-    
-    TP = {
-    
+
+    Midcast_Healing = {
+        legs = "Druid's Slops",
     },
-    
+
+    TP = {
+
+    },
+
     Town = {
         main  = "Mandibular Sickle",
     },
@@ -152,7 +172,7 @@ profile.Sets = sets;
 
 profile.OnLoad = function()
     (function() includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet) end):once(5);
-        
+
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /stone /lac fwd stone');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /water /lac fwd water');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /aero /lac fwd aero');
@@ -160,7 +180,7 @@ profile.OnLoad = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /blizzard /lac fwd blizzard');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /thunder /lac fwd thunder');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /sleepga /lac fwd sleepga');
-    
+
     AshitaCore:GetChatManager():QueueCommand(1, '/bind !` /ma "Stun" <t>');
     AshitaCore:GetChatManager():QueueCommand(1, '/bind home /lac fwd mb');
 
@@ -178,10 +198,10 @@ profile.OnUnload = function()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /blizzard');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /thunder');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /sleepga');
-    
+
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind !`');
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind home');
-    
+
     includes.OnUnload();
 
     display.Unload();
@@ -208,11 +228,11 @@ profile.HandleDefault = function()
 	if (player.IsMoving == true) then
 		gFunc.EquipSet(sets.Movement);
 	end
-    
+
     includes.RestingCheck(player);
 	includes.CheckDefaults();
 end
-    
+
 profile.HandlePrecast = function()
     local spell = gData.GetAction();
     gFunc.EquipSet(sets.Precast);
@@ -227,7 +247,7 @@ profile.HandlePrecast = function()
         gFunc.EquipSet(sets.Cure_Precast);
     end
 end
-    
+
 profile.HandleMidcast = function()
     local player = gData.GetPlayer();
     local spell = gData.GetAction();
@@ -240,19 +260,26 @@ profile.HandleMidcast = function()
         else
             gFunc.EquipSet(sets.Midcast_Elemental);
         end
-        
+
         if (EleDoTs:contains(spell.Name)) then
             gFunc.EquipSet(sets.Midcast_Elemental_DoTs);
         end
 
         if (conquest.GetInsideControl()) then
+            if (not EleDoTs:contains(spell.Name)) then
+                gFunc.Equip('head', 'Republic Circlet');
+            end
             gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
         end
     elseif (spell.Skill == 'Dark Magic') then
-        gFunc.EquipSet(sets.Midcast_Dark);
-
-        if (conquest.GetInsideControl()) then
-            gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
+        if (spell.Name == 'Drain' or spell.Name == 'Aspir') then
+            gFunc.EquipSet(sets.Midcast_Dark);
+            if (conquest.GetInsideControl()) then
+                gFunc.Equip('head', 'Republic Circlet');
+                gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
+            end
+        else
+            gFunc.EquipSet(sets.Midcast_Stun);
         end
     elseif (spell.Skill == 'Enfeebling Magic') then
         gFunc.EquipSet(sets.Midcast_Enfeebling);
@@ -260,10 +287,7 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Midcast_Enfeebling_Mnd);
         end
     elseif (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.Cure);
-        if string.match(spell.Name, 'Cursna') then
-            gFunc.EquipSet(sets.Cursna);
-        end
+        gFunc.EquipSet(sets.Midcast_Healing);
     end
     
     if (player.MainJobSync >= 51) then
@@ -336,7 +360,7 @@ function DoAero()
 	
     if (player.MainJobSync >= 72 and recast4 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero IV" <t>');
-    elseif (player.MainJobSync >= 59 and recast3 == 0) then
+    elseif (player.MainJobSync >= 59 and recast3 == 0 and player.MP >= 105) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero III" <t>');
     elseif (player.MainJobSync >= 34 and recast2 == 0 and player.MP >= 59) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero II" <t>');
@@ -353,7 +377,7 @@ function DoFire()
 	
     if (player.MainJobSync >= 73 and recast4 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire IV" <t>');
-    elseif (player.MainJobSync >= 62 and recast3 == 0) then
+    elseif (player.MainJobSync >= 62 and recast3 == 0 and player.MP >= 113) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire III" <t>');
     elseif (player.MainJobSync >= 38 and recast2 == 0 and player.MP >= 68) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire II" <t>');
