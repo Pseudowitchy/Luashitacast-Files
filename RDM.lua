@@ -303,12 +303,11 @@ profile.HandleMidcast = function()
     end
 
     gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
+    includes.HandleMidcast();
 end
 
 profile.HandleWeaponskill = function()
     gFunc.EquipSet(sets.WS);
-    
-    -- if(string.match _skillname_ swap set etc here when needed
 end
 
 profile.HandleCommand = function(args)

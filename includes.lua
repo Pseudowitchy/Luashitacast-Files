@@ -158,6 +158,19 @@ function includes.CheckDefaults()
     gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
 end
 
+function includes.HandleMidcast()
+    local player = gData.GetPlayer();
+    local spell = gData.GetAction();
+
+    if (spell.Name == 'Sneak') then
+        gFunc.Equip('feet', 'Dream Boots +1');
+    elseif (spell.Name == 'Invisible') then
+        gFunc.Equip('hands', 'Dream Mittens +1');
+    end
+
+
+end
+
 function includes.HandleCommands(args)
 	if (args[1] == 'warp') then
         includes.Warp();

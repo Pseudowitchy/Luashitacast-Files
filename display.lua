@@ -2,8 +2,10 @@ local Cycles = {};
 local Toggles = {};
 local fonts = require('fonts')
 
-local display = {
-}
+local display = {}
+
+local player = gData.GetPlayer();
+local header = '    ---  ' .. player.MainJobSync .. player.MainJob .. '/' .. player.SubJobSync .. player.SubJob .. '  ---    ';
 
 local fontSettings = T{
     visible = true,
@@ -104,11 +106,7 @@ display.Load = function()
         end
 
         for key, value in pairs(Cycles) do
---            if (includes.elementColors:contains(value.Array[value.Index])) then
---                outText = outText .. '\n ' .. key .. ': ' .. includes.elementColors[value.Array[value.Index]];
---            else
                 outText = outText .. '\n ' .. key .. ': ' .. '|cFF0BDE27|' .. value.Array[value.Index] .. '|r';
---          end
         end
 
 		for key, value in pairs(Toggles) do
@@ -119,6 +117,18 @@ display.Load = function()
 				outText = outText .. '|cFFDD0000|Disabled|r';
 			end
 		end
+
+        if (includes.util1 ~= '/ma ""' or includes.util2 ~= '/ma ""') then
+            outText = outText .. '\n    --- === Utils === ---    ';
+            if (includes.util1 ~= '/ma ""' and includes.util1 ~= '') then
+                local util1Str = string.upper(string.sub(includes.util1, 6, 6)) .. string.lower(string.sub(includes.util1, 7, string.len(includes.util1) - 1))
+                outText = outText .. '\n 1: ' .. util1Str;
+            end
+            if (includes.util2 ~= '/ma ""' and includes.util2 ~= '') then
+                local util2Str = string.upper(string.sub(includes.util2, 6, 6)) .. string.lower(string.sub(includes.util2, 7, string.len(includes.util2) - 1));
+                outText = outText .. '\n 2: ' .. util2Str;
+            end
+        end
 
 		display.FontObject.text = outText;
 	end)

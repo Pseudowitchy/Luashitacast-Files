@@ -163,6 +163,7 @@ local sets = {
 
     Town = {
         main  = "Mandibular Sickle",
+        legs  = "Druid's Slops",
     },
 
     Movement = {},
@@ -246,6 +247,8 @@ profile.HandlePrecast = function()
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Cure_Precast);
     end
+
+    includes.CheckDefaults();
 end
 
 profile.HandleMidcast = function()
@@ -282,10 +285,15 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Midcast_Stun);
         end
     elseif (spell.Skill == 'Enfeebling Magic') then
-        gFunc.EquipSet(sets.Midcast_Enfeebling);
         if string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') then
             gFunc.EquipSet(sets.Midcast_Enfeebling_Mnd);
+        else
+            gFunc.EquipSet(sets.Midcast_Enfeebling);
+            if (conquest.GetOutsideControl() and player.MainJobSync >= 65) then
+                gFunc.Equip('hands', 'Mst.Cst. Bracelets');
+            end
         end
+
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Midcast_Healing);
     end
@@ -293,6 +301,9 @@ profile.HandleMidcast = function()
     if (player.MainJobSync >= 51) then
         includes.StaffCheck();
     end
+
+    gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
+    includes.HandleMidcast();
 end
 
 profile.HandleCommand = function(args)

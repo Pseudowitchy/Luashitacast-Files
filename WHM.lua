@@ -179,6 +179,7 @@ profile.HandleMidcast = function()
     end
 
     gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
+    includes.HandleMidcast();
 end
 
 profile.HandleWeaponskill = function()

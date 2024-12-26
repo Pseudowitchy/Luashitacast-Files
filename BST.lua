@@ -153,6 +153,9 @@ end
     
 profile.HandleMidcast = function()
     gFunc.EquipSet(sets.Midcast);
+
+    gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
+    includes.HandleMidcast();
 end
 
 profile.HandleAbility = function()
