@@ -167,8 +167,6 @@ function includes.HandleMidcast()
     elseif (spell.Name == 'Invisible') then
         gFunc.Equip('hands', 'Dream Mittens +1');
     end
-
-
 end
 
 function includes.HandleCommands(args)
