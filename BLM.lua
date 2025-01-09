@@ -14,6 +14,7 @@ util1     = 'Aquaveil';
 util2     = 'Blink';
 jobText = '';
 
+uggyPendant = true; -- Sets if Uggalepih Pendant should be used when the latent can be triggered.
 sorcRing = false; -- Sets if Sorc Ring features should be used, if you don't have the ring leave false
 sorcRing_Slot = 'ring1'; -- overwrites existing ring in this slot when Sorc Ring is toggled on
 
@@ -253,7 +254,7 @@ profile.HandlePrecast = function()
     local spell = gData.GetAction();
     gFunc.EquipSet(sets.Precast);
 
-    if (spel.Skill == 'Elemental Magic' or spell.Name == 'Drain' or spell.Name == 'Aspir') then
+    if (spell.Skill == 'Elemental Magic' or spell.Name == 'Drain' or spell.Name == 'Aspir') then
         gFunc.EquipSet(sets.Precast_Sorc);
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing_Precast);
@@ -295,6 +296,9 @@ profile.HandleMidcast = function()
         if (sorcRing) then
             gFunc.Equip(sorcRing_Slot, 'Sorcerer\' Ring');
         end
+        if (uggyPendant and spell.MPPAftercast < 51 and player.MainJobSync >= 70) then
+            gFunc.Equip('neck', 'Uggalepih Pendant');
+        end
     elseif (spell.Skill == 'Dark Magic') then
         if (spell.Name == 'Drain' or spell.Name == 'Aspir') then
             gFunc.EquipSet(sets.Midcast_Dark);
@@ -304,7 +308,10 @@ profile.HandleMidcast = function()
             end
             if (sorcRing) then
                 gFunc.Equip(sorcRing_Slot, 'Sorcerer\' Ring');
-            end                
+            end
+            if (uggyPendant and spell.MPPAftercast < 51 and player.MainJobSync >= 70) then
+                gFunc.Equip('neck', 'Uggalepih Pendant');
+            end
         else
             gFunc.EquipSet(sets.Midcast_Stun);
         end
