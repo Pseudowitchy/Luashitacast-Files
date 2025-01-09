@@ -97,10 +97,11 @@ end
 
 display.Load = function()
     display.FontObject = fonts.new(fontSettings);
-    local player = gData.GetPlayer();
-
+    
 	ashita.events.register('d3d_present', 'display_present_cb', function ()
-		local outText = '    ---  ' .. player.MainJobSync .. player.MainJob .. '/' .. player.SubJobSync .. player.SubJob .. '  ---    ';
+        local player = gData.GetPlayer();
+        local outText = '    ---  ' .. includes.job .. '  ---    ';
+
         if (jobText ~= '') then
             outText = outText .. '\n ' .. jobText;
         end

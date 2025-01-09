@@ -6,13 +6,14 @@ includes.WeaponsLocked = false;
 includes.cutsceneSkip = false;
 includes.util1 = ''; -- Overwritten by job files
 includes.util2 = '';
+includes.job = '  Welcome  ';
 
 EarthStaff = "Earth Staff";
 WaterStaff = "Neptune's Staff";
 WindStaff = "Wind Staff";
 FireStaff = "Fire Staff";
 IceStaff = "Aquilo's Staff";
-ThunderStaff = "Thunder Staff";
+ThunderStaff = "Jupiter's Staff";
 LightStaff = "Light Staff";
 DarkStaff = "Dark Staff";
 
@@ -214,6 +215,9 @@ function includes.HandleCommands(args)
 end
 
 function includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet) 
+    local player = gData.GetPlayer();
+    includes.job = player.MainJobSync .. player.MainJob .. '/' .. player.SubJobSync .. player.SubJob;
+
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book ' .. macroBook);
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set ' .. macroSet);
 

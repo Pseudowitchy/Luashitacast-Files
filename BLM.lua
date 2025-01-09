@@ -14,6 +14,9 @@ util1     = 'Aquaveil';
 util2     = 'Blink';
 jobText = '';
 
+sorcRing = false; -- Sets if Sorc Ring features should be used, if you don't have the ring leave false
+sorcRing_Slot = 'ring1'; -- overwrites existing ring in this slot when Sorc Ring is toggled on
+
 local sets = {
     Idle = {
         main  = EarthStaff,
@@ -39,6 +42,10 @@ local sets = {
     },
 
     Precast = { -- Fast Cast
+    
+    },
+
+    Precast_Sorc = { -- Fast Cast, -hp gear to trigger Sorc Ring
     
     },
 
@@ -184,11 +191,15 @@ profile.OnLoad = function()
 
     AshitaCore:GetChatManager():QueueCommand(1, '/bind !` /ma "Stun" <t>');
     AshitaCore:GetChatManager():QueueCommand(1, '/bind home /lac fwd mb');
-
+    
     includes.OnLoad();
-
+    
     display.Load();
     display.CreateToggle('Magic Burst', false);
+    if (sorcRing == true) then
+        display.CreateToggle('Sorc. Ring', false);
+        AshitaCore:GetChatManager():QueueCommand(1, '/bind end /lac fwd sorc');
+    end    
 end
 
 profile.OnUnload = function()
@@ -206,6 +217,10 @@ profile.OnUnload = function()
     includes.OnUnload();
 
     display.Unload();
+
+    if (sorcRing == true) then
+        AshitaCore:GetChatManager():QueueCommand(1, '/unbind end');
+    end   
 end
 
 local EleDoTs = T{ 'Burn', 'Frost', 'Choke', 'Rasp', 'Shock', 'Drown' }
@@ -238,7 +253,9 @@ profile.HandlePrecast = function()
     local spell = gData.GetAction();
     gFunc.EquipSet(sets.Precast);
 
-    if (spell.Skill == 'Enhancing Magic') then
+    if (spel.Skill == 'Elemental Magic' or spell.Name == 'Drain' or spell.Name == 'Aspir') then
+        gFunc.EquipSet(sets.Precast_Sorc);
+    elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Enhancing_Precast);
 
         if string.contains(spell.Name, 'Stoneskin') then
@@ -274,6 +291,10 @@ profile.HandleMidcast = function()
             end
             gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
         end
+
+        if (sorcRing) then
+            gFunc.Equip(sorcRing_Slot, 'Sorcerer\' Ring');
+        end
     elseif (spell.Skill == 'Dark Magic') then
         if (spell.Name == 'Drain' or spell.Name == 'Aspir') then
             gFunc.EquipSet(sets.Midcast_Dark);
@@ -281,6 +302,9 @@ profile.HandleMidcast = function()
                 gFunc.Equip('head', 'Republic Circlet');
                 gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
             end
+            if (sorcRing) then
+                gFunc.Equip(sorcRing_Slot, 'Sorcerer\' Ring');
+            end                
         else
             gFunc.EquipSet(sets.Midcast_Stun);
         end
@@ -325,6 +349,8 @@ profile.HandleCommand = function(args)
         DoSleepga();
     elseif args[1] == 'mb' then
         display.AdvanceToggle('Magic Burst');
+    elseif args[1] == 'sorc' then
+        display.AdvanceToggle('Sorc. Ring');
     else includes.HandleCommands(args);
     end
 end
@@ -335,7 +361,7 @@ function DoStone()
     local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(161);
 	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(160);
 	
-    if (player.MainJobSync >= 68 and recast4 == 0) then
+    if (player.MainJobSync >= 68 and recast4 == -1) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stone IV" <t>');
     elseif (player.MainJobSync >= 51 and recast3 == 0 and player.MP >= 92) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stone III" <t>');
@@ -352,7 +378,7 @@ function DoWater()
     local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(171);
 	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(170);
 	
-    if (player.MainJobSync >= 70 and recast4 == 0) then
+    if (player.MainJobSync >= 70 and recast4 == -1) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water IV" <t>');
     elseif (player.MainJobSync >= 55 and recast3 == 0 and player.MP >= 98) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water III" <t>');
@@ -369,7 +395,7 @@ function DoAero()
     local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(156);
 	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(155);
 	
-    if (player.MainJobSync >= 72 and recast4 == 0) then
+    if (player.MainJobSync >= 72 and recast4 == -1) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero IV" <t>');
     elseif (player.MainJobSync >= 59 and recast3 == 0 and player.MP >= 105) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero III" <t>');
@@ -386,7 +412,7 @@ function DoFire()
     local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(146);
 	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(145);
 	
-    if (player.MainJobSync >= 73 and recast4 == 0) then
+    if (player.MainJobSync >= 73 and recast4 == -1) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire IV" <t>');
     elseif (player.MainJobSync >= 62 and recast3 == 0 and player.MP >= 113) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire III" <t>');
@@ -403,7 +429,7 @@ function DoBlizzard()
     local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(151);
 	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(150);
 	
-    if (player.MainJobSync >= 74 and recast4 == 0) then
+    if (player.MainJobSync >= 74 and recast4 == -1) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard IV" <t>');
     elseif (player.MainJobSync >= 64 and recast3 == 0 and player.MP >= 120) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard III" <t>');
@@ -420,7 +446,7 @@ function DoThunder()
     local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(166);
 	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(165);
 	
-    if (player.MainJobSync >= 75 and recast4 == 0) then
+    if (player.MainJobSync >= 75 and recast4 == -1) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Thunder IV" <t>');
     elseif (player.MainJobSync >= 66 and recast3 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Thunder III" <t>');

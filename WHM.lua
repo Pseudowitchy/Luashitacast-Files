@@ -1,23 +1,40 @@
 local profile = {};
 includes = gFunc.LoadFile('includes.lua');
 
-macroBook = 5;
+macroBook = 6;
 macroSet  = 1; -- Page within book
-lockstyleSet = 197; -- which macro equipset do you use for lockstyle
+lockstyleSet = 196; -- which macro equipset do you use for lockstyle
 
 -- Util spells, usable via /lac fwd (util1/util2) (optional spell name to update spell)
 -- Utilizes shortcuts addon to input via // commands
 -- Change default spells below, or leave blank: ''
-util1     = 'Stoneskin';
-util2     = 'Paralyna';
+util1     = 'Paralyna';
+util2     = 'Stoneskin';
 
 local sets = {
     Idle = {
-        main  = EarthStaff,
+        main  = "Solid Wand",
+        sub   = "Frost Shield",
+        ammo  = "Sweet Sachet",
+        head  = "Republic Circlet",
+        neck  = "Justice Badge",
+        ear1  = "Morion Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
+        hands = "Devotee's Mitts",
+        ring1 = "Solace Ring",
+        ring2 = "Solace Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Baron's Slops",
+        feet  = "Seer's Pumps +1"
     },
     
     Resting = {
-        main  = DarkStaff,
+        main  = "Blessed Hammer",
+        sub   = "Frost Shield",
+        body  = "Seer's Tunic +1",
+        legs  = "Baron's Slops",
     },
     
     Precast = { -- Fast Cast
@@ -48,7 +65,7 @@ local sets = {
 
     },
     
-    Midcast_Divine = { -- Elemental 
+    Midcast_Divine = {
 
     },
 
