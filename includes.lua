@@ -8,14 +8,25 @@ includes.util1 = ''; -- Overwritten by job files
 includes.util2 = '';
 includes.job = '  Welcome  ';
 
-EarthStaff = "Earth Staff";
-WaterStaff = "Neptune's Staff";
-WindStaff = "Wind Staff";
-FireStaff = "Fire Staff";
-IceStaff = "Aquilo's Staff";
+-- Staves & Obis: Set name for your Staves to account for NQ/HQ differences; set if you own a given obi
+
+EarthStaff   = "Earth Staff";
+WaterStaff   = "Neptune's Staff";
+WindStaff    = "Wind Staff";
+FireStaff    = "Fire Staff";
+IceStaff     = "Aquilo's Staff";
 ThunderStaff = "Jupiter's Staff";
-LightStaff = "Light Staff";
-DarkStaff = "Dark Staff";
+LightStaff   = "Light Staff";
+DarkStaff    = "Dark Staff";
+
+EarthObi   = false;
+WaterObi   = false;
+WindObi    = false;
+FireObi    = false;
+IceObi     = false;
+ThunderObi = false;
+LightObi   = false;
+DarkObi    = false;
 
 includes.elementColors = T{
     dark    = '|cFF919191|Dark|r',
@@ -78,32 +89,56 @@ includes.SmnEnfeebling = T{'Diamond Storm','Sleepga','Shock Squall','Slowga','Ti
 
 includes.NinNukes = T{'Katon: Ichi', 'Katon: Ni', 'Katon: San', 'Hyoton: Ichi', 'Hyoton: Ni', 'Hyoton: San', 'Huton: Ichi', 'Huton: Ni', 'Huton: San', 'Doton: Ichi', 'Doton: Ni', 'Doton: San', 'Raiton: Ichi', 'Raiton: Ni', 'Raiton: San', 'Suiton: Ichi', 'Suiton: Ni', 'Suiton: San'};
 
---spell elements for staff handling updated for WHM, BLM, RDM, BRD
+-- spell elements for staff handling updated for WHM, BLM, RDM, BRD
 includes.Earth = T{'Stone', 'Stone II', 'Stone III', 'Stone IV',
-    'Stonega', 'Stonega II', 'Stonega III', 'Quake', 'Rasp',
-    'Slow', 'Battlefield Elegy', 'Wind Threnody', 'Carnage Elegy'};
+    'Stonega', 'Stonega II', 'Stonega III', 'Quake', 'Rasp', 'Slow', 'Doton: Ichi',
+    'Doton: Ni', 'Battlefield Elegy', 'Wind Threnody', 'Carnage Elegy'};
 includes.Water = T{'Water', 'Water II', 'Water III', 'Water IV',
-    'Waterga', 'Waterga II', 'Waterga III', 'Flood', 'Drown',
-    'Poison', 'Poison II', 'Poisonaga', 'Fire Threnody'};
+    'Waterga', 'Waterga II', 'Waterga III', 'Flood', 'Drown', 'Suiton: Ichi',
+     'Suiton: Ni', 'Poison', 'Poison II', 'Poisonaga', 'Fire Threnody'};
 includes.Wind = T{'Aero', 'Aero II', 'Aero III', 'Aero IV',
-    'Aeroga', 'Aeroga II', 'Aeroga III', 'Tornado', 'Choke',
-    'Gravity', 'Silence', 'Earth Threnody'};
+    'Aeroga', 'Aeroga II', 'Aeroga III', 'Tornado', 'Choke', 'Huton: Ichi',
+     'Huton: Ni', 'Gravity', 'Silence', 'Earth Threnody'};
 includes.Fire = T{'Fire', 'Fire II', 'Fire III', 'Fire IV',
     'Firaga', 'Firaga II', 'Firaga III', 'Flare', 'Burn',
-    'Ice Threnody'};
+    'Katon: Ichi', 'Katon: Ni', 'Ice Threnody'};
 includes.Ice = T{'Blizzard', 'Blizzard II', 'Blizzard III', 'Blizzard IV',
     'Blizzaga', 'Blizzaga II', 'Blizzaga III', 'Freeze', 'Frost',
-    'Bind', 'Paralyze', 'Wind Threnody'};
+    'Hyoton: Ichi', 'Hyoton: Ni', 'Bind', 'Paralyze', 'Wind Threnody'};
 includes.Thunder = T{'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV',
     'Thundaga', 'Thundaga II', 'Thundaga III', 'Burst', 'Shock',
-    'Stun', 'Water Threnody'};
-includes.Light = T{'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Dia', 'Dia II',
-    'Foe Requiem', 'Foe Requiem II', 'Foe Requiem III', 'Foe Requiem IV', 'Foe Requiem V', 'Foe Requiem VI',
-    'Foe Lullaby', 'Horde Lullaby', 'Magic Finale'};
+    'Raiton: Ichi', 'Raiton: Ni', 'Stun', 'Water Threnody'};
+    includes.Light = T{'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Dia', 'Dia II',
+    'Foe Requiem', 'Foe Requiem II', 'Foe Requiem III', 'Foe Requiem IV',
+    'Foe Requiem V', 'Foe Requiem VI', 'Banish', 'Banish II', 'Banish III',
+    'Banishga', 'Banishga II', 'Foe Lullaby', 'Horde Lullaby', 'Magic Finale'};
 includes.Dark = T{'Drain', 'Aspir', 'Bio', 'Bio II', 'Sleep', 'Sleep II', 'Blind'};
 
+-- Above but restricted to damage spells for Obi calcs
+includes.EarthNuke = T{'Stone', 'Stone II', 'Stone III',
+    'Stone IV', 'Stonega', 'Stonega II', 'Stonega III',
+    'Quake', 'Doton: Ichi', 'Doton: Ni'};
+includes.WaterNuke = T{'Water', 'Water II', 'Water III',
+    'Water IV', 'Waterga', 'Waterga II', 'Waterga III',
+    'Flood', 'Suiton: Ichi', 'Suiton: Ni'};
+includes.WindNuke = T{'Aero', 'Aero II', 'Aero III', 'Aero IV',
+    'Aeroga', 'Aeroga II', 'Aeroga III', 'Tornado',
+    'Huton: Ichi', 'Huton: Ni'};
+includes.FireNuke = T{'Fire', 'Fire II', 'Fire III', 'Fire IV',
+    'Firaga', 'Firaga II', 'Firaga III', 'Flare', 'Burn',
+    'Katon: Ichi', 'Katon: Ni'};
+includes.IceNuke = T{'Blizzard', 'Blizzard II', 'Blizzard III', 'Blizzard IV',
+    'Blizzaga', 'Blizzaga II', 'Blizzaga III', 'Freeze', 'Frost',
+    'Hyoton: Ichi', 'Hyoton: Ni'};
+includes.ThunderNuke = T{'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV',
+    'Thundaga', 'Thundaga II', 'Thundaga III', 'Burst', 'Shock',
+    'Raiton: Ichi', 'Raiton: Ni'};
+includes.LightNuke = T{'Banish', 'Banish II', 'Banish III',
+    'Banishga', 'Banishga II'};
+includes.DarkNuke = T{'Drain', 'Aspir'};
+
+
 function includes.OnLoad()
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /warp /lac fwd warp');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /craft /lac fwd craft');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /clam /lac fwd clam');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /cs /lac fwd cs');
@@ -118,7 +153,6 @@ function includes.OnLoad()
 end
 
 function includes.OnUnload()
-    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /warp');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /craft');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /clam');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /cs');
@@ -258,26 +292,6 @@ function includes.echoToChat(topic, value)
     gFunc.Echo(73, '## ' .. topic .. value .. ' ##');
 end
 
-function includes.Warp() -- May delete, just shortcuts/automates warping, kind of unneeded
-    local player = gData.GetPlayer();
-    
-    if (player.MainJob == "BLM" or player.SubJob == "BLM") then
-        AshitaCore:GetChatManager():QueueCommand(-1, '/ma "Warp" <me>');
-        return
-    else
-        includes.WeaponsLocked = false;
-        AshitaCore:GetChatManager():QueueCommand(-1, '/equip main "Warp Cudgel"');
-        local function usecudgel()
-            AshitaCore:GetChatManager():QueueCommand(-1, '/item "Warp Cudgel" <me>');
-        end
-        local function removeCudgel()
-            AshitaCore:GetChatManager():QueueCommand(1, '/equip main');
-        end
-        usecudgel:once(31);
-        removeCudgel:once(42);
-    end
-end
-
 function includes.StaffCheck() -- Better way to do this but I wrote it and don't wanna get rid of my baby~ >:3
     local spell = gData.GetAction();
     
@@ -297,6 +311,29 @@ function includes.StaffCheck() -- Better way to do this but I wrote it and don't
         gFunc.Equip('main', LightStaff);
     elseif (includes.Dark:contains(spell.Name)) then
         gFunc.Equip('main', DarkStaff);
+    end
+end
+
+function includes.ObiCheck()
+    local spell = gData.GetAction();
+    local zone = gData.GetEnvironment();
+    
+    if (EarthObi == true and includes.EarthNuke:contains(spell.Name) and zone.WeatherElement == 'Earth') then
+        gFunc.Equip('waist', 'Dorin Obi');
+    elseif (WaterObi == true and includes.WaterNuke:contains(spell.Name) and zone.WeatherElement == 'Water') then
+        gFunc.Equip('waist', 'Suirin Obi');
+    elseif (WindObi == true and includes.WindNuke:contains(spell.Name) and zone.WeatherElement == 'Wind') then
+        gFunc.Equip('waist', 'Furin Obi');
+    elseif (FireObi == true and includes.FireNuke:contains(spell.Name) and zone.WeatherElement == 'Fire') then
+        gFunc.Equip('waist', 'Karin Obi');
+    elseif (IceObi == true and includes.IceNuke:contains(spell.Name) and zone.WeatherElement == 'Ice') then
+        gFunc.Equip('waist', 'Hyorin Obi');
+    elseif (ThunderObi == true and includes.ThunderNuke:contains(spell.Name) and zone.WeatherElement == 'Thunder') then
+        gFunc.Equip('waist', 'Rairin Obi');
+    elseif (LightObi == true and includes.LightNuke:contains(spell.Name) and zone.WeatherElement == 'Light') then
+        gFunc.Equip('waist', 'Korin Obi');
+    elseif (DarkObi == true and includes.DarkNuke:contains(spell.Name) and zone.WeatherElement == 'Dark') then
+        gFunc.Equip('waist', 'Anrin Obi');
     end
 end
 

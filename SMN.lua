@@ -314,9 +314,7 @@ profile.HandleDefault = function()
     end
 	
 	local player = gData.GetPlayer();
-    if (player.Status == 'Engaged') then
-        gFunc.EquipSet( sets.TP);
-    elseif (player.Status == 'Resting') then
+    if (player.Status == 'Resting') then
         if (player.MainJobSync < 40) then
             gFunc.Equip('main', "Pilgrim's Wand");
         elseif (player.MainJobSync < 51) then

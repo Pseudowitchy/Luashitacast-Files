@@ -372,7 +372,9 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Midcast_Healing);
     end
     
-    if (player.MainJobSync >= 51) then
+    if (player.MainJobSync >= 71) then
+        includes.ObiCheck();
+    elseif (player.MainJobSync >= 51) then
         includes.StaffCheck();
     end
 
@@ -429,10 +431,10 @@ function DoNuke(nukeTier)
         includes.echoToChat('Spell being downgraded: ', reason)
     end
 
-    if (tier == '4') then tier = ' IV';
-    elseif (tier == '3') then tier = ' III';
-    elseif (tier == '2') then tier = ' II';
-    elseif (tier == '1') then tier = '';
+    if (tier == 4) then tier = ' IV';
+    elseif (tier == 3) then tier = ' III';
+    elseif (tier == 2) then tier = ' II';
+    elseif (tier == 1) then tier = '';
     end
     AshitaCore:GetChatManager():QueueCommand(1, '/ma "' .. element .. tier .. '" <t>');
 end
