@@ -47,7 +47,7 @@ local sets = {
         back  = "Red Cape +1",
         waist = "Adept's Rope",
         legs  = "Seer's Slacks +1",
-        feet  = "Mage's Sandals"
+        feet  = "Seer's Pumps +1"
     },
 
     Idle_40 = {
@@ -63,7 +63,7 @@ local sets = {
         ring2 = "Astral Ring",
         waist = "Adept's Rope",
         legs  = "Seer's Slacks +1",
-        feet  = "Mage's Sandals"
+        feet  = "Seer's Pumps +1"
     },
 
     Pet_Idle = {
@@ -106,7 +106,7 @@ local sets = {
 	SmnMagical = { -- Avatar MACC + MATK
         head  = "Evoker's Horn",
         neck  = "Smn. Torque",
-        body  = "Summoner's Dblt.",
+        body  = "Shep. Doublet",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },
@@ -135,7 +135,7 @@ local sets = {
     SmnHybrid = { -- Avatar MATK + ATK 100% Accuracy naturally
         head  = "Evoker's Horn",
         neck  = "Smn. Torque",
-        body  = "Summoner's Dblt.",
+        body  = "Shep. Doublet",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
         feet  = "Summoner's Pigaches"
@@ -149,17 +149,11 @@ local sets = {
     Precast_Summoning = {
 
     },
-    
-    Enmity = { --midcast -enmity gear
-        head  = "Crow Beret",
-        body  = "Crow Jupon",
-        hands = "Crow Bracers",
-        legs  = "Crow Hose",
-        feet  = "Crow Gaiters"
-    },
 
     Midcast = {
         waist = "Heko Obi +1",
+        back  = "Gigant Mantle",
+        feet = "Rostrum Pumps"
     },
     
     Midcast_Cure = {
@@ -446,7 +440,7 @@ profile.HandleMidcast = function()
         avatarElement = spell.Element;            
     elseif (spell.Skill == 'Healing Magic') then
         if player.MPP <= 85 then
-            gFunc.EquipSet(sets.Enmity);
+            gFunc.EquipSet(sets.Midcast_Healing);
         end
         gFunc.EquipSet(sets.Midcast_Cure);
     elseif (spell.Skill == 'Enfeebling Magic') then

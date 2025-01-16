@@ -2,6 +2,7 @@ local profile = {};
 includes = gFunc.LoadFile('includes.lua');
 display = gFunc.LoadFile('display.lua');
 conquest = gFunc.LoadFile('conquest.lua');
+nukeReqs = gFunc.LoadFile('SpellReqs.lua');
 
 macroBook = 2;
 macroSet  = 1; -- Page within book
@@ -10,8 +11,8 @@ lockstyleSet = 198; -- which macro equipset do you use for lockstyle
 -- Util spells, usable via /lac fwd (util1/util2) (optional spell name to update spell)
 -- Utilizes shortcuts addon to input via // commands
 -- Change default spells below, or leave blank: ''
-util1     = 'Aquaveil';
-util2     = 'Blink';
+util1     = 'Blink';
+util2     = 'Stoneskin';
 jobText = '';
 
 uggyPendant = true; -- Sets if Uggalepih Pendant should be used when the latent can be triggered.
@@ -21,15 +22,15 @@ sorcRing_Slot = 'ring1'; -- overwrites existing ring in this slot when Sorc Ring
 local sets = {
     Idle = {
         main  = EarthStaff,
-        ammo  = "Sweet Sachet",
-        neck  = "Checkered Scarf",
-        ear1  = "Moldavite Earring",
-        ear2  = "Phantom Earring",
+        ammo  = "Phtm. Tathlum",
+        neck  = "Jeweled Collar",
+        ear1  = "Merman's Earring",
+        ear2  = "Merman's Earring",
         body  = "Vermillion Cloak",
         hands = "Sly Gauntlets",
-        ring1 = "Wisdom Ring",
-        ring2 = "Wisdom Ring",
-        back  = "Red Cape +1",
+        ring1 = "Merman's Ring",
+        ring2 = "Merman's Ring",
+        back  = "Cheviot Cape",
         waist = "Mrc.Cpt. Belt",
         legs  = "Seer's Slacks +1",
         feet  = "Wizard's Sabots"
@@ -39,6 +40,7 @@ local sets = {
         main  = DarkStaff,
         neck  = "Checkered Scarf",
         body  = "Vermillion Cloak",
+        waist = "Hierarch Belt",
         legs  = "Baron's Slops",
     },
 
@@ -55,13 +57,61 @@ local sets = {
         feet  = "Wizard's Sabots"
     },
 
-    Midcast_Elemental = {
-        ammo  = "Sweet Sachet",
+    Midcast_Elemental_Dmg = { -- INT & MAB > Skill
+        ammo  = "Phtm. Tathlum",
         head  = "Wizard's Petasos",
-        neck  = "Checkered Scarf",
+        neck  = "Philomath Stole",
         ear1  = "Moldavite Earring",
         ear2  = "Phantom Earring",
         body  = "Black Cotehardie",
+        hands = "Sly Gauntlets",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Seer's Slacks +1",
+        feet  = "Wizard's Sabots"
+    },
+
+    Midcast_Elemental_Macc = { -- Skill & MACC > INT & MAB
+        ammo  = "Phtm. Tathlum",
+        head  = "",
+        neck  = "Philomath Stole",
+        ear1  = "Moldavite Earring",
+        ear2  = "Phantom Earring",
+        body  = "Black Cloak",
+        hands = "Wizard's Gloves",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Druid's Slops",
+        feet  = "Wizard's Sabots"
+    },
+    
+    Midcast_Elemental_MB_Dmg = { -- MB Bonus > INT & MAB > Skill & MACC 
+        ammo  = "Phtm. Tathlum",
+        head  = "Wizard's Petasos",
+        neck  = "Philomath Stole",
+        ear1  = "Moldavite Earring",
+        ear2  = "Phantom Earring",
+        body  = "Black Cotehardie",
+        hands = "Sly Gauntlets",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Seer's Slacks +1",
+        feet  = "Wizard's Sabots"
+    },
+
+    Midcast_Elemental_MB_Macc = { -- MB Bonus > Skill & MACC > INT & MAB
+        ammo  = "Phtm. Tathlum",
+        head  = "",
+        neck  = "Philomath Stole",
+        ear1  = "Moldavite Earring",
+        ear2  = "Phantom Earring",
+        body  = "Black Cloak",
         hands = "Wizard's Gloves",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
@@ -71,26 +121,10 @@ local sets = {
         feet  = "Wizard's Sabots"
     },
 
-    Midcast_Elemental_MB = {
-        ammo  = "Sweet Sachet",
+    Midcast_Elemental_DoTs = { -- INT > MACC
+        ammo  = "Phtm. Tathlum",
         head  = "Wizard's Petasos",
-        neck  = "Checkered Scarf",
-        ear1  = "Moldavite Earring",
-        ear2  = "Phantom Earring",
-        body  = "Black Cotehardie",
-        hands = "Wizard's Gloves",
-        ring1 = "Wisdom Ring",
-        ring2 = "Wisdom Ring",
-        back  = "Red Cape +1",
-        waist = "Mrc.Cpt. Belt",
-        legs  = "Druid's Slops",
-        feet  = "Wizard's Sabots"
-    },
-
-    Midcast_Elemental_DoTs = { -- INT gear for DoTs
-        ammo  = "Sweet Sachet",
-        head  = "Wizard's Petasos",
-        neck  = "Checkered Scarf",
+        neck  = "Philomath Stole",
         ear1  = "Phantom Earring",
         ear2  = "Phantom Earring",
         body  = "Black Cotehardie",
@@ -103,11 +137,11 @@ local sets = {
         feet  = "Wizard's Sabots"
     },
 
-    Midcast_Dark = {
-        ammo  = "Sweet Sachet",
+    Midcast_Dark = { -- Skil > MACC > INT
+        ammo  = "Phtm. Tathlum",
         head  = "Wizard's Petasos",
-        neck  = "Checkered Scarf",
-        ear1  = "Moldavite Earring",
+        neck  = "Philomath Stole",
+        ear1  = "Phantom Earring",
         ear2  = "Phantom Earring",
         body  = "Black Cotehardie",
         hands = "Sly Gauntlets",
@@ -119,11 +153,11 @@ local sets = {
         feet  = "Wizard's Sabots"
     },
 
-    Midcast_Stun = {
-        ammo  = "Sweet Sachet",
+    Midcast_Stun = { -- Skil > MACC > INT
+        ammo  = "Phtm. Tathlum",
         head  = "Wizard's Petasos",
-        neck  = "Checkered Scarf",
-        ear1  = "Moldavite Earring",
+        neck  = "Philomath Stole",
+        ear1  = "Phantom Earring",
         ear2  = "Phantom Earring",
         body  = "Black Cotehardie",
         hands = "Sly Gauntlets",
@@ -135,10 +169,10 @@ local sets = {
         feet  = "Wizard's Sabots"
     },
 
-    Midcast_Enfeebling = { -- INT & MACC first
-        ammo  = "Sweet Sachet",
+    Midcast_Enfeebling = { -- Skil > MACC > INT
+        ammo  = "Phtm. Tathlum",
         head  = "Wizard's Petasos",
-        neck  = "Checkered Scarf",
+        neck  = "Philomath Stole",
         ear1  = "Phantom Earring",
         ear2  = "Phantom Earring",
         body  = "Wizard's Coat",
@@ -151,18 +185,29 @@ local sets = {
         feet  = "Wizard's Sabots"
     },
 
-    Midcast_Enfeebling_Mnd = {
+    Midcast_Enfeebling_Mnd = { -- Skil > MACC > MND
         head  = "Republic Circlet",
         neck  = "Justice Badge",
         body  = "Wizard's Coat",
         hands = "Devotee's Mitts",
         ring1 = "Solace Ring",
         ring2 = "Solace Ring",
-        feet  = "Seet's Pumps +1"
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        feet  = "Seer's Pumps +1"
     },
 
-    Midcast_Healing = {
-        legs = "Druid's Slops",
+    Midcast_Healing = {  -- Skil > MND
+        head  = "Republic Circlet",
+        neck  = "Justice Badge",
+        body  = "Ryl.Sqr. Robe +2",
+        hands = "Devotee's Mitts",
+        ring1 = "Solace Ring",
+        ring2 = "Solace Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        legs  = "Druid's Slops",
+        feet  = "Seer's Pumps +1"
     },
 
     TP = {
@@ -182,45 +227,43 @@ profile.Sets = sets;
 profile.OnLoad = function()
     (function() includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet) end):once(5);
 
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /stone /lac fwd stone');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /water /lac fwd water');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /aero /lac fwd aero');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /fire /lac fwd fire');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /blizzard /lac fwd blizzard');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /thunder /lac fwd thunder');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /sleepga /lac fwd sleepga');
 
     AshitaCore:GetChatManager():QueueCommand(1, '/bind !` /ma "Stun" <t>');
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind f11 /lac fwd stat');
     AshitaCore:GetChatManager():QueueCommand(1, '/bind home /lac fwd mb');
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind end /lac fwd eleFwd');
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind delete /lac fwd eleBack');
     
     includes.OnLoad();
     
     display.Load();
+    display.CreateCycle('Stat Focus', { [1] = 'Dmg', [2] = 'Macc' });
+    display.CreateCycle('Element', { [1] = '|cFF9366FA|Thunder', [2] = '|cFFDD0000|Fire',  [3] = '|cFF0BDE27|Aero',
+                                     [4] = '|cFF8B8B13|Stone',   [5] = '|cFF0066CC|Water', [6] = '|cFF00CCCC|Blizzard' });
     display.CreateToggle('Magic Burst', false);
     if (sorcRing == true) then
         display.CreateToggle('Sorc. Ring', false);
-        AshitaCore:GetChatManager():QueueCommand(1, '/bind end /lac fwd sorc');
+        AshitaCore:GetChatManager():QueueCommand(1, '/bind !home /lac fwd sorc');
     end    
 end
 
 profile.OnUnload = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /stone');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /water');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /aero');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /fire');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /blizzard');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /thunder');
+
     AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /sleepga');
 
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind !`');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind f11');
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind home');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind end');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind delete');
 
     includes.OnUnload();
 
     display.Unload();
 
     if (sorcRing == true) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/unbind end');
+        AshitaCore:GetChatManager():QueueCommand(1, '/unbind !home');
     end   
 end
 
@@ -257,13 +300,13 @@ profile.HandlePrecast = function()
     if (spell.Skill == 'Elemental Magic' or spell.Name == 'Drain' or spell.Name == 'Aspir') then
         gFunc.EquipSet(sets.Precast_Sorc);
     elseif (spell.Skill == 'Enhancing Magic') then
-        gFunc.EquipSet(sets.Enhancing_Precast);
+        gFunc.EquipSet(sets.EPrecast_Enhancing);
 
         if string.contains(spell.Name, 'Stoneskin') then
-            gFunc.EquipSet(sets.Stoneskin_Precast);
+            gFunc.EquipSet(sets.Precast_Enhancing_Stoneskin);
         end
     elseif (spell.Skill == 'Healing Magic') then
-        gFunc.EquipSet(sets.Cure_Precast);
+        gFunc.EquipSet(sets.Precast_Healing);
     end
 
     includes.CheckDefaults();
@@ -277,9 +320,9 @@ profile.HandleMidcast = function()
 
     if (spell.Skill == 'Elemental Magic') then
         if (display.GetToggle('Magic Burst') == true) then
-            gFunc.EquipSet(sets.Midcast_Elemental_MB);
+            gFunc.EquipSet('Midcast_Elemental_MB_' .. display.GetCycle("Stat Focus"));
         else
-            gFunc.EquipSet(sets.Midcast_Elemental);
+            gFunc.EquipSet('Midcast_Elemental_' .. display.GetCycle("Stat Focus"));
         end
 
         if (EleDoTs:contains(spell.Name)) then
@@ -296,7 +339,7 @@ profile.HandleMidcast = function()
         if (sorcRing) then
             gFunc.Equip(sorcRing_Slot, 'Sorcerer\' Ring');
         end
-        if (uggyPendant and spell.MPPAftercast < 51 and player.MainJobSync >= 70) then
+        if (uggyPendant and spell.MppAftercast < 51 and player.MainJobSync >= 70) then
             gFunc.Equip('neck', 'Uggalepih Pendant');
         end
     elseif (spell.Skill == 'Dark Magic') then
@@ -309,7 +352,7 @@ profile.HandleMidcast = function()
             if (sorcRing) then
                 gFunc.Equip(sorcRing_Slot, 'Sorcerer\' Ring');
             end
-            if (uggyPendant and spell.MPPAftercast < 51 and player.MainJobSync >= 70) then
+            if (uggyPendant and spell.MppAftercast < 51 and player.MainJobSync >= 70) then
                 gFunc.Equip('neck', 'Uggalepih Pendant');
             end
         else
@@ -338,130 +381,60 @@ profile.HandleMidcast = function()
 end
 
 profile.HandleCommand = function(args)
-    if args[1] == 'stone' then
-        DoStone();
-    elseif args[1] == 'water' then
-        DoWater();
-    elseif args[1] == 'aero' then
-        DoAero(); 
-    elseif args[1] == 'fire' then
-        DoFire();
-    elseif args[1] == 'blizzard' then  
-        DoBlizzard();
-    elseif args[1] == 'thunder' then
-        DoThunder();
-    elseif args[1] == 'sleep' then
+    if args[1] == 'sleep' then
         DoSleep();
     elseif args[1] == 'sleepga' then
         DoSleepga();
+    elseif args[1] == 'eleFwd' then
+        display.AdvanceCycle('Element');
+    elseif args[1] == 'eleBack' then
+        display.AdvanceCycleBack('Element');
     elseif args[1] == 'mb' then
         display.AdvanceToggle('Magic Burst');
+    elseif args[1] == 'stat' then
+        display.AdvanceCycle('Stat Focus');
     elseif args[1] == 'sorc' then
         display.AdvanceToggle('Sorc. Ring');
+    elseif args[1] == 'nuke' then
+        if (args[2] ~= nil and (tonumber(args[2]) >= 1 and tonumber(args[2]) <= 4)) then
+            DoNuke(tonumber(args[2]));
+        else includes.echoToChat('Invalid Command. ', '/lac fwd nuke (1/2/3/4)');
+        end
     else includes.HandleCommands(args);
     end
 end
 
-function DoStone()
-	local player = gData.GetPlayer()
-	local recast4 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(162);
-    local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(161);
-	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(160);
-	
-    if (player.MainJobSync >= 68 and recast4 == -1) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stone IV" <t>');
-    elseif (player.MainJobSync >= 51 and recast3 == 0 and player.MP >= 92) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stone III" <t>');
-    elseif (player.MainJobSync >= 26 and recast2 == 0 and player.MP >= 43) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stone II" <t>');
-    else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Stone" <t>');
-    end
-end
+function DoNuke(nukeTier)
+    local player = gData.GetPlayer();
+    local element = string.sub(display.GetCycle('Element'), 12, -1);
+    local tier = nukeTier;
+    local nukeDowngrade = false;
+    local reason = '';
 
-function DoWater()
-	local player = gData.GetPlayer()
-	local recast4 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(172);
-    local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(171);
-	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(170);
-	
-    if (player.MainJobSync >= 70 and recast4 == -1) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water IV" <t>');
-    elseif (player.MainJobSync >= 55 and recast3 == 0 and player.MP >= 98) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water III" <t>');
-    elseif (player.MainJobSync >= 30 and recast2 == 0 and player.MP >= 51) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water II" <t>');
-    else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Water" <t>');
+    while (tier > 1) do
+        if (player.MainJobSync >= nukeReqs['BLM'][element][tier][1] and
+         player.MP >= nukeReqs['BLM'][element][tier][2]) then
+            break
+         else
+            nukeDowngrade = true;
+            tier = tier - 1;
+            if (player.MainJobSync < nukeReqs['BLM'][element][tier][1]) then
+                reason = 'Too low level.';
+            else reason = 'Not enough MP.';
+            end
+        end
     end
-end
 
-function DoAero()
-	local player = gData.GetPlayer()
-	local recast4 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(157);
-    local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(156);
-	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(155);
-	
-    if (player.MainJobSync >= 72 and recast4 == -1) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero IV" <t>');
-    elseif (player.MainJobSync >= 59 and recast3 == 0 and player.MP >= 105) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero III" <t>');
-    elseif (player.MainJobSync >= 34 and recast2 == 0 and player.MP >= 59) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero II" <t>');
-    else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aero" <t>');
+    if (nukeDowngrade) then
+        includes.echoToChat('Spell being downgraded: ', reason)
     end
-end
 
-function DoFire()
-	local player = gData.GetPlayer()
-	local recast4 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(147);
-    local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(146);
-	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(145);
-	
-    if (player.MainJobSync >= 73 and recast4 == -1) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire IV" <t>');
-    elseif (player.MainJobSync >= 62 and recast3 == 0 and player.MP >= 113) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire III" <t>');
-    elseif (player.MainJobSync >= 38 and recast2 == 0 and player.MP >= 68) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire II" <t>');
-    else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Fire" <t>');
+    if (tier == '4') then tier = ' IV';
+    elseif (tier == '3') then tier = ' III';
+    elseif (tier == '2') then tier = ' II';
+    elseif (tier == '1') then tier = '';
     end
-end
-
-function DoBlizzard()
-	local player = gData.GetPlayer()
-	local recast4 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(152);
-    local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(151);
-	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(150);
-	
-    if (player.MainJobSync >= 74 and recast4 == -1) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard IV" <t>');
-    elseif (player.MainJobSync >= 64 and recast3 == 0 and player.MP >= 120) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard III" <t>');
-    elseif (player.MainJobSync >= 42 and recast2 == 0 and player.MP >= 77) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard II" <t>');
-    else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Blizzard" <t>');
-    end
-end
-
-function DoThunder()
-	local player = gData.GetPlayer()
-	local recast4 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(167);
-    local recast3 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(166);
-	local recast2 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(165);
-	
-    if (player.MainJobSync >= 75 and recast4 == -1) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Thunder IV" <t>');
-    elseif (player.MainJobSync >= 66 and recast3 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Thunder III" <t>');
-    elseif (player.MainJobSync >= 46 and recast2 == 0 and player.MP >= 86) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Thunder II" <t>');
-    else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Thunder" <t>');
-    end
+    AshitaCore:GetChatManager():QueueCommand(1, '/ma "' .. element .. tier .. '" <t>');
 end
 
 function DoSleep()

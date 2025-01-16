@@ -346,6 +346,7 @@ function includes.cutsceneMode()
         AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. /fps 0');
         AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. up /fps 1');
         AshitaCore:GetChatManager():QueueCommand(1, '/addon load enternity');
+        AshitaCore:GetChatManager():QueueCommand(1, '/enternity skip');
     elseif (includes.cutsceneSkip == false) then
         AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. /lac fwd sjbutton');
         AshitaCore:GetChatManager():QueueCommand(1, '/unbind numpad. up');
@@ -364,6 +365,8 @@ function includes.SJButton()
         else
             AshitaCore:GetChatManager():QueueCommand(1, '/ma "Utsusemi: Ichi" <me>');
         end
+    elseif (player.SubJob == 'RDM') then
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Dispel" <t>');
     else
         includes.echoToChat('No command configured for subjob: ', player.SubJob .. '.');
     end
