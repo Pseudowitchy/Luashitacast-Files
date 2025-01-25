@@ -19,11 +19,11 @@ local sets = {
     Idle = {
         main  = EarthStaff,
         ammo  = "Phtm. Tathlum",
-        head  = "",
+        head  = "Green Ribbon +1",
         neck  = "Uggalepih Pendant",
         ear1  = "Phantom Earring",
         ear2  = "Phantom Earring",
-        body  = "Vermillion Cloak",
+        body  = "Yinyang Robe",
         hands = "Errant Cuffs",
         ring1 = "Ether Ring",
         ring2 = "Evoker's Ring",
@@ -67,12 +67,12 @@ local sets = {
     },
 
     Pet_Idle = {
-        body  = "Vermillion Cloak",
+        body  = "Yinyang Robe",
         ring2 = "Evoker's Ring",
         feet  = "Evk. Pigaches +1"
     },
     
-    Pet_Idle_Day = {head = "Green Ribbon +1", body = "Summoner's Dblt."},
+    Pet_Idle_Day = {body = "Summoner's Dblt."},
     Pet_Idle_Weather = {head = "Summoner's Horn"},
 
     Pet_Idle_Carby = {hands = "Carbuncle Mitts"},
@@ -88,7 +88,7 @@ local sets = {
     BP = { --I/II cap at 15, max skill afterwards
         head = "Summoner's Horn",
         neck  = "Smn. Torque",
-        body  = "Austere Robe",
+        body  = "Yinyang Robe",
         hands = "Austere Cuffs",
         feet  = "Summoner's Pgch."
     },
@@ -320,7 +320,7 @@ profile.HandleDefault = function()
         elseif (player.MainJobSync < 51) then
             gFunc.Equip('main', "Kukulcan's Staff");
         elseif (player.MainJobSync < 59) then
-            gFunc.Equip('body', "Seer's Cloak +1");        
+            gFunc.Equip('body', "Seer's Tunic +1");        
         elseif (player.MainJobSync < 72) then
             gFunc.Equip('body', "Vermillion Cloak");
             gFunc.Equip('head', '');

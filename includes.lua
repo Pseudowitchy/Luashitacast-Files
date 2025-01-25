@@ -2,6 +2,7 @@ local includes = {};
 
 includes.Craft = false;
 includes.Clam = false;
+includes.Logging = false;
 includes.WeaponsLocked = false;
 includes.cutsceneSkip = false;
 includes.util1 = ''; -- Overwritten by job files
@@ -13,11 +14,11 @@ includes.job = '  Welcome  ';
 EarthStaff   = "Earth Staff";
 WaterStaff   = "Neptune's Staff";
 WindStaff    = "Wind Staff";
-FireStaff    = "Fire Staff";
+FireStaff    = "Vulcan's Staff";
 IceStaff     = "Aquilo's Staff";
 ThunderStaff = "Jupiter's Staff";
-LightStaff   = "Light Staff";
-DarkStaff    = "Dark Staff";
+LightStaff   = "Apollo's Staff";
+DarkStaff    = "Pluto's Staff";
 
 EarthObi   = false;
 WaterObi   = false;
@@ -69,6 +70,12 @@ includes.sets = T{
         legs  = "Taru. Shorts +1",
         feet  = ""
     },
+
+    Log = {
+        body  = "Field Tunica",
+        hands = "Field Gloves",
+        legs  = "Field Hose"
+    }
 };
 
 includes.Towns = T{'Tavnazian Safehold','Al Zahbi','Aht Urhgan Whitegate','Nashmau','Western Adoulin','Eastern Adoulin',
@@ -141,6 +148,7 @@ includes.DarkNuke = T{'Drain', 'Aspir'};
 function includes.OnLoad()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /craft /lac fwd craft');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /clam /lac fwd clam');
+    AshitaCore:GetChatManager():QueueCommand(1, '/alias /log /lac fwd log');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /cs /lac fwd cs');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /update /lac fwd update');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /util1 /lac fwd util1');
@@ -155,6 +163,7 @@ end
 function includes.OnUnload()
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /craft');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /clam');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /log');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /cs');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /update');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /util1');
@@ -186,9 +195,14 @@ function includes.SetTownGear()
 end
 
 function includes.CheckDefaults()
+    local player = gData.GetPlayer();
+
 	includes.SetTownGear();    
-	if (includes.Clam == true) then gFunc.EquipSet(includes.sets.Clam) end
 	if (includes.Craft == true) then gFunc.EquipSet(includes.sets.Craft) end
+	if (includes.Clam == true) then gFunc.EquipSet(includes.sets.Clam) end
+	if (includes.Logging == true) then gFunc.EquipSet(includes.sets.Log) end
+
+    includes.job = player.MainJobSync .. player.MainJob .. '/' .. player.SubJobSync .. player.SubJob;
     
     gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
 end
@@ -205,14 +219,14 @@ function includes.HandleMidcast()
 end
 
 function includes.HandleCommands(args)
-	if (args[1] == 'warp') then
-        includes.Warp();
-    elseif (args[1] == 'lock') then
+    if (args[1] == 'lock') then
         includes.LockWeapons();
     elseif (args[1] == 'craft') then
 		includes.Craft = not includes.Craft;
     elseif (args[1] == 'clam') then
 		includes.Clam = not includes.Clam;
+    elseif (args[1] == 'log') then
+		includes.Logging = not includes.Logging;
     elseif (args[1] == 'sjbutton') then
         includes.SJButton();
     elseif (args[1] == 'cs') then
@@ -250,7 +264,6 @@ end
 
 function includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet) 
     local player = gData.GetPlayer();
-    includes.job = player.MainJobSync .. player.MainJob .. '/' .. player.SubJobSync .. player.SubJob;
 
     AshitaCore:GetChatManager():QueueCommand(1, '/macro book ' .. macroBook);
     AshitaCore:GetChatManager():QueueCommand(1, '/macro set ' .. macroSet);
