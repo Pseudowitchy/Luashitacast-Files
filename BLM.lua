@@ -34,9 +34,9 @@ local sets = {
         ring1 = { "Merman's Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Merman's Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Cheviot Cape", "Red Cape +1", "Black Cape +1" },
-        waist = "Mrc.Cpt. Belt",
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt", },
         legs  = { "Errant Slops", "Seer's Slacks +1" },
-        feet  = { "Wizard's Sabots" },
+        feet  = { "Rostrum Pumps", "Wizard's Sabots" },
     },
 
     Resting_Priority = {
@@ -48,8 +48,8 @@ local sets = {
     },
 
     Precast_Priority = { -- Fast Cast
-
-    },
+    feet  = "Rostrum Pumps"
+},
 
     Precast_Sorc_Priority = { -- Fast Cast, -hp gear to trigger Sorc Ring
     
@@ -57,7 +57,7 @@ local sets = {
 
     Midcast_Priority = { -- Spell Interruption Rate
         waist = { "Heko Obi +1" },
-        feet  = { "Wizard's Sabots" }
+        feet  = { "Rostrum Pumps", "Wizard's Sabots" }
     },
 
     Midcast_Elemental_Dmg_Priority = { -- INT & MAB > Skill
@@ -68,30 +68,30 @@ local sets = {
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
         body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
 
     Midcast_Elemental_Macc_Priority = { -- Skill & MACC > INT & MAB
         ammo  = { "Phtm. Tathlum", "Sweet Sachet", "Morion Tathlum" },
-        head  = { "Demon Helm", "Wizard's Petasos", "Seer's Crown +1", "Baron's Chapeau" },
+        head  = { "Sorcerer's Petas.", "Demon Helm", "Wizard's Petasos", "Seer's Crown +1", "Baron's Chapeau" },
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
         body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Wizard's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Druid's Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
-    
+
     Midcast_Elemental_MB_Dmg_Priority = { -- MB Bonus > INT & MAB > Skill & MACC 
         ammo  = { "Phtm. Tathlum", "Sweet Sachet", "Morion Tathlum" },
         head  = { "Demon Helm", "Wizard's Petasos", "Seer's Crown +1", "Baron's Chapeau" },
@@ -100,28 +100,28 @@ local sets = {
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
         body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
 
     Midcast_Elemental_MB_Macc_Priority = { -- MB Bonus > Skill & MACC > INT & MAB
         ammo  = { "Phtm. Tathlum", "Sweet Sachet", "Morion Tathlum" },
-        head  = { "Demon Helm", "Wizard's Petasos", "Seer's Crown +1", "Baron's Chapeau" },
+        head  = { "Sorcerer's Petas.", "Demon Helm", "Wizard's Petasos", "Seer's Crown +1", "Baron's Chapeau" },
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
         body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Wizard's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Druid's Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
 
     Midcast_Elemental_DoTs_Priority = { -- INT > MACC
@@ -132,12 +132,12 @@ local sets = {
         ear2  = { "Phantom Earring", "Morion Earring" },
         body  = { "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
 
     Midcast_Dark_Priority = { -- Skill > MACC > INT
@@ -148,12 +148,12 @@ local sets = {
         ear2  = { "Phantom Earring", "Morion Earring" },
         body  = { "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Wizard's Tonban", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
 
     Midcast_Stun_Priority = { -- Skill > MACC > INT
@@ -164,12 +164,12 @@ local sets = {
         ear2  = { "Phantom Earring", "Morion Earring" },
         body  = { "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Wizard's Tonban", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
 
     Midcast_Enfeebling_Priority = { -- Skill > MACC > INT
@@ -180,12 +180,12 @@ local sets = {
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
         body  = { "Wizard's Coat", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
-        ring1 = { "Wisdom Ring", "Eremite's Ring" },
-        ring2 = { "Wisdom Ring", "Eremite's Ring" },
+        ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
+        ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Wizard's Sabots", "Seer's Pumps +1"},
+        feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
 
     Midcast_Enfeebling_Mnd_Priority = { -- Skill > MACC > MND
@@ -196,22 +196,22 @@ local sets = {
         ring1 = { "Solace Ring" },
         ring2 = { "Solace Ring" },
         back  = { "Red Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Errant Pigaches", "Seer's Pumps +1" },
+        feet  = { "Rostrum Pumps", "Errant Pigaches", "Seer's Pumps +1" },
     },
 
     Midcast_Healing_Priority = {  -- Skill > MND
-        head  = { "Republic Circlet", "Seer's Crown +1" },
+        head  = { "Zenith Crown", "Republic Circlet", "Seer's Crown +1" },
         neck  = { "Justice Badge" },
         body  = { "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Devotee's Mitts" },
         ring1 = { "Solace Ring" },
         ring2 = { "Solace Ring" },
-        back  = { "Red Cape +1" },
-        waist = { "Mrc.Cpt. Belt" },
+        back  = { "Gigant Mantle", "Red Cape +1" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Druid Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Errant Pigaches", "Seer's Pumps +1" },
+        feet  = { "Rostrum Pumps", "Errant Pigaches", "Seer's Pumps +1" },
     },
 
     TP_Priority = {
@@ -283,13 +283,6 @@ profile.HandleDefault = function()
 
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.TP);
-    elseif (player.Status == 'Resting') then
-        if (player.MainJobSync < 59) then
-            gFunc.Equip('body', "Seer's Tunic +1");
-        elseif (player.MainJobSync < 51) then
-            gFunc.Equip('main', "Pilgrim's Wand");
-            gFunc.Equip('body', "Seer's Tunic +1");
-        end
     else
 		gFunc.EquipSet(sets.Idle);
     end
@@ -343,10 +336,13 @@ profile.HandleMidcast = function()
             if (not EleDoTs:contains(spell.Name)) then
                 gFunc.Equip('head', 'Republic Circlet');
             end
-            gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
+            if (player.MainJobSync < 72) then
+                gFunc.Equip('body', 'Ryl.Sqr. Robe +2');
+            end
         end
+
         if  (not EleDoTs:contains(spell.Name)) then
-            if (sorcRing) then
+            if (sorcRing and (player.HP / player.MaxHP <= .75) then
                 gFunc.Equip(sorcRing_Slot, 'Sorcerer\'s Ring');
             end
             if (uggyPendant and spell.MppAftercast < 51 and player.MainJobSync >= 70) then
@@ -421,16 +417,18 @@ function DoNuke(nukeTier)
     local reason = '';
 
     while (tier > 1) do
-        if (player.MainJobSync >= nukeReqs['BLM'][element][tier][1] and
-         player.MP >= nukeReqs['BLM'][element][tier][2]) then
+        if ((player.MainJobSync >= nukeReqs['BLM'][element][tier][1]) and
+            (player.MP >= nukeReqs['BLM'][element][tier][2])) then
             break
          else
-            nukeDowngrade = true;
-            tier = tier - 1;
-            if (player.MainJobSync < nukeReqs['BLM'][element][tier][1]) then
-                reason = 'Too low level.';
-            else reason = 'Not enough MP.';
+            if (nukeDowngrade == false) then
+                if (player.MainJobSync < nukeReqs['BLM'][element][tier][1]) then
+                    reason = 'Too low level.';
+                else reason = 'Not enough MP.';
+                end
             end
+            tier = tier - 1;
+            nukeDowngrade = true;
         end
     end
 

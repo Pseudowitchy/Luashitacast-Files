@@ -12,8 +12,8 @@ util1     = 'Paralyna';
 util2     = 'Stoneskin';
 
 local sets = {
-    Idle = {
-        main  = "Solid Wand",
+    Idle_Priority = {
+        main  = { "Rose Wand +1", "Solid Wand" },
         sub   = "Frost Shield",
         ammo  = "Sweet Sachet",
         head  = "Republic Circlet",
@@ -30,9 +30,9 @@ local sets = {
         feet  = "Seer's Pumps +1"
     },
     
-    Resting = {
-        main  = "Blessed Hammer",
-        sub   = "Frost Shield",
+    Resting_Priority = {
+        main  = { DarkStaff, "Blessed Hammer", "Pilgrim's Wand" },
+        sub   = { { "", Level = 51 }, "Frost Shield" },
         body  = "Seer's Tunic +1",
         legs  = "Baron's Slops",
     },
@@ -126,18 +126,17 @@ profile.OnUnload = function()
     includes.OnUnload();
 end
 
+local CurrentLevel = 0;
 profile.HandleDefault = function()
     local player = gData.GetPlayer();
     
+    if (player.MainJobSync ~= CurrentLevel) then
+		gFunc.EvaluateLevels(profile.Sets, player.MainJobSync);
+        CurrentLevel = player.MainJobSync;
+    end
+    
     if (player.Status == 'Engaged') then
         gFunc.EquipSet(sets.TP);
-    elseif (player.Status == 'Resting') then        
-        if (player.MainJobSync < 51) then
-            gFunc.Equip('main', "Pilgrim's Wand");                
-        elseif (player.MainJobSync < 72) then
-            gFunc.Equip('body', "Vermillion Cloak");
-            gFunc.Equip('head', '');
-        end
     else
 		gFunc.EquipSet(sets.Idle);
     end
