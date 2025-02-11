@@ -11,7 +11,7 @@ includes.job = '  Welcome  ';
 
 -- Staves & Obis: Set name for your Staves to account for NQ/HQ differences; set if you own a given obi
 
-EarthStaff   = "Earth Staff";
+EarthStaff   = "Terra's Staff";
 WaterStaff   = "Neptune's Staff";
 WindStaff    = "Wind Staff";
 FireStaff    = "Vulcan's Staff";
@@ -115,10 +115,10 @@ includes.Ice = T{'Blizzard', 'Blizzard II', 'Blizzard III', 'Blizzard IV',
 includes.Thunder = T{'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV',
     'Thundaga', 'Thundaga II', 'Thundaga III', 'Burst', 'Shock',
     'Raiton: Ichi', 'Raiton: Ni', 'Stun', 'Water Threnody'};
-    includes.Light = T{'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Dia', 'Dia II',
+includes.Light = T{'Cure', 'Cure II', 'Cure III', 'Cure IV', 'Dia', 'Dia II',
     'Foe Requiem', 'Foe Requiem II', 'Foe Requiem III', 'Foe Requiem IV',
     'Foe Requiem V', 'Foe Requiem VI', 'Banish', 'Banish II', 'Banish III',
-    'Banishga', 'Banishga II', 'Foe Lullaby', 'Horde Lullaby', 'Magic Finale'};
+    'Banishga', 'Banishga II', 'Holy', 'Foe Lullaby', 'Horde Lullaby', 'Magic Finale'};
 includes.Dark = T{'Drain', 'Aspir', 'Bio', 'Bio II', 'Sleep', 'Sleep II', 'Blind'};
 
 -- Above but restricted to damage spells for Obi calcs
@@ -141,7 +141,7 @@ includes.ThunderNuke = T{'Thunder', 'Thunder II', 'Thunder III', 'Thunder IV',
     'Thundaga', 'Thundaga II', 'Thundaga III', 'Burst', 'Shock',
     'Raiton: Ichi', 'Raiton: Ni'};
 includes.LightNuke = T{'Banish', 'Banish II', 'Banish III',
-    'Banishga', 'Banishga II'};
+    'Banishga', 'Banishga II', 'Holy'};
 includes.DarkNuke = T{'Drain', 'Aspir'};
 
 
@@ -396,7 +396,7 @@ function includes.cutsceneMode()
         AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. /fps 0');
         AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. up /fps 1');
         AshitaCore:GetChatManager():QueueCommand(1, '/addon load enternity');
-        AshitaCore:GetChatManager():QueueCommand(1, '/enternity skip');
+        (function() AshitaCore:GetChatManager():QueueCommand(1, '/enternity skip') end):once(1);
     elseif (includes.cutsceneSkip == false) then
         AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. /lac fwd sjbutton');
         AshitaCore:GetChatManager():QueueCommand(1, '/unbind numpad. up');

@@ -16,10 +16,10 @@ util2     = 'Paralyna';
 avatarElement = ''; -- For comparing current weather with pet element for -perp gear, leave blank
 
 local sets = {
-    Idle = {
-        main  = EarthStaff,
-        ammo  = "Phtm. Tathlum",
-        head  = "Green Ribbon +1",
+    Idle_Priority = {
+        main  = { EarthStaff, "Kukulcan's Staff", "Pilgrim's Wand" },
+        ammo  = { "Hedgehog Bomb", "Phtm. Tathlum", "Morion Tathlum" },
+        head  = "Zenith Crown",
         neck  = "Uggalepih Pendant",
         ear1  = "Phantom Earring",
         ear2  = "Phantom Earring",
@@ -29,7 +29,7 @@ local sets = {
         ring2 = "Evoker's Ring",
         back  = "Summoner's Cape",
         waist = "Hierarch Belt",
-        legs  = "Evoker's Spats",
+        legs  = "Summoner's Spats",
         feet  = "Evk. Pigaches +1"
     },
 
@@ -82,6 +82,7 @@ local sets = {
         body  = "Yinyang Robe",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
+        legs  = "Summoner's Spats",
         feet  = "Evk. Pigaches +1"
     },
 
@@ -90,6 +91,7 @@ local sets = {
         neck  = "Smn. Torque",
         body  = "Yinyang Robe",
         hands = "Austere Cuffs",
+        legs  = "Summoner's Spats",
         feet  = "Summoner's Pgch."
     },
 
@@ -151,13 +153,11 @@ local sets = {
     },
 
     Midcast = {
-        waist = "Heko Obi +1",
-        back  = "Gigant Mantle",
         feet = "Rostrum Pumps"
     },
     
     Midcast_Cure = {
-        neck  = "Justice Badge",
+        neck  = "Promise Badge",
         body  = "Errant Hpl.",
         legs  = "Errant Slops",
         feet  = "Errant Pigaches"
@@ -179,7 +179,7 @@ local sets = {
     },
 
     Midcast_Enfeebling_MND = {
-        neck  = "Justice Badge",
+        neck  = "Promise Badge",
         body  = "Errant Hpl.",
         legs  = "Errant Slops",
         feet  = "Errant Pigaches"
@@ -223,7 +223,6 @@ local sets = {
       
     Resting = {
         main  = DarkStaff,
-        head = "Green Ribbon +1",
         neck  = "Checkered Scarf",
         body  = "Errant Hpl.",
         waist = "Hierarch Belt",
@@ -300,11 +299,17 @@ local function HandlePetAction(PetAction)
     end
 end
 
-
+local CurrentLevel = 0;
 profile.HandleDefault = function()
+    local player = gData.GetPlayer();
     local pet = gData.GetPet();
 	local petAction = gData.GetPetAction();
     local environment = gData.GetEnvironment();
+    
+    if (player.MainJobSync ~= CurrentLevel) then
+		gFunc.EvaluateLevels(profile.Sets, player.MainJobSync);
+        CurrentLevel = player.MainJobSync;
+    end
 
     if (petAction ~= nil) then
         HandlePetAction(petAction);

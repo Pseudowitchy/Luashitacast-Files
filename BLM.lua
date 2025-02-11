@@ -13,7 +13,8 @@ lockstyleSet = 198; -- which macro equipset do you use for lockstyle
 -- Change default spells below, or leave blank: ''
 util1     = 'Blink';
 util2     = 'Stoneskin';
-jobText = '';
+
+local fullMP = 918; -- Your "max" mp, when to swap out of refresh gear and into full idle set.
 
 relicLegs = true; -- Do you have BLM Relic legs?
 uggyPendant = true; -- Do you have Uggalepih Pendant?
@@ -29,7 +30,7 @@ local sets = {
         neck  = { "Jeweled Collar", "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Merman's Earring", "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Merman's Earring", "Phantom Earring", "Morion Earring", "Energy Earring" },
-        body  = { "Vermillion Cloak", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        body  = { "Vermillion Cloak", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Merman's Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Merman's Ring", "Wisdom Ring", "Eremite's Ring" },
@@ -66,7 +67,7 @@ local sets = {
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
-        body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        body  = { "Igqira Weskit", "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
@@ -82,7 +83,7 @@ local sets = {
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
-        body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        body  = { "Igqira Weskit", "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Wizard's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
@@ -98,8 +99,8 @@ local sets = {
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
-        body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
-        hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
+        body  = { "Igqira Weskit", "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        hands = { "Sorcerer's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
@@ -114,8 +115,8 @@ local sets = {
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
-        body  = { "Igqira Weskit", "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
-        hands = { "Wizard's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
+        body  = { "Igqira Weskit", "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        hands = { "Sorcerer's Gloves", "Wizard's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
@@ -130,7 +131,7 @@ local sets = {
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Phantom Earring", "Morion Earring" },
         ear2  = { "Phantom Earring", "Morion Earring" },
-        body  = { "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        body  = { "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
@@ -146,8 +147,8 @@ local sets = {
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Phantom Earring", "Morion Earring" },
         ear2  = { "Phantom Earring", "Morion Earring" },
-        body  = { "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
-        hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
+        body  = { "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        hands = { "Sorcerer's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
@@ -162,8 +163,8 @@ local sets = {
         neck  = { "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Phantom Earring", "Morion Earring" },
         ear2  = { "Phantom Earring", "Morion Earring" },
-        body  = { "Errant Hpl.", "Black Cotehardie", "Ryl.Sqr. Robe +2", "Baron's Saio" },
-        hands = { "Errant Cuffs", "Sly Gauntlets", "Seer's Mitts +1" },
+        body  = { "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        hands = { "Sorcerer's Gloves", "Sly Gauntlets", "Seer's Mitts +1" },
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
@@ -190,7 +191,7 @@ local sets = {
 
     Midcast_Enfeebling_Mnd_Priority = { -- Skill > MACC > MND
         head  = { "Igqira Tiara", "Republic Circlet", "Seer's Crown +1" },
-        neck  = { "Justice Badge" },
+        neck  = { "Promise Badge", "Justice Badge" },
         body  = { "Wizard's Coat", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Devotee's Mitts" },
         ring1 = { "Solace Ring" },
@@ -203,7 +204,7 @@ local sets = {
 
     Midcast_Healing_Priority = {  -- Skill > MND
         head  = { "Zenith Crown", "Republic Circlet", "Seer's Crown +1" },
-        neck  = { "Justice Badge" },
+        neck  = { "Promise Badge", "Justice Badge" },
         body  = { "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Devotee's Mitts" },
         ring1 = { "Solace Ring" },
@@ -270,8 +271,11 @@ profile.OnUnload = function()
     end
 end
 
+-- Leave these bits alone :3
+jobText = '';
 local CurrentLevel = 0;
 local EleDoTs = T{ 'Burn', 'Frost', 'Choke', 'Rasp', 'Shock', 'Drown' };
+-- Those bits up there~
 
 profile.HandleDefault = function()
     local player = gData.GetPlayer();
@@ -285,6 +289,10 @@ profile.HandleDefault = function()
         gFunc.EquipSet(sets.TP);
     else
 		gFunc.EquipSet(sets.Idle);
+        if (player.MainJobSync == 75 and player.MP >= fullMP) then
+            gFunc.Equip('head', 'Green Ribbon +1');
+            gFunc.Equip('body', 'Igqira Weskit');
+        end
     end
 
 	if (player.IsMoving == true) then
@@ -342,7 +350,7 @@ profile.HandleMidcast = function()
         end
 
         if  (not EleDoTs:contains(spell.Name)) then
-            if (sorcRing and (player.HP / player.MaxHP <= .75) then
+            if (sorcRing and (player.HP / player.MaxHP <= .75)) then
                 gFunc.Equip(sorcRing_Slot, 'Sorcerer\'s Ring');
             end
             if (uggyPendant and spell.MppAftercast < 51 and player.MainJobSync >= 70) then

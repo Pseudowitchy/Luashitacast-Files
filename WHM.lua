@@ -13,11 +13,11 @@ util2     = 'Stoneskin';
 
 local sets = {
     Idle_Priority = {
-        main  = { "Rose Wand +1", "Solid Wand" },
-        sub   = "Frost Shield",
+        main  = { EarthStaff, "Rose Wand +1", "Solid Wand" },
+        sub   = { { "", Level = 51 }, "Frost Shield" },
         ammo  = "Sweet Sachet",
         head  = "Republic Circlet",
-        neck  = "Justice Badge",
+        neck  = { "Promise Badge", "Justice Badge" },
         ear1  = "Morion Earring",
         ear2  = "Morion Earring",
         body  = "Ryl.Sqr. Robe +2",
@@ -58,15 +58,23 @@ local sets = {
     },
 
     Midcast_Enfeebling = { -- INT based enfeebles
-
+        head  = "Seer's Crown +1",
+        neck  = "Black Neckerchief",
+        ear1  = "Morion Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        legs  = "Seer's Slacks +1",
     },
     
-    Midcast_Mnd_Enfeebling = { -- MND based enfeebles
-
+    Midcast_Enfeebling_Mnd = { -- MND based enfeebles
+        neck  = { "Promise Badge", "Justice Badge" },
     },
     
     Midcast_Divine = {
-
+        ear1  = "Moldavite Earring",
     },
 
     Midcast_Elemental = {
@@ -104,24 +112,11 @@ profile.Sets = sets;
 
 profile.OnLoad = function()
     includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet);
-    
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /stone /lac fwd stone');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /water /lac fwd water');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /aero /lac fwd aero');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /fire /lac fwd fire');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /blizzard /lac fwd blizzard');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias /thunder /lac fwd thunder');
-        
+            
     includes.OnLoad();
 end
 
 profile.OnUnload = function()
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /stone');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /water');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /aero');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /fire');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /blizzard');
-    AshitaCore:GetChatManager():QueueCommand(1, '/alias delete /thunder');
        
     includes.OnUnload();
 end
@@ -177,7 +172,7 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Midcast_Elemental);
     elseif (spell.Skill == 'Enfeebling Magic') then
         if (string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') or string.contains(spell.Name, 'Silence')) then
-            gFunc.EquipSet(sets.Midcast_Mnd_Enfeebling);
+            gFunc.EquipSet(sets.Midcast_Enfeebling_Mnd);
         else
             gFunc.EquipSet(sets.Midcast_Enfeebling);
         end
@@ -203,7 +198,21 @@ profile.HandleWeaponskill = function()
 end
 
 profile.HandleCommand = function(args)
-     includes.HandleCommands(args);
+    local player = gData.GetPlayer();
+    if (args[1] == 'regen') then
+        if (player.MainJobSync >= 44) then
+            AshitaCore:GetChatManager():QueueCommand(1, '/ma "Regen II"');
+        else
+            AshitaCore:GetChatManager():QueueCommand(1, '/ma "Regen"');
+        end
+    elseif (args[1] == 'dia') then
+        if (player.MainJobSync >= 36) then
+            AshitaCore:GetChatManager():QueueCommand(1, '/ma "Dia II" <t>');
+        else
+            AshitaCore:GetChatManager():QueueCommand(1, '/ma "Dia" <t>');
+        end
+    end
+    includes.HandleCommands(args);
 end
 
 return profile;
