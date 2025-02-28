@@ -49,7 +49,7 @@ local sets = {
         legs  = "Crow Hose",
         feet  = "Crow Gaiters",
     },    
-    Resting = {
+    Resting_Priority = {
         main  = { DarkStaff, "Pilgrim's Wand" },
         head  = { "", Level = 59 },
         neck  = "Checkered Scarf",
