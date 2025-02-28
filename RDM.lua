@@ -50,8 +50,10 @@ local sets = {
         feet  = "Crow Gaiters",
     },    
     Resting = {
-        main  = DarkStaff,
+        main  = { DarkStaff, "Pilgrim's Wand" },
+        head  = { "", Level = 59 },
         neck  = "Checkered Scarf",
+        body  = "Vermillion Cloak",
         legs  = "Baron's Slops",
     },
     
@@ -227,17 +229,20 @@ profile.OnUnload = function()
     includes.OnUnload();
 end
 
+local CurrentLevel = 0;
 profile.HandleDefault = function()
     local player = gData.GetPlayer();
+
+    if (player.MainJobSync ~= CurrentLevel) then
+		gFunc.EvaluateLevels(profile.Sets, player.MainJobSync);
+        CurrentLevel = player.MainJobSync;
+    end
     
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.TP);
-    elseif (player.Status == 'Resting') then        
-        if (player.MainJobSync < 51) then
-            gFunc.Equip('main', "Pilgrim's Wand");                
-        elseif (player.MainJobSync < 72) then
-            gFunc.Equip('body', "Vermillion Cloak");
-            gFunc.Equip('head', "Displaced");
+        if (player.SubJob == "NIN") then
+            gFunc.EquipSet(sets.TP_NIN);
+        else
+            gFunc.EquipSet(sets.TP);
         end
     else
 		gFunc.EquipSet(sets.Idle);

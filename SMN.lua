@@ -19,54 +19,21 @@ local sets = {
     Idle_Priority = {
         main  = { EarthStaff, "Kukulcan's Staff", "Pilgrim's Wand" },
         ammo  = { "Hedgehog Bomb", "Phtm. Tathlum", "Morion Tathlum" },
-        head  = "Zenith Crown",
-        neck  = "Uggalepih Pendant",
-        ear1  = "Phantom Earring",
-        ear2  = "Phantom Earring",
-        body  = "Yinyang Robe",
-        hands = "Errant Cuffs",
-        ring1 = "Ether Ring",
-        ring2 = "Evoker's Ring",
-        back  = "Summoner's Cape",
-        waist = "Hierarch Belt",
-        legs  = "Summoner's Spats",
-        feet  = "Evk. Pigaches +1"
+        head  = { "Zenith Crown", { "Green Ribbon +1", Level = 71 }, { "", Level = 59 }, "Austere Hat", "Seer's Crown +1" },
+        neck  = { "Uggalepih Pendant", "Promise Badge", "Justice Badge" },
+        ear1  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
+        ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
+        body  = { "Yinyang Robe", "Vermillion Cloak", "Austere Robe", "Seer's Tunic +1" },
+        hands = { "Errant Cuffs", "Austere Cuffs", "Carbuncle Mitts" },
+        ring1 = { "Ether Ring", "Astral Ring" },
+        ring2 = { "Evoker's Ring", "Astral Ring" },
+        back  = { "Summoner's Cape", "Red Cape +1" },
+        waist = { "Hierarch Belt", "Adept's Rope" },
+        legs  = { "Summoner's Spats", "Seer's Slacks +1" },
+        feet  = { "Evk. Pigaches +1", "Seer's Pumps +1" }
     },
 
-    Idle_50 = {
-        main  = "Kukulcan's Staff",
-        ammo  = "Morion Tathlum",
-        head  = "Crow Beret",
-        neck  = "Justice Badge",
-        ear1  = "Morion Earring",
-        ear2  = "Morion Earring",
-        body  = "Seer's Tunic +1",
-        hands = "Carbuncle Mitts",
-        ring1 = "Ether Ring",
-        ring2 = "Astral Ring",
-        back  = "Red Cape +1",
-        waist = "Adept's Rope",
-        legs  = "Seer's Slacks +1",
-        feet  = "Seer's Pumps +1"
-    },
-
-    Idle_40 = {
-        main  = "Kukulcan's Staff",
-        ammo  = "Morion Tathlum",
-        head  = "Seer's Crown +1",
-        neck  = "Justice Badge",
-        ear1  = "Morion Earring",
-        ear2  = "Morion Earring",
-        body  = "Seer's Tunic +1",
-        hands = "Carbuncle Mitts",
-        ring1 = "Ether Ring",
-        ring2 = "Astral Ring",
-        waist = "Adept's Rope",
-        legs  = "Seer's Slacks +1",
-        feet  = "Seer's Pumps +1"
-    },
-
-    Pet_Idle = {
+    Pet_Idle = { -- -Perp Cost gear, Pet Regen etc if available
         body  = "Yinyang Robe",
         ring2 = "Evoker's Ring",
         feet  = "Evk. Pigaches +1"
@@ -77,7 +44,7 @@ local sets = {
 
     Pet_Idle_Carby = {hands = "Carbuncle Mitts"},
     Spirits = { -- SMN skill for cast rate, -perp
-        head  = "Evoker's Horn",
+        head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
         body  = "Yinyang Robe",
         hands = "Austere Cuffs",
@@ -86,56 +53,56 @@ local sets = {
         feet  = "Evk. Pigaches +1"
     },
 
-    BP = { --I/II cap at 15, max skill afterwards
-        head = "Summoner's Horn",
+    BP_Priority = { --I/II cap at 15, max skill afterwards
+        head  = { "Summoner's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
-        body  = "Yinyang Robe",
+        body  = { "Yinyang Robe", "Austere Robe" },
         hands = "Austere Cuffs",
         legs  = "Summoner's Spats",
         feet  = "Summoner's Pgch."
     },
 
-	SmnPhysical = { -- Avatar ATK + ACC
-        head  = "Evoker's Horn",
+	SmnPhysical_Priority = { -- Avatar ATK + ACC
+        head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
-        body  = "Summoner's Dblt.",
+        body  = { "Summoner's Dblt.", "Austere Robe" },
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
         legs  = "Evoker's Spats",
         feet  = "Summoner's Pigaches"
     },
     
-	SmnMagical = { -- Avatar MACC + MATK
-        head  = "Evoker's Horn",
+	SmnMagical_Priority = { -- Avatar MACC + MATK
+        head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
         body  = "Shep. Doublet",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },
     
-	SmnSkill = { -- Max SMN skill
-        head  = "Evoker's Horn",
+	SmnSkill_Priority = { -- Max SMN skill
+        head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },
  
-    SmnHealing = { -- Avatar HP+, SMN skill
-        head  = "Evoker's Horn",
+    SmnHealing_Priority = { -- Avatar HP+, SMN skill
+        head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },
     
-	SmnEnfeebling = { -- Avatar MACC + SMN skill
-        head  = "Evoker's Horn",
+	SmnEnfeebling_Priority = { -- Avatar MACC + SMN skill
+        head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
         hands = "Austere Cuffs",
         ring2 = "Evoker's Ring",
     },
     
-    SmnHybrid = { -- Avatar MATK + ATK 100% Accuracy naturally
-        head  = "Evoker's Horn",
+    SmnHybrid_Priority = { -- Avatar MATK + ATK 100% Accuracy naturally
+        head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
         body  = "Shep. Doublet",
         hands = "Austere Cuffs",
@@ -144,7 +111,6 @@ local sets = {
     },
     
     Precast = { -- Fast Cast
-        back  = "Gigant Mantle",
         feet = "Rostrum Pumps"
     },
     
@@ -160,7 +126,7 @@ local sets = {
         neck  = "Promise Badge",
         body  = "Errant Hpl.",
         legs  = "Errant Slops",
-        feet  = "Errant Pigaches"
+        feet = "Rostrum Pumps"
     },
     
     Midcast_Enhancing = {
@@ -168,7 +134,10 @@ local sets = {
     },
     
     Midcast_Stoneskin = {
-
+        neck  = "Promise Badge",
+        body  = "Errant Hpl.",
+        legs  = "Errant Slops",
+        feet = "Rostrum Pumps"
     },
 
     Midcast_Enfeebling = {
@@ -221,10 +190,10 @@ local sets = {
         feet  = "Errant Pigaches"
     },
       
-    Resting = {
-        main  = DarkStaff,
+    Resting_Priority = {
+        main  = { DarkStaff, "Kukulkan's Staff", "Pilgrim's Wand" },
         neck  = "Checkered Scarf",
-        body  = "Errant Hpl.",
+        body  = { "Errant Hpl.", "Yinyang Robe", "Vermillion Cloak", "Seer's Tunic +1" },
         waist = "Hierarch Belt",
         legs  = "Baron's Slops",
     },
@@ -249,7 +218,6 @@ profile.OnUnload = function()
 end
 
 timerAdded = false;
-
 local function HandlePetAction(PetAction)
 	if (includes.SmnSkill:contains(PetAction.Name)) then
         gFunc.EquipSet(sets.SmnSkill);
@@ -316,28 +284,6 @@ profile.HandleDefault = function()
         return;
     elseif (petAction == nil and timerAdded == true) then
         timerAdded = false;
-    end
-	
-	local player = gData.GetPlayer();
-    if (player.Status == 'Resting') then
-        if (player.MainJobSync < 40) then
-            gFunc.Equip('main', "Pilgrim's Wand");
-        elseif (player.MainJobSync < 51) then
-            gFunc.Equip('main', "Kukulcan's Staff");
-        elseif (player.MainJobSync < 59) then
-            gFunc.Equip('body', "Seer's Tunic +1");        
-        elseif (player.MainJobSync < 72) then
-            gFunc.Equip('body', "Vermillion Cloak");
-            gFunc.Equip('head', '');
-        end
-    else
-        if (player.MainJobSync == 50) then
-            gFunc.EquipSet(sets.Idle_50);
-        elseif (player.MainJobSync == 40) then
-            gFunc.EquipSet(sets.Idle_40);
-        else
-		    gFunc.EquipSet(sets.Idle);
-        end
     end
 
     if (pet ~= nil) then

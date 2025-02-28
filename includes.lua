@@ -13,7 +13,7 @@ includes.job = '  Welcome  ';
 
 EarthStaff   = "Terra's Staff";
 WaterStaff   = "Neptune's Staff";
-WindStaff    = "Wind Staff";
+WindStaff    = "Auster's Staff";
 FireStaff    = "Vulcan's Staff";
 IceStaff     = "Aquilo's Staff";
 ThunderStaff = "Jupiter's Staff";

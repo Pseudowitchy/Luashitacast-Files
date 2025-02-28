@@ -1,5 +1,7 @@
 local profile = {};
 includes = gFunc.LoadFile('includes.lua');
+conquest = gFunc.LoadFile('conquest.lua');
+
 
 macroBook = 6;
 macroSet  = 1; -- Page within book
@@ -8,7 +10,7 @@ lockstyleSet = 196; -- which macro equipset do you use for lockstyle
 -- Util spells, usable via /lac fwd (util1/util2) (optional spell name to update spell)
 -- Utilizes shortcuts addon to input via // commands
 -- Change default spells below, or leave blank: ''
-util1     = 'Paralyna';
+util1     = 'Blink';
 util2     = 'Stoneskin';
 
 local sets = {
@@ -16,7 +18,7 @@ local sets = {
         main  = { EarthStaff, "Rose Wand +1", "Solid Wand" },
         sub   = { { "", Level = 51 }, "Frost Shield" },
         ammo  = "Sweet Sachet",
-        head  = "Republic Circlet",
+        head  = { "Healer's Cap", "Republic Circlet" },
         neck  = { "Promise Badge", "Justice Badge" },
         ear1  = "Morion Earring",
         ear2  = "Morion Earring",
@@ -26,8 +28,8 @@ local sets = {
         ring2 = "Solace Ring",
         back  = "Red Cape +1",
         waist = "Mrc.Cpt. Belt",
-        legs  = "Baron's Slops",
-        feet  = "Seer's Pumps +1"
+        legs  = { "Crow Hose", "Baron's Slops" },
+        feet  = { "Healer's Duckbills", "Seer's Pumps +1" }
     },
     
     Resting_Priority = {
@@ -50,11 +52,11 @@ local sets = {
     },
     
     Midcast = { -- Spell Interruption Rate
-
+        feet  = "Healer's Duckbills"
     },
     
     Midcast_Cure = {
-
+        feet  = "Healer's Duckbills"
     },
 
     Midcast_Enfeebling = { -- INT based enfeebles
@@ -63,35 +65,83 @@ local sets = {
         ear1  = "Morion Earring",
         ear2  = "Morion Earring",
         body  = "Ryl.Sqr. Robe +2",
+        hands = "Seer's Mitts +1",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
         legs  = "Seer's Slacks +1",
+        feet  = "Healer's Duckbills"
     },
     
     Midcast_Enfeebling_Mnd = { -- MND based enfeebles
+        head  = { "Healer's Cap", "Republic Circlet" },
         neck  = { "Promise Badge", "Justice Badge" },
+        hands = "Devotee's Mitts",
+        ring1 = "Solace Ring",
+        ring2 = "Solace Ring",
+        back  = "Red Cape +1",
+        waist = "Mrc.Cpt. Belt",
+        feet  = "Healer's Duckbills"
     },
     
     Midcast_Divine = {
+        head  = { "Healer's Cap", "Republic Circlet" },
+        neck  = { "Promise Badge", "Justice Badge" },
         ear1  = "Moldavite Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
+        hands = "Devotee's Mitts",
+        ring1 = "Solace Ring",
+        ring2 = "Solace Ring",
+        back  = "Red Cape +1",
+        legs  = "Crow Hose",
+        feet  = "Healer's Duckbills"
     },
 
     Midcast_Elemental = {
-
+        head  = "Seer's Crown +1",
+        neck  = "Black Neckerchief",
+        ear1  = "Moldavite Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
+        hands = "Seer's Mitts +1",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        legs  = "Seer's Slacks +1",
+        feet  = "Healer's Duckbills"
     },
     
     Midcast_Dark = {
-
-    },    
+        head  = "Seer's Crown +1",
+        neck  = "Black Neckerchief",
+        ear1  = "Morion Earring",
+        ear2  = "Morion Earring",
+        body  = "Ryl.Sqr. Robe +2",
+        hands = "Seer's Mitts +1",
+        ring1 = "Wisdom Ring",
+        ring2 = "Wisdom Ring",
+        back  = "Red Cape +1",
+        legs  = "Seer's Slacks +1",
+        feet  = "Healer's Duckbills"    },    
     
     Midcast_Enhancing = {
-
+        feet  = "Healer's Duckbills"
     },
     
     Midcast_Enhancing_Stoneskin = { -- MND+ & Enhancing Skill
-
-    },
+    head  = { "Healer's Cap", "Republic Circlet" },
+    neck  = { "Promise Badge", "Justice Badge" },
+    ear1  = "Moldavite Earring",
+    ear2  = "Morion Earring",
+    body  = "Ryl.Sqr. Robe +2",
+    hands = "Devotee's Mitts",
+    ring1 = "Solace Ring",
+    ring2 = "Solace Ring",
+    back  = "Red Cape +1",
+    legs  = "Crow Hose",
+    feet  = "Healer's Duckbills"
+},
     
     TP = {
 
@@ -166,10 +216,16 @@ profile.HandleMidcast = function()
 
     if (spell.Skill == 'Divine Magic') then
         gFunc.EquipSet(sets.Divine);
+        if (conquest.GetInsideControl()) then
+            gFunc.Equip('head', 'Republic Circlet');
+        end
     elseif (spell.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Midcast_Dark);
     elseif (spell.Skill == 'Elemental Magic') then
         gFunc.EquipSet(sets.Midcast_Elemental);
+        if (conquest.GetInsideControl()) then
+            gFunc.Equip('head', 'Republic Circlet');
+        end
     elseif (spell.Skill == 'Enfeebling Magic') then
         if (string.contains(spell.Name, 'Paralyze') or string.contains(spell.Name, 'Slow') or string.contains(spell.Name, 'Silence')) then
             gFunc.EquipSet(sets.Midcast_Enfeebling_Mnd);
@@ -178,6 +234,9 @@ profile.HandleMidcast = function()
         end
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Midcast_Cure);
+        if (player.MainJobSync >= 50 and (player.HP / player.MaxHP <= .75) and spell.Name:contains("Cure")) then
+            gFunc.Equip('ring1', 'Medicine Ring');
+        end
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Midcast_Enhancing);
         if (spell.Name == 'Stoneskin') then
