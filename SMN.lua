@@ -33,8 +33,8 @@ local sets = {
         feet  = { "Evk. Pigaches +1", "Seer's Pumps +1" }
     },
 
-    Pet_Idle = { -- -Perp Cost gear, Pet Regen etc if available
-        body  = "Yinyang Robe",
+    Pet_Idle_Priority = { -- -Perp Cost gear, Pet Regen etc if available
+        body  = { "Yinyang Robe", "Austere Robe" },
         ring2 = "Evoker's Ring",
         feet  = "Evk. Pigaches +1"
     },
@@ -279,6 +279,8 @@ profile.HandleDefault = function()
         CurrentLevel = player.MainJobSync;
     end
 
+    gFunc.EquipSet(sets.Idle);
+    
     if (petAction ~= nil) then
         HandlePetAction(petAction);
         return;
