@@ -17,6 +17,7 @@ util2     = 'Stoneskin';
 local fullMP = 918; -- Your "max" mp, when to swap out of refresh gear and into full idle set.
 
 relicLegs = true; -- Do you have BLM Relic legs?
+OpuntiaHoop = true; -- Do you have Opuntia Ring?
 uggyPendant = true; -- Do you have Uggalepih Pendant?
 sorcRing = false; -- Do you have Sorc Ring? Will activate a toggle for when to/not to use ring
 sorcRing_Slot = 'ring1'; -- Where to equip Sorc ring to when in use
@@ -215,6 +216,14 @@ local sets = {
         feet  = { "Rostrum Pumps", "Errant Pigaches", "Seer's Pumps +1" },
     },
 
+    Midcast_Enhancing_Priority = { -- Skill
+
+    },
+
+    Midcast_Enhancing_Stoneskin_Priority = { -- Skill, MND
+
+    },
+
     TP_Priority = {
 
     },
@@ -380,6 +389,11 @@ profile.HandleMidcast = function()
         end
     elseif (spell.Skill == 'Healing Magic') then
         gFunc.EquipSet(sets.Midcast_Healing);
+    elseif (spell.Skill == 'Enhancing Magic') then
+        gFunc.EquipSet(sets.Midcast_Enhancing);
+        if (OpuntiaHoop and spell.Name:contains("Spikes")) then
+            gFunc.Equip('ring1', 'Opuntia Hoop');
+        end
     end
     
     if (player.MainJobSync >= 51) then

@@ -108,7 +108,7 @@ profile.HandlePrecast = function()
     gFunc.EquipSet(sets.Precast);
 end
 
-wheelSpells = { "Katon: Ichi", "Katon: Ni", "Hyoton: Ichi", "Hyoton: Ni",
+wheelSpells = T{ "Katon: Ichi", "Katon: Ni", "Hyoton: Ichi", "Hyoton: Ni",
                 "Huton: Ichi", "Huton: Ni", "Doton: Ichi", "Doton: Ni", 
                 "Raiton: Ichi", "Raiton: Ni", "Suiton: Ichi", "Suiton: Ni" };
 profile.HandleMidcast = function()

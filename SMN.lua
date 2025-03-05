@@ -281,18 +281,11 @@ profile.HandleDefault = function()
 
     gFunc.EquipSet(sets.Idle);
     
-    if (petAction ~= nil) then
-        HandlePetAction(petAction);
-        return;
-    elseif (petAction == nil and timerAdded == true) then
-        timerAdded = false;
-    end
-
     if (pet ~= nil) then
         gFunc.EquipSet(sets.Pet_Idle);
         
         if (player.HPP <= 75) then
-           gFunc.Equip('ring1', "Conjurer's Ring"); 
+            gFunc.Equip('ring1', "Conjurer's Ring"); 
         end
         
         if (pet.Name == 'Carbuncle' or pet.Name == 'LightSpirit') then
@@ -315,11 +308,11 @@ profile.HandleDefault = function()
         elseif (pet.Name == 'Shiva' or pet.Name == 'IceSpirit') then
             gFunc.Equip('main', IceStaff);
         end
-
+        
         if string.contains(pet.Name, 'Spirit') then
             gFunc.EquipSet(sets.Spirits)
         end
-
+        
         if (pet.Status == 'Engaged') then
             gFunc.EquipSet(sets.Avatar_TP);
         end
@@ -328,10 +321,16 @@ profile.HandleDefault = function()
             if (avatarElement == environment.DayElement) then
                 gFunc.EquipSet(sets.Pet_Idle_Day)
             end
-
+            
             if (avatarElement == environment.WeatherElement) then
                 gFunc.EquipSet(sets.Pet_Idle_Weather)
             end
+        end
+
+        if (petAction ~= nil) then
+            HandlePetAction(petAction);
+        elseif (petAction == nil and timerAdded == true) then
+            timerAdded = false;
         end
 	end
 
