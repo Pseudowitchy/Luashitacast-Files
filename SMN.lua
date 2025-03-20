@@ -311,8 +311,15 @@ profile.HandleDefault = function()
         
         if string.contains(pet.Name, 'Spirit') then
             gFunc.EquipSet(sets.Spirits)
+            if (player.MainJobSync < 59) then
+                if (pet.Name == "LightSpirit") then
+                    gFunc.Equip('Body', "Nimbus Doublet")
+                elseif (pet.Name == "DarkSpirit") then
+                    gFunc.Equip('Body', "Duende Cotehardie")
+                end
+            end
         end
-        
+
         if (pet.Status == 'Engaged') then
             gFunc.EquipSet(sets.Avatar_TP);
         end
@@ -415,6 +422,10 @@ end
 
 profile.HandleCommand = function(args)
     includes.HandleCommands(args);
+end
+
+function BloodPactChat(bp, duration)
+    --make do stuff lol
 end
 
 return profile;

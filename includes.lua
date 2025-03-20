@@ -153,6 +153,7 @@ function includes.OnLoad()
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /update /lac fwd update');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /util1 /lac fwd util1');
     AshitaCore:GetChatManager():QueueCommand(1, '/alias /util2 /lac fwd util2');
+    AshitaCore:GetChatManager():QueueCommand(1, '/alias /rr /lac fwd rr');
     
     AshitaCore:GetChatManager():QueueCommand(1, '/bind numpad. /lac fwd sjbutton');
     AshitaCore:GetChatManager():QueueCommand(1, '/bind f12 /lac fwd lock');
@@ -168,6 +169,7 @@ function includes.OnUnload()
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /update');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /util1');
     AshitaCore:GetChatManager():QueueCommand(1, '/unalias /util2');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unalias /rr');
 
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind numpad.');
     AshitaCore:GetChatManager():QueueCommand(1, '/unbind f12');
@@ -196,12 +198,12 @@ end
 
 function includes.CheckDefaults()
     local player = gData.GetPlayer();
-
+    
 	includes.SetTownGear();    
 	if (includes.Craft == true) then gFunc.EquipSet(includes.sets.Craft) end
 	if (includes.Clam == true) then gFunc.EquipSet(includes.sets.Clam) end
 	if (includes.Logging == true) then gFunc.EquipSet(includes.sets.Log) end
-
+    
     includes.job = player.MainJobSync .. player.MainJob .. '/' .. player.SubJobSync .. player.SubJob;
     
     gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
@@ -210,7 +212,7 @@ end
 function includes.HandleMidcast()
     local player = gData.GetPlayer();
     local spell = gData.GetAction();
-
+    
     if (spell.Name == 'Sneak') then
         gFunc.Equip('feet', 'Dream Boots +1');
     elseif (spell.Name == 'Invisible') then
@@ -259,6 +261,19 @@ function includes.HandleCommands(args)
             end                
             includes.echoToChat('Util2 updated: now inputting ', includes.util2);
         end 
+    elseif (args[1] == 'rr') then
+        local player = gData.GetPlayer();
+        if (player.MainJob == 'WHM' or player.SubJob == 'WHM') then
+            if (player.MainJob == 'WHM' and player.MainJobSync >= 56) then
+                if (player.MainJobSync >= 70) then
+                    AshitaCore:GetChatManager():QueueCommand(1, '/ma "Reraise III" <me>');
+                elseif (player.MainJobSync >= 56) then
+                    AshitaCore:GetChatManager():QueueCommand(1, '/ma "Reraise II" <me>');
+                end
+            else
+                AshitaCore:GetChatManager():QueueCommand(1, '/ma "Reraise" <me>');
+            end
+        end
     end
 end
 

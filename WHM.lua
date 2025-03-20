@@ -17,12 +17,12 @@ local sets = {
     Idle_Priority = {
         main  = { EarthStaff, "Rose Wand +1", "Solid Wand" },
         sub   = { { "", Level = 51 }, "Frost Shield" },
-        ammo  = "Sweet Sachet",
-        head  = { "Healer's Cap", "Republic Circlet" },
-        neck  = { "Promise Badge", "Justice Badge" },
-        ear1  = "Morion Earring",
-        ear2  = "Morion Earring",
-        body  = "Ryl.Sqr. Robe +2",
+        ammo  = { "Hedgehog Bomb", "Phantom Tathlum", "Sweet Sachet" },
+        head  = { { "", Level = 59 }, "Healer's Cap", "Republic Circlet" },
+        neck  = { "Ajari Necklace", "Promise Badge", "Justice Badge" },
+        ear1  = { "Phantom Earring", "Morion Earring" },
+        ear2  = { "Phantom Earring", "Morion Earring" },
+        body  = { "Vermillion Cloak", "Nimbus Doublet" },
         hands = "Devotee's Mitts",
         ring1 = "Solace Ring",
         ring2 = "Solace Ring",
@@ -35,6 +35,7 @@ local sets = {
     Resting_Priority = {
         main  = { DarkStaff, "Blessed Hammer", "Pilgrim's Wand" },
         sub   = { { "", Level = 51 }, "Frost Shield" },
+        neck  = "Checkered Scarf",
         body  = "Seer's Tunic +1",
         legs  = "Baron's Slops",
     },
@@ -52,10 +53,13 @@ local sets = {
     },
     
     Midcast = { -- Spell Interruption Rate
+        waist = "Swift Belt",
         feet  = "Healer's Duckbills"
     },
     
     Midcast_Cure = {
+        hands = "Healer's Mitts",
+        waist = "Swift Belt",
         feet  = "Healer's Duckbills"
     },
 
@@ -64,11 +68,12 @@ local sets = {
         neck  = "Black Neckerchief",
         ear1  = "Morion Earring",
         ear2  = "Morion Earring",
-        body  = "Ryl.Sqr. Robe +2",
+        body  = { "Healer's Bliaut", "Ryl.Sqr. Robe +2" },
         hands = "Seer's Mitts +1",
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
+        waist = "Swift Belt",
         legs  = "Seer's Slacks +1",
         feet  = "Healer's Duckbills"
     },
@@ -76,6 +81,7 @@ local sets = {
     Midcast_Enfeebling_Mnd = { -- MND based enfeebles
         head  = { "Healer's Cap", "Republic Circlet" },
         neck  = { "Promise Badge", "Justice Badge" },
+        body  = { "Healer's Bliaut", "Ryl.Sqr. Robe +2" },
         hands = "Devotee's Mitts",
         ring1 = "Solace Ring",
         ring2 = "Solace Ring",
@@ -94,7 +100,8 @@ local sets = {
         ring1 = "Solace Ring",
         ring2 = "Solace Ring",
         back  = "Red Cape +1",
-        legs  = "Crow Hose",
+        waist = "Swift Belt",
+        legs  = "Healer's Pantaloons",
         feet  = "Healer's Duckbills"
     },
 
@@ -108,6 +115,7 @@ local sets = {
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
+        waist = "Swift Belt",
         legs  = "Seer's Slacks +1",
         feet  = "Healer's Duckbills"
     },
@@ -122,23 +130,25 @@ local sets = {
         ring1 = "Wisdom Ring",
         ring2 = "Wisdom Ring",
         back  = "Red Cape +1",
+        waist = "Swift Belt",
         legs  = "Seer's Slacks +1",
-        feet  = "Healer's Duckbills"    },    
+        feet  = "Healer's Duckbills"
+    },    
     
     Midcast_Enhancing = {
+        waist = "Swift Belt",
         feet  = "Healer's Duckbills"
     },
     
     Midcast_Enhancing_Stoneskin = { -- MND+ & Enhancing Skill
     head  = { "Healer's Cap", "Republic Circlet" },
     neck  = { "Promise Badge", "Justice Badge" },
-    ear1  = "Moldavite Earring",
-    ear2  = "Morion Earring",
     body  = "Ryl.Sqr. Robe +2",
     hands = "Devotee's Mitts",
     ring1 = "Solace Ring",
     ring2 = "Solace Ring",
     back  = "Red Cape +1",
+    waist = "Swift Belt",
     legs  = "Crow Hose",
     feet  = "Healer's Duckbills"
 },
@@ -215,7 +225,7 @@ profile.HandleMidcast = function()
     gFunc.EquipSet(sets.Midcast);
 
     if (spell.Skill == 'Divine Magic') then
-        gFunc.EquipSet(sets.Divine);
+        gFunc.EquipSet(sets.Midcast_Divine);
         if (conquest.GetInsideControl()) then
             gFunc.Equip('head', 'Republic Circlet');
         end

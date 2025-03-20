@@ -114,6 +114,7 @@ local sets = {
         ring1 = "Merman's Ring",
         ring2 = "Merman's Ring",
         back  = "Cheviot Cape",
+        waist = "Swift Belt",
         legs  = "Darksteel Subligar",
         feet  = "Dst. Leggings"
 
@@ -204,7 +205,7 @@ profile.HandleDefault = function()
         if (player.SubJob == 'WHM' or player.SubJob == 'RDM' or player.SubJob == 'BLM') then
             if (player.MP < 49) then
                 gFunc.Equip('body', 'Gaudy Harness');
-            elseif (player.MP < 174) then
+            elseif (player.MP < 194) then
                 gFunc.Equip('head', '');
                 gFunc.Equip('body', 'Vermillion Cloak');
             end

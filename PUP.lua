@@ -78,11 +78,19 @@ local sets = {
 
     },
 
-    RagingFists = {
+    Combo = { -- 20% STR 20% DEX
 
     },
 
-    DragonKick = {
+    RagingFists = { -- 20% STR 20% DEX
+
+    },
+
+    HowlingFist = { -- 50% STR 20% VIT
+
+    },
+
+    DragonKick = { -- 50% STR 50% VIT
 
     },
 
@@ -311,8 +319,12 @@ profile.HandleWeaponskill = function()
     local zone = gData.GetEnvironment();
     gFunc.EquipSet(sets.WS);
 
-    if (action.Name == "Raging Fists") then
+    if (action.Name == "Combo") then
+        gFunc.EquipSet(sets.Combo);
+    elseif (action.Name == "Raging Fists") then
         gFunc.EquipSet(sets.RagingFists);
+    elseif (action.Name == "Howling Fist") then
+        gFunc.EquipSet(sets.HowlingFist);
     elseif (action.Name == "Dragon Kick") then
         gFunc.EquipSet(sets.DragonKick);
     elseif (action.Name == "Stringing Pummel") then
@@ -397,7 +409,7 @@ profile.HandleCommand = function(args)
             end
         end
         if (textError) then
-            includes.echoToChat('Invalid maneuvers. Ensure spelling is correct (case does not matter.) ', 'ex: /lac fwd manadd Fire fire wind')
+            includes.echoToChat('Invalid maneuvers. Ensure spelling is correct (case does not matter.) ', 'ex: /man Fire fire wind')
             return;
         end
     elseif (args[1] == 'manuse') then

@@ -217,11 +217,20 @@ local sets = {
     },
 
     Midcast_Enhancing_Priority = { -- Skill
-
+        feet  = { "Rostrum Pumps", "Errant Pigaches", "Seer's Pumps +1" },
     },
 
     Midcast_Enhancing_Stoneskin_Priority = { -- Skill, MND
-
+        head  = { "Igqira Tiara", "Republic Circlet", "Seer's Crown +1" },
+        neck  = { "Promise Badge", "Justice Badge" },
+        body  = { "Wizard's Coat", "Ryl.Sqr. Robe +2", "Baron's Saio" },
+        hands = { "Errant Cuffs", "Devotee's Mitts" },
+        ring1 = { "Solace Ring" },
+        ring2 = { "Solace Ring" },
+        back  = { "Red Cape +1" },
+        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
+        feet  = { "Errant Pigaches", "Seer's Pumps +1" },
     },
 
     TP_Priority = {
@@ -301,6 +310,10 @@ profile.HandleDefault = function()
         if (player.MainJobSync == 75 and player.MP >= fullMP) then
             gFunc.Equip('head', 'Green Ribbon +1');
             gFunc.Equip('body', 'Igqira Weskit');
+        end
+
+        if (OpuntiaHoop and SpikesCheck() == true) then
+            gFunc.Equip('ring1', 'Opuntia Hoop');
         end
     end
 
@@ -391,9 +404,6 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Midcast_Healing);
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Midcast_Enhancing);
-        if (OpuntiaHoop and spell.Name:contains("Spikes")) then
-            gFunc.Equip('ring1', 'Opuntia Hoop');
-        end
     end
     
     if (player.MainJobSync >= 51) then
@@ -468,23 +478,31 @@ end
 
 function DoSleep()
 	local player = gData.GetPlayer()
-	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(259);
+	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(258);
 
-    if (player.MainJobSync >= 41 and recast1 == 0 and player.MP >= 29) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep II" <t>');	
+    if (player.MainJobSync < 41 or recast1 == 0) then
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep" <t>');	
     else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep" <t>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep II" <t>');
     end
 end
 
 function DoSleepga()
 	local player = gData.GetPlayer()
-	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(274);
+	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(273);
 
-    if (player.MainJobSync >= 56 and recast1 == 0 and player.MP >= 58) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga II" <t>');	
+    if (player.MainJobSync < 56 or recast1 == 0) then
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga" <t>');	
     else
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga" <t>');
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga II" <t>');
+    end
+end
+
+function SpikesCheck()
+    if (gData.GetBuffCount("Blaze Spikes") > 0 or
+        gData.GetBuffCount("Ice Spikes") > 0 or
+        gData.GetBuffCount("Shock Spikes") > 0) then
+        return true;
     end
 end
 

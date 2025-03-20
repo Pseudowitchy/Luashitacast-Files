@@ -3,7 +3,7 @@ includes = gFunc.LoadFile('includes.lua');
 
 macroBook = 18;
 macroSet  = 1; -- Page within book
-lockstyleSet = 196; -- which macro equipset do you use for lockstyle
+lockstyleSet = 195; -- which macro equipset do you use for lockstyle
 
 -- Util spells, usable via /lac fwd (util1/util2) (optional spell name to update spell)
 -- Utilizes shortcuts addon to input via // commands
@@ -12,76 +12,81 @@ util1     = '';
 util2     = '';
 
 local sets = {
-    Idle_WHM = {
+    Idle_WHM_Priority = {
         ammo  = "Pebble",
-        head  = "Beetle Mask +1",
+        head  = { "Beetle Mask +1", "Brass Cap" },
         neck  = "Spike Necklace",
-        ear1  = "Beetle Earring +1",
-        ear2  = "Beetle Earring +1",
-        body  = "Beetle Harness +1",
-        hands = "Republic Mittens",
-        ring1 = "Courage Ring",
-        ring2 = "Courage Ring",
-        back  = "Traveler's Mantle",
-        waist = "Leather Belt",
-        legs  = "Beetle Subligar +1",
-        feet  = "Btl. Leggings +1"
+        ear1  = { "Beetle Earring +1", "Bone Earring +1" },
+        ear2  = { "Beetle Earring +1", "Bone Earring +1" },
+        body  = { "Beetle Harness +1" },
+        hands = { "Battle Gloves", "Republic Mittens" },
+        ring1 = { "Courage Ring" },
+        ring2 = { "Courage Ring" },
+        back  = { "Traveler's Mantle" },
+        waist = { "Leather Belt" },
+        legs  = { "Beetle Subligar +1" },
+        feet  = { "Btl. Leggings +1" }
     },
 
-    Idle_NIN = {
+    Idle_NIN_Priority = {
         ammo  = "Pebble",
-        head  = "Beetle Mask +1",
+        head  = { "Beetle Mask +1", "Brass Cap" },
         neck  = "Spike Necklace",
-        ear1  = "Beetle Earring +1",
-        ear2  = "Beetle Earring +1",
-        body  = "Beetle Harness +1",
-        hands = "Republic Mittens",
-        ring1 = "Courage Ring",
-        ring2 = "Courage Ring",
-        back  = "Traveler's Mantle",
-        waist = "Leather Belt",
-        legs  = "Beetle Subligar +1",
-        feet  = "Btl. Leggings +1"
+        ear1  = { "Beetle Earring +1", "Bone Earring +1" },
+        ear2  = { "Beetle Earring +1", "Bone Earring +1" },
+        body  = { "Beetle Harness +1" },
+        hands = { "Battle Gloves", "Republic Mittens" },
+        ring1 = { "Courage Ring" },
+        ring2 = { "Courage Ring" },
+        back  = { "Traveler's Mantle" },
+        waist = { "Leather Belt" },
+        legs  = { "Beetle Subligar +1" },
+        feet  = { "Btl. Leggings +1" }
     },
 
-    TP_WHM = {
-        head  = "Beetle Mask +1",
+    TP_WHM_Priority = {
+        ammo  = "Pebble",
+        head  = { "Beetle Mask +1", "Brass Cap" },
         neck  = "Spike Necklace",
-        ear1  = "Beetle Earring +1",
-        ear2  = "Beetle Earring +1",
-        body  = "Beetle Harness +1",
-        hands = "Republic Mittens",
-        ring1 = "Courage Ring",
-        ring2 = "Courage Ring",
-        back  = "Traveler's Mantle",
-        waist = "Leather Belt",
-        legs  = "Beetle Subligar +1",
-        feet  = "Btl. Leggings +1"
+        ear1  = { "Beetle Earring +1", "Bone Earring +1" },
+        ear2  = { "Beetle Earring +1", "Bone Earring +1" },
+        body  = { "Beetle Harness +1" },
+        hands = { "Battle Gloves", "Republic Mittens" },
+        ring1 = { "Courage Ring" },
+        ring2 = { "Courage Ring" },
+        back  = { "Traveler's Mantle" },
+        waist = { "Leather Belt" },
+        legs  = { "Beetle Subligar +1" },
+        feet  = { "Btl. Leggings +1" }
     },
 
-    TP_NIN = {
-        head  = "Beetle Mask +1",
+    TP_NIN_Priority = {
+        ammo  = "Pebble",
+        head  = { "Beetle Mask +1", "Brass Cap" },
         neck  = "Spike Necklace",
-        ear1  = "Beetle Earring +1",
-        ear2  = "Beetle Earring +1",
-        body  = "Beetle Harness +1",
-        hands = "Republic Mittens",
-        ring1 = "Courage Ring",
-        ring2 = "Courage Ring",
-        back  = "Traveler's Mantle",
-        waist = "Leather Belt",
-        legs  = "Beetle Subligar +1",
-        feet  = "Btl. Leggings +1"
+        ear1  = { "Beetle Earring +1", "Bone Earring +1" },
+        ear2  = { "Beetle Earring +1", "Bone Earring +1" },
+        body  = { "Beetle Harness +1" },
+        hands = { "Battle Gloves", "Republic Mittens" },
+        ring1 = { "Courage Ring" },
+        ring2 = { "Courage Ring" },
+        back  = { "Traveler's Mantle" },
+        waist = { "Leather Belt" },
+        legs  = { "Beetle Subligar +1" },
+        feet  = { "Btl. Leggings +1" }
     },
     
     WS = {
-
+        hands = { "Republic Mittens" },
     },
 
     WS_SpiritTaker = {}, -- add WS specific sets here
 
     Charm = {
-
+        head  = "Noble's Ribbon",
+        neck  = "Bird Whistle",
+        ring1 = "Hope Ring",
+        ring2 = "Hope Ring",
     },
 
     Tame = {
@@ -121,9 +126,15 @@ profile.OnUnload = function()
     includes.OnUnload();
 end
 
+local CurrentLevel = 0;
 profile.HandleDefault = function()
     local player = gData.GetPlayer();
     
+    if (player.MainJobSync ~= CurrentLevel) then
+		gFunc.EvaluateLevels(profile.Sets, player.MainJobSync);
+        CurrentLevel = player.MainJobSync;
+    end
+
     if (player.Status == 'Engaged') then
         if (player.SubJob == 'NIN') then
             gFunc.EquipSet(sets.TP_NIN);
