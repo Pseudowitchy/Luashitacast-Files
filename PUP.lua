@@ -19,20 +19,20 @@ jobText = 'Maneuvers:';
 
 local sets = {
     Idle = {
-        range = "",
-        ammo  = "",
-        head  = "",
-        neck  = "",
-        ear1  = "",
-        ear2  = "",
-        body  = "",
-        hands = "",
-        ring1 = "",
-        ring2 = "",
-        back  = "",
-        waist = "",
-        legs  = "",
-        feet  = ""
+        -- range = "",
+        -- ammo  = "",
+        -- head  = "",
+        -- neck  = "",
+        -- ear1  = "",
+        -- ear2  = "",
+        -- body  = "",
+        -- hands = "",
+        -- ring1 = "",
+        -- ring2 = "",
+        -- back  = "",
+        -- waist = "",
+        -- legs  = "",
+        -- feet  = ""
     },
 
         -- TP Gearsets decided by player/auto status as well as DamageMode setting 

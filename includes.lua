@@ -301,6 +301,7 @@ end
 
 local restTimer = 0;
 local restFirstTick = true;
+local fullMP = false;
 
 function includes.RestingCheck(player);
     if (player.Status == 'Resting') then
@@ -309,10 +310,18 @@ function includes.RestingCheck(player);
             restFirstTick = false;
         end        
         if (os.clock() > restTimer) then
-            gFunc.EquipSet('Resting');
+            if (fullMP) then
+                gFunc.EquipSet('Idle');
+                gFunc.Equip('main', DarkStaff);
+            else
+                gFunc.EquipSet('Resting');
+            end
         end
     else
         restFirstTick = true;
+    end
+    if (player.MPP == 100) then
+         fullMP = true;
     end
 end
 
@@ -432,6 +441,8 @@ function includes.SJButton()
         end
     elseif (player.SubJob == 'RDM') then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Dispel" <t>');
+    elseif (player.SubJob == 'BLM') then
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aspir" <t>');
     else
         includes.echoToChat('No command configured for subjob: ', player.SubJob .. '.');
     end

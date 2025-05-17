@@ -14,8 +14,8 @@ util2     = '';
 local sets = {
     Idle_WHM_Priority = {
         ammo  = "Pebble",
-        head  = { "Beetle Mask +1", "Brass Cap" },
-        neck  = "Spike Necklace",
+        head  = { "Emperor Hairpin", "Beetle Mask +1", "Brass Cap" },
+        neck  = { "Peacock Amulet", "Spike Necklace" },
         ear1  = { "Beetle Earring +1", "Bone Earring +1" },
         ear2  = { "Beetle Earring +1", "Bone Earring +1" },
         body  = { "Beetle Harness +1" },
@@ -24,14 +24,14 @@ local sets = {
         ring2 = { "Courage Ring" },
         back  = { "Traveler's Mantle" },
         waist = { "Leather Belt" },
-        legs  = { "Beetle Subligar +1" },
+        legs  = { "Republic Subligar", "Beetle Subligar +1" },
         feet  = { "Btl. Leggings +1" }
     },
 
     Idle_NIN_Priority = {
         ammo  = "Pebble",
-        head  = { "Beetle Mask +1", "Brass Cap" },
-        neck  = "Spike Necklace",
+        head  = { "Emperor Hairpin", "Beetle Mask +1", "Brass Cap" },
+        neck  = { "Peacock Amulet", "Spike Necklace" },
         ear1  = { "Beetle Earring +1", "Bone Earring +1" },
         ear2  = { "Beetle Earring +1", "Bone Earring +1" },
         body  = { "Beetle Harness +1" },
@@ -40,14 +40,14 @@ local sets = {
         ring2 = { "Courage Ring" },
         back  = { "Traveler's Mantle" },
         waist = { "Leather Belt" },
-        legs  = { "Beetle Subligar +1" },
+        legs  = { "Republic Subligar", "Beetle Subligar +1" },
         feet  = { "Btl. Leggings +1" }
     },
 
     TP_WHM_Priority = {
         ammo  = "Pebble",
-        head  = { "Beetle Mask +1", "Brass Cap" },
-        neck  = "Spike Necklace",
+        head  = { "Emperor Hairpin", "Beetle Mask +1", "Brass Cap" },
+        neck  = { "Peacock Amulet", "Spike Necklace" },
         ear1  = { "Beetle Earring +1", "Bone Earring +1" },
         ear2  = { "Beetle Earring +1", "Bone Earring +1" },
         body  = { "Beetle Harness +1" },
@@ -56,14 +56,14 @@ local sets = {
         ring2 = { "Courage Ring" },
         back  = { "Traveler's Mantle" },
         waist = { "Leather Belt" },
-        legs  = { "Beetle Subligar +1" },
+        legs  = { "Republic Subligar", "Beetle Subligar +1" },
         feet  = { "Btl. Leggings +1" }
     },
 
     TP_NIN_Priority = {
         ammo  = "Pebble",
-        head  = { "Beetle Mask +1", "Brass Cap" },
-        neck  = "Spike Necklace",
+        head  = { "Emperor Hairpin", "Beetle Mask +1", "Brass Cap" },
+        neck  = { "Peacock Amulet", "Spike Necklace" },
         ear1  = { "Beetle Earring +1", "Bone Earring +1" },
         ear2  = { "Beetle Earring +1", "Bone Earring +1" },
         body  = { "Beetle Harness +1" },
@@ -72,15 +72,17 @@ local sets = {
         ring2 = { "Courage Ring" },
         back  = { "Traveler's Mantle" },
         waist = { "Leather Belt" },
-        legs  = { "Beetle Subligar +1" },
+        legs  = { "Republic Subligar", "Beetle Subligar +1" },
         feet  = { "Btl. Leggings +1" }
     },
     
     WS = {
+        neck  = { "Spike Necklace" },
         hands = { "Republic Mittens" },
+        ring1 = { "Courage Ring" },
+        ring2 = { "Courage Ring" },
+        waist = { "Mrc.Cpt. Belt" },
     },
-
-    WS_SpiritTaker = {}, -- add WS specific sets here
 
     Charm = {
         head  = "Noble's Ribbon",

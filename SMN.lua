@@ -22,14 +22,14 @@ local sets = {
         head  = { "Zenith Crown", { "Green Ribbon +1", Level = 71 }, { "", Level = 59 }, "Austere Hat", "Seer's Crown +1" },
         neck  = { "Uggalepih Pendant", "Promise Badge", "Justice Badge" },
         ear1  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
-        ear2  = { "Phantom Earring", "Morion Earring", "Energy Earring" },
+        ear2  = { "Magnetic Earring", "Phantom Earring", "Morion Earring", "Energy Earring" },
         body  = { "Yinyang Robe", "Vermillion Cloak", "Austere Robe", "Seer's Tunic +1" },
         hands = { "Errant Cuffs", "Austere Cuffs", "Carbuncle Mitts" },
         ring1 = { "Ether Ring", "Astral Ring" },
         ring2 = { "Evoker's Ring", "Astral Ring" },
         back  = { "Summoner's Cape", "Red Cape +1" },
         waist = { "Hierarch Belt", "Adept's Rope" },
-        legs  = { "Summoner's Spats", "Seer's Slacks +1" },
+        legs  = { "Zenith Slacks", "Summoner's Spats", "Seer's Slacks +1" },
         feet  = { "Evk. Pigaches +1", "Seer's Pumps +1" }
     },
 
@@ -43,7 +43,7 @@ local sets = {
     Pet_Idle_Weather = {head = "Summoner's Horn"},
 
     Pet_Idle_Carby = {hands = "Carbuncle Mitts"},
-    Spirits = { -- SMN skill for cast rate, -perp
+    Spirits_Priority = { -- SMN skill for cast rate, -perp
         head  = { "Evoker's Horn", "Austere Hat" },
         neck  = "Smn. Torque",
         body  = "Yinyang Robe",
@@ -119,22 +119,28 @@ local sets = {
     },
 
     Midcast = {
+        ear2  = "Magnetic Earring",
+        body  = "Duende Cotehardie",
         feet = "Rostrum Pumps"
     },
     
     Midcast_Cure = {
         neck  = "Promise Badge",
+        ear2  = "Magnetic Earring",
         body  = "Errant Hpl.",
         legs  = "Errant Slops",
         feet = "Rostrum Pumps"
     },
     
     Midcast_Enhancing = {
-
+        ear2  = "Magnetic Earring",
+        body  = "Duende Cotehardie",
+        feet  = "Rostrum Pumps"
     },
     
     Midcast_Stoneskin = {
         neck  = "Promise Badge",
+        ear2  = "Magnetic Earring",
         body  = "Errant Hpl.",
         legs  = "Errant Slops",
         feet = "Rostrum Pumps"
@@ -142,6 +148,7 @@ local sets = {
 
     Midcast_Enfeebling = {
         neck  = "Checkered Scarf",
+        ear2  = "Magnetic Earring",
         body  = "Errant Hpl.",
         hands = "Errant Cuffs",
         legs  = "Errant Slops",
@@ -149,6 +156,7 @@ local sets = {
 
     Midcast_Enfeebling_MND = {
         neck  = "Promise Badge",
+        ear2  = "Magnetic Earring",
         body  = "Errant Hpl.",
         legs  = "Errant Slops",
         feet  = "Errant Pigaches"
@@ -198,9 +206,7 @@ local sets = {
         legs  = "Baron's Slops",
     },
 
-	Town = {
-        ear1  = "Beastly Earring",
-    },
+	Town = { },
     
 	Movement = {},
 };
@@ -309,7 +315,7 @@ profile.HandleDefault = function()
             gFunc.Equip('main', IceStaff);
         end
         
-        if string.contains(pet.Name, 'Spirit') then
+        if (string.contains(pet.Name, 'Spirit')) then
             gFunc.EquipSet(sets.Spirits)
             if (player.MainJobSync < 59) then
                 if (pet.Name == "LightSpirit") then
@@ -393,13 +399,11 @@ profile.HandleMidcast = function()
     gFunc.EquipSet(sets.Midcast);
 
     if (spell.Skill == 'Summoning') then
-        gFunc.EquipSet(sets.Midcast);
         avatarElement = spell.Element;            
     elseif (spell.Skill == 'Healing Magic') then
-        if player.MPP <= 85 then
-            gFunc.EquipSet(sets.Midcast_Healing);
+        if (player.MPP <= 90 and (string.contains(spell.Name, 'Cure') or string.contains(spell.Name, 'Curaga'))) then
+            gFunc.EquipSet(sets.Midcast_Cure);
         end
-        gFunc.EquipSet(sets.Midcast_Cure);
     elseif (spell.Skill == 'Enfeebling Magic') then
         if (spell.Name == "Paralyze" or spell.Name == "Slow" or spell.Name == "Silence") then
             gFunc.EquipSet(sets.Midcast_Enfeebling_MND);

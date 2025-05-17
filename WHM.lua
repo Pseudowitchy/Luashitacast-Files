@@ -24,20 +24,20 @@ local sets = {
         ear2  = { "Phantom Earring", "Morion Earring" },
         body  = { "Vermillion Cloak", "Nimbus Doublet" },
         hands = "Devotee's Mitts",
-        ring1 = "Solace Ring",
-        ring2 = "Solace Ring",
+        ring1 = { "Serenity Ring", "Solace Ring" },
+        ring2 = { "Serenity Ring", "Solace Ring" },
         back  = "Red Cape +1",
-        waist = "Mrc.Cpt. Belt",
+        waist = "Penitent's Rope",
         legs  = { "Crow Hose", "Baron's Slops" },
         feet  = { "Healer's Duckbills", "Seer's Pumps +1" }
     },
     
     Resting_Priority = {
-        main  = { DarkStaff, "Blessed Hammer", "Pilgrim's Wand" },
-        sub   = { { "", Level = 51 }, "Frost Shield" },
-        neck  = "Checkered Scarf",
-        body  = "Seer's Tunic +1",
-        legs  = "Baron's Slops",
+        main  = { DarkStaff, "Pilgrim's Wand" },
+        neck  = { "Checkered Scarf" },
+        body  = { "Errant Hpl.", "Vermillion Cloak", "Seer's Tunic +1" },
+        waist = { "Hierarch Belt" },
+        legs  = { "Baron's Slops" },
     },
     
     Precast = { -- Fast Cast
@@ -63,11 +63,11 @@ local sets = {
         feet  = "Healer's Duckbills"
     },
 
-    Midcast_Enfeebling = { -- INT based enfeebles
+    Midcast_Enfeebling_Priority = { -- INT based enfeebles
         head  = "Seer's Crown +1",
         neck  = "Black Neckerchief",
-        ear1  = "Morion Earring",
-        ear2  = "Morion Earring",
+        ear1  = { "Phantom Earring", "Morion Earring" },
+        ear2  = { "Phantom Earring", "Morion Earring" },
         body  = { "Healer's Bliaut", "Ryl.Sqr. Robe +2" },
         hands = "Seer's Mitts +1",
         ring1 = "Wisdom Ring",
@@ -78,38 +78,38 @@ local sets = {
         feet  = "Healer's Duckbills"
     },
     
-    Midcast_Enfeebling_Mnd = { -- MND based enfeebles
+    Midcast_Enfeebling_Mnd_Priority = { -- MND based enfeebles
         head  = { "Healer's Cap", "Republic Circlet" },
-        neck  = { "Promise Badge", "Justice Badge" },
+        neck  = { "Ajari Necklace", "Promise Badge", "Justice Badge" },
         body  = { "Healer's Bliaut", "Ryl.Sqr. Robe +2" },
         hands = "Devotee's Mitts",
-        ring1 = "Solace Ring",
-        ring2 = "Solace Ring",
+        ring1 = { "Serenity Ring", "Solace Ring" },
+        ring2 = { "Serenity Ring", "Solace Ring" },
         back  = "Red Cape +1",
-        waist = "Mrc.Cpt. Belt",
+        waist = "Penitent's Rope",
         feet  = "Healer's Duckbills"
     },
     
-    Midcast_Divine = {
+    Midcast_Divine_Priority = {
         head  = { "Healer's Cap", "Republic Circlet" },
-        neck  = { "Promise Badge", "Justice Badge" },
+        neck  = { "Ajari Necklace", "Promise Badge", "Justice Badge" },
         ear1  = "Moldavite Earring",
-        ear2  = "Morion Earring",
+        ear2  = { "Phantom Earring", "Morion Earring" },
         body  = "Ryl.Sqr. Robe +2",
         hands = "Devotee's Mitts",
-        ring1 = "Solace Ring",
-        ring2 = "Solace Ring",
+        ring1 = { "Serenity Ring", "Solace Ring" },
+        ring2 = { "Serenity Ring", "Solace Ring" },
         back  = "Red Cape +1",
-        waist = "Swift Belt",
+        waist = "Penitent's Rope",
         legs  = "Healer's Pantaloons",
         feet  = "Healer's Duckbills"
     },
 
-    Midcast_Elemental = {
+    Midcast_Elemental_Priority = {
         head  = "Seer's Crown +1",
-        neck  = "Black Neckerchief",
+        neck  = { "Checkered Scarf", "Black Neckerchief" },
         ear1  = "Moldavite Earring",
-        ear2  = "Morion Earring",
+        ear2  = { "Phantom Earring", "Morion Earring" },
         body  = "Ryl.Sqr. Robe +2",
         hands = "Seer's Mitts +1",
         ring1 = "Wisdom Ring",
@@ -120,11 +120,11 @@ local sets = {
         feet  = "Healer's Duckbills"
     },
     
-    Midcast_Dark = {
+    Midcast_Dark_Priority = {
         head  = "Seer's Crown +1",
-        neck  = "Black Neckerchief",
-        ear1  = "Morion Earring",
-        ear2  = "Morion Earring",
+        neck  = { "Checkered Scarf", "Black Neckerchief" },
+        ear1  = { "Phantom Earring", "Morion Earring" },
+        ear2  = { "Phantom Earring", "Morion Earring" },
         body  = "Ryl.Sqr. Robe +2",
         hands = "Seer's Mitts +1",
         ring1 = "Wisdom Ring",
@@ -140,15 +140,16 @@ local sets = {
         feet  = "Healer's Duckbills"
     },
     
-    Midcast_Enhancing_Stoneskin = { -- MND+ & Enhancing Skill
+    Midcast_Enhancing_Stoneskin_Priority = { -- MND+ & Enhancing Skill
+    main  = WaterStaff,
     head  = { "Healer's Cap", "Republic Circlet" },
-    neck  = { "Promise Badge", "Justice Badge" },
+    neck  = { "Ajari Necklace", "Promise Badge", "Justice Badge" },
     body  = "Ryl.Sqr. Robe +2",
     hands = "Devotee's Mitts",
-    ring1 = "Solace Ring",
-    ring2 = "Solace Ring",
+    ring1 = { "Serenity Ring", "Solace Ring" },
+    ring2 = { "Serenity Ring", "Solace Ring" },
     back  = "Red Cape +1",
-    waist = "Swift Belt",
+    waist = "Penitent's Rope",
     legs  = "Crow Hose",
     feet  = "Healer's Duckbills"
 },

@@ -27,7 +27,7 @@ local sets = {
         main  = { EarthStaff, "Rose Wand +1", "Solid Wand", "Yew Wand +1" },
         sub   = { { "", Level = 51 }, "Rose Wand +1", "Solid Wand", "Yew Wand +1" },
         ammo  = { "Phtm. Tathlum", "Sweet Sachet", "Morion Tathlum" },
-        head  = { { "Green Ribbon +1", Level = 74 }, { "", Level = 59 }, "Seer's Crown +1", "Baron's Chapeau" },
+        head  = { "Green Ribbon +1", { "", Level = 59 }, "Seer's Crown +1", "Baron's Chapeau" },
         neck  = { "Jeweled Collar", "Philomath Stole", "Checkered Scarf", "Black Necherchief" },
         ear1  = { "Merman's Earring", "Moldavite Earring", "Morion Earring", "Energy Earring" },
         ear2  = { "Merman's Earring", "Phantom Earring", "Morion Earring", "Energy Earring" },
@@ -36,7 +36,7 @@ local sets = {
         ring1 = { "Merman's Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Merman's Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Cheviot Cape", "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt", },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt", },
         legs  = { "Errant Slops", "Seer's Slacks +1" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots" },
     },
@@ -50,15 +50,17 @@ local sets = {
     },
 
     Precast_Priority = { -- Fast Cast
-    feet  = "Rostrum Pumps"
-},
+        feet  = "Rostrum Pumps"
+    },
 
     Precast_Sorc_Priority = { -- Fast Cast, -hp gear to trigger Sorc Ring
     
     },
 
     Midcast_Priority = { -- Spell Interruption Rate
-        waist = { "Heko Obi +1" },
+        ear2  = "Magnetic Earring",
+        body  = "Duende Cotehardie",
+        waist = { "Sorcerer's Belt", "Heko Obi +1" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots" }
     },
 
@@ -73,7 +75,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -89,7 +91,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Druid's Slops", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -105,7 +107,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -121,7 +123,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Druid's Slops", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -137,7 +139,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -153,7 +155,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Wizard's Tonban", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -169,7 +171,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Wizard's Tonban", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -185,7 +187,7 @@ local sets = {
         ring1 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         ring2 = { "Diamond Ring", "Wisdom Ring", "Eremite's Ring" },
         back  = { "Red Cape +1", "Black Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = { "Sorcerer's Belt", "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
         feet  = { "Rostrum Pumps", "Wizard's Sabots", "Seer's Pumps +1"},
     },
@@ -193,10 +195,11 @@ local sets = {
     Midcast_Enfeebling_Mnd_Priority = { -- Skill > MACC > MND
         head  = { "Igqira Tiara", "Republic Circlet", "Seer's Crown +1" },
         neck  = { "Promise Badge", "Justice Badge" },
+        ear2  = "Magnetic Earring",
         body  = { "Wizard's Coat", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Devotee's Mitts" },
-        ring1 = { "Solace Ring" },
-        ring2 = { "Solace Ring" },
+        ring1 = { "Serenity Ring", "Solace Ring" },
+        ring2 = { "Serenity Ring", "Solace Ring" },
         back  = { "Red Cape +1" },
         waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
@@ -206,10 +209,11 @@ local sets = {
     Midcast_Healing_Priority = {  -- Skill > MND
         head  = { "Zenith Crown", "Republic Circlet", "Seer's Crown +1" },
         neck  = { "Promise Badge", "Justice Badge" },
+        ear2  = "Magnetic Earring",
         body  = { "Errant Hpl.", "Ryl.Sqr. Robe +2", "Baron's Saio" },
         hands = { "Errant Cuffs", "Devotee's Mitts" },
-        ring1 = { "Solace Ring" },
-        ring2 = { "Solace Ring" },
+        ring1 = { "Serenity Ring", "Solace Ring" },
+        ring2 = { "Serenity Ring", "Solace Ring" },
         back  = { "Gigant Mantle", "Red Cape +1" },
         waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
         legs  = { "Druid Slops", "Seer's Slacks +1", "Baron's Slops" },
@@ -217,20 +221,24 @@ local sets = {
     },
 
     Midcast_Enhancing_Priority = { -- Skill
+        ear2  = "Magnetic Earring",
+        body  = "Duende Cotehardie",
         feet  = { "Rostrum Pumps", "Errant Pigaches", "Seer's Pumps +1" },
     },
 
     Midcast_Enhancing_Stoneskin_Priority = { -- Skill, MND
-        head  = { "Igqira Tiara", "Republic Circlet", "Seer's Crown +1" },
+        main  = WaterStaff,
+        head  = { "Zenith Crown", "Republic Circlet" },
         neck  = { "Promise Badge", "Justice Badge" },
-        body  = { "Wizard's Coat", "Ryl.Sqr. Robe +2", "Baron's Saio" },
-        hands = { "Errant Cuffs", "Devotee's Mitts" },
-        ring1 = { "Solace Ring" },
-        ring2 = { "Solace Ring" },
+        ear2  = "Magnetic Earring",
+        body  = "Errant Hpl.",
+        hands = "Devotee's Mitts",
+        ring1 = { "Serenity Ring", "Solace Ring" },
+        ring2 = { "Serenity Ring", "Solace Ring" },
         back  = { "Red Cape +1" },
-        waist = { "Penitent's Rope", "Mrc.Cpt. Belt" },
+        waist = "Penitent's Rope",
         legs  = { "Errant Slops", "Seer's Slacks +1", "Baron's Slops" },
-        feet  = { "Errant Pigaches", "Seer's Pumps +1" },
+        feet  = "Errant Pigaches"
     },
 
     TP_Priority = {
@@ -404,6 +412,9 @@ profile.HandleMidcast = function()
         gFunc.EquipSet(sets.Midcast_Healing);
     elseif (spell.Skill == 'Enhancing Magic') then
         gFunc.EquipSet(sets.Midcast_Enhancing);
+        if string.contains(spell.Name, 'Stoneskin') then
+            gFunc.EquipSet(sets.Midcast_Enhancing_Stoneskin);
+        end
     end
     
     if (player.MainJobSync >= 51) then
@@ -478,7 +489,7 @@ end
 
 function DoSleep()
 	local player = gData.GetPlayer()
-	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(258);
+	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(253);
 
     if (player.MainJobSync < 41 or recast1 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep" <t>');	

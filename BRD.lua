@@ -29,6 +29,21 @@ local sets = {
         feet  = "Dst. Leggings"
     },
     
+    Idle_Weakened = {
+        head  = "Zenith Crown",
+        neck  = "Uggalepih Pendant",
+        ear1  = "Phantom Earring",
+        ear2  = "Phantom Earring",
+        body  = "Errant Hpl.",
+        hands = "Errant Cuffs",
+        ring1 = "Ether Ring",
+        ring2 = "Astral Ring",
+        back  = "",
+        waist = "Adept Rope",
+        legs  = "Zenith Slacks",
+        feet  = "Rostrum Pumps"
+    },
+    
     Resting = {
         main = DarkStaff,
     },
@@ -67,6 +82,7 @@ local sets = {
     },
 
     Precast = { -- FastCast
+        range = "Angel Lyre",
         back  = "Gigant Mantle",
         feet  = "Rostrum Pumps"
     },
@@ -88,7 +104,7 @@ local sets = {
     },
 
     Midcast = {
-        range = "Mythic Harp +1",
+        range = "Angel Lyre",
         head  = "Green Ribbon +1",
         neck  = "Jeweled Collar",
         ear1  = "Merman's Earring",
@@ -122,7 +138,7 @@ local sets = {
     
     Midcast_Songs_Debuffs = { -- Singing Skill followed by CHR and MACC, Overwritten below for specific songs
         main  = "Chanter's Staff",
-        range = "Kingdom Horn",
+        range = "Oliphant",
         head  = "Bard's Roundlet",
         body  = "Errant Hpl.",
         neck  = "Flower Necklace",
@@ -136,6 +152,20 @@ local sets = {
         legs  = "Sha'ir Seraweels",
         feet  = "Sha'ir Crackows"
     },
+
+    Midcast_Stoneskin = {
+        main  = WaterStaff,
+        head  = "Zenith Crown",
+        neck  = "Promise Badge",
+        body  = "Errant Hpl.",
+        Hands = "Devotee's Mitts",
+        ring1 = "Serenity Ring",
+        ring2 = "Serenity Ring",
+        back  = "Red Cape +1",
+        waist = "Penitent's Rope",
+        legs  = "Bard's Cannions",
+        feet  = "Suzaku's Sune-Ate"
+    },
     
     Minuet   = {range = "Cornette +1", legs = "Choral Cannions"},
     Madrigal = {range = "Traversiere +1", legs = "Choral Cannions"},
@@ -146,6 +176,8 @@ local sets = {
     Carol    = {range = "Crumhorn +1", legs = "Choral Cannions"},
     Etude    = {range = "Rose Harp +1", ear2 = "String Earring", body = "Choral Jstcorps", feet = "Bard's Slippers"},
     Minne    = {range = "Harp +1", ear2 = "String Earring", body = "Choral Jstcorps", feet = "Bard's Slippers"},
+    Ballad   = {range = "Oliphant", legs = "Choral Cannions"},
+    Hymnus   = {range = "Angel Lyre", ear2 = "String Earring", body = "Choral Jstcorps", feet = "Bard's Slippers"},
     Mazurka  = {range = "Harlequin's Horn", legs = "Choral Cannions"},
     Lullaby  = {range = "Mary's Horn", legs = "Choral Cannions"},
     Elegy    = {range = "Horn +1", legs = "Choral Cannions"},
@@ -153,22 +185,7 @@ local sets = {
     Requiem  = {range = "Siren Flute", legs = "Choral Cannions"},
     Threnody = {range = "Sorrowful Harp", ear2 = "String Earring", body = "Choral Jstcorps", feet = "Bard's Slippers"},
 
-    Town = {
-        main  = "Chanter's Staff",
-        range = "Military Harp",
-        head  = "Green Ribbon +1",
-        neck  = "Jeweled Collar",
-        ear1  = "Beastly Earring",
-        ear2  = "Melody Earring",
-        body  = "Sha'ir Manteel",
-        hands = "Darksteel Mittens",
-        ring1 = "Minstrel's Ring",
-        ring2 = "Bomb Queen Ring",
-        back  = "Cheviot Cape",
-        waist = "Gleeman's Belt",
-        legs  = "Darksteel Subligar",
-        feet  = "Rostrum Pumps"
-    },
+    Town = { },
 
     Movement = {},
 };
@@ -209,6 +226,10 @@ profile.HandleDefault = function()
                 gFunc.Equip('head', '');
                 gFunc.Equip('body', 'Vermillion Cloak');
             end
+        end
+
+        if (gData.GetBuffCount("Weakness") > 0 and gData.GetBuffCount("Reraise") == 0) then
+            gFunc.EquipSet(sets.Idle_Weakened)
         end
     end
     
@@ -273,6 +294,8 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Requiem);
         elseif string.contains(spell.Name, 'Prelude') then
             gFunc.EquipSet(sets.Prelude);
+        elseif string.contains(spell.Name, 'Ballad') then
+            gFunc.EquipSet(sets.Ballad);
         elseif string.contains(spell.Name, 'Lullaby') then
             gFunc.EquipSet(sets.Lullaby);
         elseif string.contains(spell.Name, 'Carol') then
@@ -281,8 +304,8 @@ profile.HandleMidcast = function()
             gFunc.EquipSet(sets.Mazurka);
         elseif string.contains(spell.Name, 'Finale') then
             gFunc.EquipSet(sets.Finale);
-        elseif string.contains(spell.Name, 'Requiem') then
-            gFunc.EquipSet(sets.Requiem);
+        elseif string.contains(spell.Name, 'Hymnus') then
+            gFunc.EquipSet(sets.Hymnus);
         elseif string.contains(spell.Name, 'Threnody') then
             gFunc.EquipSet(sets.Threnody);
             if {player.MainJobSync < 70} then
@@ -291,6 +314,10 @@ profile.HandleMidcast = function()
         end
     elseif (spell.Skill == 'Dark Magic') then
         gFunc.EquipSet(sets.Drain);
+    elseif (spell.Skill == 'Enhancing Magic') then
+        if string.contains(spell.Name, 'Stoneskin') then
+            gFunc.EquipSet(sets.Midcast_Stoneskin);
+        end
     end
     
     if (player.MainJobSync >= 51) then
@@ -459,7 +486,5 @@ function DoPaeon()
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Army\'s Paeon" <me>');
     end
 end
-
-
 
 return profile;
