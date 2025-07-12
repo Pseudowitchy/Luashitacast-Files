@@ -1,3 +1,5 @@
+-- Kyo needs to add sets: Idle_PDT, Idle_MDT, TP_PDT, TP_MDT, Midcast_Enmity
+
 local profile = {};
 includes = gFunc.LoadFile('includes.lua');
 
@@ -11,38 +13,34 @@ lockstyleSet = 196; -- which macro equipset do you use for lockstyle
 util1     = '';
 util2     = '';
 
+offenseMode = true; -- true = melee mode, false allows staves to be equipped
+defenseMode = 0; -- Normal = 0, PDT = 1, MDT = 2
+
 local sets = {
     Idle = {
-        ammo  = "Pebble",
-        head  = "Beetle Mask +1",
-        neck  = "Spike Necklace",
-        ear1  = "Beetle Earring +1",
-        ear2  = "Beetle Earring +1",
-        body  = "Beetle Harness +1",
-        hands = "Republic Mittens",
-        ring1 = "Courage Ring",
-        ring2 = "Courage Ring",
-        back  = "Traveler's Mantle",
-        waist = "Leather Belt",
-        legs  = "Beetle Subligar +1",
-        feet  = "Btl. Leggings +1"
+        
+    },
+
+    Idle_PDT = {
+        
+    },
+
+    Idle_MDT = {
+        
     },
 
     TP = {
-        head  = "Beetle Mask +1",
-        neck  = "Spike Necklace",
-        ear1  = "Beetle Earring +1",
-        ear2  = "Beetle Earring +1",
-        body  = "Beetle Harness +1",
-        hands = "Republic Mittens",
-        ring1 = "Courage Ring",
-        ring2 = "Courage Ring",
-        back  = "Traveler's Mantle",
-        waist = "Leather Belt",
-        legs  = "Beetle Subligar +1",
-        feet  = "Btl. Leggings +1"
+
     },
     
+    TP_PDT = {
+
+    },
+    
+    TP_MDT = {
+
+    },
+
     WS = {
 
     },
@@ -68,6 +66,10 @@ local sets = {
     Midcast_Wheel = { -- Elemental Wheel gear, INT, MAB Etc
 
     },
+
+    Midcast_Enmity = { -- Only used for Hojo/Kurayami Ichi/Ni
+
+    },
     
     Town = {},
 
@@ -78,11 +80,17 @@ profile.Sets = sets;
 
 profile.OnLoad = function()
     (function() includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet) end):once(5);
-        
+    
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind f10 /lac fwd Offense');
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind f11 /lac fwd Defense');
+    
     includes.OnLoad();
 end
 
 profile.OnUnload = function()
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind f10');
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind f11');
+
     includes.OnUnload();
 end
 
@@ -90,17 +98,28 @@ profile.HandleDefault = function()
     local player = gData.GetPlayer();
     
     if (player.Status == 'Engaged') then
-        gFunc.EquipSet(sets.TP);
-    elseif (player.Status == 'Resting') then
-        gFunc.EquipSet(sets.Resting);
+        if (defenseMode == 0) then
+            gFunc.EquipSet(sets.TP);
+        elseif (defenseMode == 1) then
+            gFunc.EquipSet(sets.TP_PDT)
+        else
+            gFunc.EquipSet(sets.TP_MDT)
+        end
     else
-		gFunc.EquipSet(sets.Idle);
+        if (defenseMode == 0) then
+            gFunc.EquipSet(sets.Idle);
+        elseif (defenseMode == 1) then
+            gFunc.EquipSet(sets.Idle_PDT)
+        else
+            gFunc.EquipSet(sets.Idle_MDT)
+        end
     end
 
 	if (player.IsMoving == true) then
 		gFunc.EquipSet(sets.Movement);
 	end
     
+    includes.RestingCheck(player);
 	includes.CheckDefaults();
 end
     
@@ -109,14 +128,24 @@ profile.HandlePrecast = function()
 end
 
 wheelSpells = T{ "Katon: Ichi", "Katon: Ni", "Hyoton: Ichi", "Hyoton: Ni",
-                "Huton: Ichi", "Huton: Ni", "Doton: Ichi", "Doton: Ni", 
-                "Raiton: Ichi", "Raiton: Ni", "Suiton: Ichi", "Suiton: Ni" };
+                 "Huton: Ichi", "Huton: Ni", "Doton: Ichi", "Doton: Ni", 
+                 "Raiton: Ichi", "Raiton: Ni", "Suiton: Ichi", "Suiton: Ni" };
+enmitySpells = T{ "Kurayami: Ichi", "Kurayami: Ni", "Hojo: Ichi", "Hojo: Ni" };
+
 profile.HandleMidcast = function()
     local spell = gData.GetAction();
 
     gFunc.EquipSet(sets.Midcast);
+
+    if (offenseMode == true) then 
+        gFunc.Equip(main,"");
+        gFunc.Equip(sub,"");
+    end
+    
     if (wheelSpells:contains(spell.Name)) then
         gFunc.EquipSet(sets.Midcast_Wheel);
+    elseif (enmitySpells:contains(spell.Name)) then
+        gFunc.EquipSet(sets.Midcast_Enmity)
     end
 
     gFunc.EquipSet(includes.LockedItems(gData.GetEquipment()))
@@ -142,6 +171,24 @@ profile.HandleWeaponskill = function()
 end
 
 profile.HandleCommand = function(args)
+    if (args[1] == 'Offense') then
+        offenseMode = not offenseMode;
+        if (offenseMode == true) then
+            includes.echoToChat("Combat Mode set to: ", "Melee");
+        else includes.echoToChat("Combat Mode set to: ", "Staves");
+        end
+    elseif (args[1] == 'Defense') then 
+        defenseMode = defenseMode + 1;
+        if (defenseMode > 2) then defenseMode = 0; end
+        if (defenseMode == 0) then
+            includes.echoToChat("Defense Mode set to: ", "Normal");
+        elseif (defenseMode == 1) then
+            includes.echoToChat("Defense Mode set to: ", "PDT");
+        elseif (defenseMode == 2) then
+            includes.echoToChat("Defense Mode set to: ", "MDT");
+        end
+    end
+
     includes.HandleCommands(args);
 end
 

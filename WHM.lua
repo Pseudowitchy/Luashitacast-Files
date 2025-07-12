@@ -34,7 +34,8 @@ local sets = {
     
     Resting_Priority = {
         main  = { DarkStaff, "Pilgrim's Wand" },
-        neck  = { "Checkered Scarf" },
+        neck  = "Checkered Scarf",
+        ear2  = "Magnetic Earring",
         body  = { "Errant Hpl.", "Vermillion Cloak", "Seer's Tunic +1" },
         waist = { "Hierarch Belt" },
         legs  = { "Baron's Slops" },

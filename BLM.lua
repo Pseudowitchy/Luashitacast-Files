@@ -43,7 +43,8 @@ local sets = {
 
     Resting_Priority = {
         main  = { DarkStaff, "Pilgrim's Wand" },
-        neck  = { "Checkered Scarf" },
+        neck  = "Checkered Scarf",
+        ear2  = "Magnetic Earring",
         body  = { "Errant Hpl.", "Vermillion Cloak", "Seer's Tunic +1" },
         waist = { "Hierarch Belt" },
         legs  = { "Baron's Slops" },
@@ -227,7 +228,7 @@ local sets = {
     },
 
     Midcast_Enhancing_Stoneskin_Priority = { -- Skill, MND
-        main  = WaterStaff,
+        main  = "Kirin's Pole",
         head  = { "Zenith Crown", "Republic Circlet" },
         neck  = { "Promise Badge", "Justice Badge" },
         ear2  = "Magnetic Earring",
@@ -444,9 +445,9 @@ profile.HandleCommand = function(args)
     elseif args[1] == 'sorc' then
         display.AdvanceToggle('Sorc. Ring');
     elseif args[1] == 'nuke' then
-        if (args[2] ~= nil and (tonumber(args[2]) >= 1 and tonumber(args[2]) <= 4)) then
+        if (args[2] ~= nil and (tonumber(args[2]) >= -3 and tonumber(args[2]) <= 4)) then
             DoNuke(tonumber(args[2]));
-        else includes.echoToChat('Invalid Command. ', '/lac fwd nuke (1/2/3/4)');
+        else includes.echoToChat('Invalid Command. ', '/lac fwd nuke|aga (1/2/3/4)');
         end
     else includes.HandleCommands(args);
     end
@@ -455,17 +456,32 @@ end
 function DoNuke(nukeTier)
     local player = gData.GetPlayer();
     local element = string.sub(display.GetCycle('Element'), 12, -1);
-    local tier = nukeTier;
+    local aoe = false;
+    local tier = math.abs(nukeTier);
     local nukeDowngrade = false;
     local reason = '';
+    local spellName = '';
+
+    if (nukeTier < 0) then aoe = true; end
+
+    if (aoe == false) then
+        spellName = element;
+    else
+        if (element == 'Fire') then spellName = 'Fira';
+        elseif (element == 'Blizzard') then spellName = 'Blizza';
+        elseif (element == 'Thunder') then spellName = 'Thunda';
+        else spellName = element;
+        end
+        spellName = spellName .. 'ga';
+    end
 
     while (tier > 1) do
-        if ((player.MainJobSync >= nukeReqs['BLM'][element][tier][1]) and
-            (player.MP >= nukeReqs['BLM'][element][tier][2])) then
+        if ((player.MainJobSync >= nukeReqs['BLM'][spellName][tier][1]) and
+            (player.MP >= nukeReqs['BLM'][spellName][tier][2])) then
             break
          else
             if (nukeDowngrade == false) then
-                if (player.MainJobSync < nukeReqs['BLM'][element][tier][1]) then
+                if (player.MainJobSync < nukeReqs['BLM'][spellName][tier][1]) then
                     reason = 'Too low level.';
                 else reason = 'Not enough MP.';
                 end
@@ -484,7 +500,7 @@ function DoNuke(nukeTier)
     elseif (tier == 2) then tier = ' II';
     elseif (tier == 1) then tier = '';
     end
-    AshitaCore:GetChatManager():QueueCommand(1, '/ma "' .. element .. tier .. '" <t>');
+    AshitaCore:GetChatManager():QueueCommand(1, '/ma "' .. spellName .. tier .. '" <t>');
 end
 
 function DoSleep()

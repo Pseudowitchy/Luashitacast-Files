@@ -46,6 +46,9 @@ local sets = {
     
     Resting = {
         main = DarkStaff,
+        ear2  = "Magnetic Earring",
+        neck  = "Checkered Scarf",
+        waist = "Hierarch Belt",
     },
     
     TP = {
@@ -108,7 +111,7 @@ local sets = {
         head  = "Green Ribbon +1",
         neck  = "Jeweled Collar",
         ear1  = "Merman's Earring",
-        ear2  = "Merman's Earring",
+        ear2  = "Magnetic Earring",
         body  = "Crow Jupon",
         hands = "Darksteel Mittens",
         ring1 = "Merman's Ring",
@@ -154,10 +157,11 @@ local sets = {
     },
 
     Midcast_Stoneskin = {
-        main  = WaterStaff,
+        main  = "Kirin's Pole",
         head  = "Zenith Crown",
         neck  = "Promise Badge",
-        body  = "Errant Hpl.",
+        ear2  = "Magnetic Earring",
+        body  = "Kirin's Osode",
         Hands = "Devotee's Mitts",
         ring1 = "Serenity Ring",
         ring2 = "Serenity Ring",

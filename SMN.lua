@@ -14,6 +14,7 @@ util1     = 'Erase';
 util2     = 'Paralyna';
 
 avatarElement = ''; -- For comparing current weather with pet element for -perp gear, leave blank
+idleMDT = false;
 
 local sets = {
     Idle_Priority = {
@@ -31,6 +32,23 @@ local sets = {
         waist = { "Hierarch Belt", "Adept's Rope" },
         legs  = { "Zenith Slacks", "Summoner's Spats", "Seer's Slacks +1" },
         feet  = { "Evk. Pigaches +1", "Seer's Pumps +1" }
+    },
+
+    Idle_MDT = {
+        main  = "Kirin's Pole",
+        ammo  = "Hedgehog Bomb",
+        head  = "Green Ribbon +1",
+        neck  = "Jeweled Collar",
+        ear1  = "Merman's Earring",
+        ear2  = "Merman's Earring",
+        body  = "Yinyang Robe",
+        hands = "Errant Cuffs",
+        ring1 = "Merman's Ring",
+        ring2 = "Merman's Ring",
+        back  = "Summoner's Cape",
+        waist = "Hierarch Belt",
+        legs  = "Errant Slops",
+        feet  = "Evk. Pigaches +1"
     },
 
     Pet_Idle_Priority = { -- -Perp Cost gear, Pet Regen etc if available
@@ -139,11 +157,18 @@ local sets = {
     },
     
     Midcast_Stoneskin = {
+        main  = "Kirin's Pole",
+        head  = "Zenith Crown",
         neck  = "Promise Badge",
         ear2  = "Magnetic Earring",
         body  = "Errant Hpl.",
+        hands = "Devotee's Mitts",
+        ring1 = "Serenity Ring",
+        ring2 = "Serenity Ring",
+        back  = "Red Cape +1",
+        waist = "Penitent's Rope",
         legs  = "Errant Slops",
-        feet = "Rostrum Pumps"
+        feet  = "Errant Pigaches"
     },
 
     Midcast_Enfeebling = {
@@ -201,6 +226,7 @@ local sets = {
     Resting_Priority = {
         main  = { DarkStaff, "Kukulkan's Staff", "Pilgrim's Wand" },
         neck  = "Checkered Scarf",
+        ear2  = "Magnetic Earring",
         body  = { "Errant Hpl.", "Yinyang Robe", "Vermillion Cloak", "Seer's Tunic +1" },
         waist = "Hierarch Belt",
         legs  = "Baron's Slops",
@@ -216,10 +242,14 @@ profile.Sets = sets;
 profile.OnLoad = function()
     (function() includes.UpdateStatus(macroBook, macroSet, util1, util2, lockstyleSet) end):once(5);
 
+    AshitaCore:GetChatManager():QueueCommand(1, '/bind f11 /lac fwd idle');
+    
     includes.OnLoad();
 end
 
 profile.OnUnload = function()
+    AshitaCore:GetChatManager():QueueCommand(1, '/unbind f11');
+
     includes.OnUnload();
 end
 
@@ -285,8 +315,12 @@ profile.HandleDefault = function()
         CurrentLevel = player.MainJobSync;
     end
 
-    gFunc.EquipSet(sets.Idle);
-    
+    if (idleMDT) then 
+        gFunc.EquipSet(sets.Idle_MDT);
+    else
+        gFunc.EquipSet(sets.Idle);
+    end
+
     if (pet ~= nil) then
         gFunc.EquipSet(sets.Pet_Idle);
         
@@ -353,6 +387,11 @@ profile.HandleDefault = function()
 	
     includes.RestingCheck(player);
 	includes.CheckDefaults();
+
+    if (player.Status == 'Resting' and idleMDT) then
+        gFunc.EquipSet(Idle_MDT);
+        gFunc.EquipSet(Resting);
+    end
 end
 
 profile.HandleAbility = function()
@@ -425,11 +464,15 @@ profile.HandleMidcast = function()
 end
 
 profile.HandleCommand = function(args)
+    if (args[1] == 'idle') then
+        idleMDT = not idleMDT;
+    end
+
     includes.HandleCommands(args);
 end
 
 function BloodPactChat(bp, duration)
-    --make do stuff lol
+    --make do stuff lol « »
 end
 
 return profile;

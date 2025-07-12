@@ -319,6 +319,9 @@ function includes.RestingCheck(player);
         end
     else
         restFirstTick = true;
+        if (fullMP == true and player.MPP ~= 100) then
+            fullMP = false;
+        end
     end
     if (player.MPP == 100) then
          fullMP = true;
