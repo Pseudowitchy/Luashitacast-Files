@@ -409,7 +409,7 @@ profile.HandleCommand = function(args)
             end
         end
         if (textError) then
-            includes.echoToChat('Invalid maneuvers. Ensure spelling is correct (case does not matter.) ', 'ex: /man Fire fire wind')
+            includes.echoToChat('Invalid maneuvers. Ensure spelling is correct (case does not matter.) ex: /man Fire fire wind')
             return;
         end
     elseif (args[1] == 'manuse') then
@@ -483,10 +483,10 @@ function ManUse()
                 ManeuverSet[1] = usedManeuver;
             end
         else
-            includes.echoToChat('Maneuvers on cooldown.', '');
+            includes.echoToChat('Maneuvers on cooldown.');
         end
     else
-        includes.echoToChat('No active pet. ', 'Please activate your Automaton.')
+        includes.echoToChat('No active pet. Please activate your Automaton.')
         return
     end
 

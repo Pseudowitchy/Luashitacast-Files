@@ -47,7 +47,7 @@ local sets = {
         ring2 = "Merman's Ring",
         back  = "Summoner's Cape",
         waist = "Hierarch Belt",
-        legs  = "Errant Slops",
+        legs  = "Summoner's Spats",
         feet  = "Evk. Pigaches +1"
     },
 

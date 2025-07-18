@@ -174,18 +174,18 @@ profile.HandleCommand = function(args)
     if (args[1] == 'Offense') then
         offenseMode = not offenseMode;
         if (offenseMode == true) then
-            includes.echoToChat("Combat Mode set to: ", "Melee");
-        else includes.echoToChat("Combat Mode set to: ", "Staves");
+            includes.echoToChat("Combat Mode set to: Melee");
+        else includes.echoToChat("Combat Mode set to: Staves");
         end
     elseif (args[1] == 'Defense') then 
         defenseMode = defenseMode + 1;
         if (defenseMode > 2) then defenseMode = 0; end
         if (defenseMode == 0) then
-            includes.echoToChat("Defense Mode set to: ", "Normal");
+            includes.echoToChat("Defense Mode set to: Normal");
         elseif (defenseMode == 1) then
-            includes.echoToChat("Defense Mode set to: ", "PDT");
+            includes.echoToChat("Defense Mode set to: PDT");
         elseif (defenseMode == 2) then
-            includes.echoToChat("Defense Mode set to: ", "MDT");
+            includes.echoToChat("Defense Mode set to: MDT");
         end
     end
 

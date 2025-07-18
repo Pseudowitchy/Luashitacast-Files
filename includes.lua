@@ -246,7 +246,7 @@ function includes.HandleCommands(args)
             else
                 includes.util1 = includes.utilBuilder(args[2]);
             end                
-            includes.echoToChat('Util1 updated: now inputting ', includes.util1);
+            includes.echoToChat('Util1 updated: now inputting ' .. includes.util1);
         end
     elseif (args[1] == 'util2') then
         if (args[2] == nil and includes.util2 == '') then
@@ -259,7 +259,7 @@ function includes.HandleCommands(args)
             else
                 includes.util2 = includes.utilBuilder(args[2]);
             end                
-            includes.echoToChat('Util2 updated: now inputting ', includes.util2);
+            includes.echoToChat('Util2 updated: now inputting ' .. includes.util2);
         end 
     elseif (args[1] == 'rr') then
         local player = gData.GetPlayer();
@@ -328,8 +328,8 @@ function includes.RestingCheck(player);
     end
 end
 
-function includes.echoToChat(topic, value)
-    gFunc.Echo(73, '## ' .. topic .. value .. ' ##');
+function includes.echoToChat(comment)
+    gFunc.Echo(73, '## ' .. comment .. ' ##');
 end
 
 function includes.StaffCheck() -- Better way to do this but I wrote it and don't wanna get rid of my baby~ >:3
@@ -434,7 +434,6 @@ end
 function includes.SJButton()
     local player = gData.GetPlayer();
     local utsuNi = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(339);
-
     
     if (player.SubJob == 'NIN') then
         if (player.MainJobSync >= 74 and utsuNi == 0) then
@@ -446,8 +445,10 @@ function includes.SJButton()
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Dispel" <t>');
     elseif (player.SubJob == 'BLM') then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Aspir" <t>');
+    elseif (player.SubJob == 'WHM') then
+        AshitaCore:GetChatManager():QueueCommand(1, '/item "Wizard Cookie" <me>');
     else
-        includes.echoToChat('No command configured for subjob: ', player.SubJob .. '.');
+        includes.echoToChat('No command configured for subjob: ' .. player.SubJob .. '.');
     end
 end
 

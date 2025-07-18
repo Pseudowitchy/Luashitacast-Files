@@ -447,7 +447,7 @@ profile.HandleCommand = function(args)
     elseif args[1] == 'nuke' then
         if (args[2] ~= nil and (tonumber(args[2]) >= -3 and tonumber(args[2]) <= 4)) then
             DoNuke(tonumber(args[2]));
-        else includes.echoToChat('Invalid Command. ', '/lac fwd nuke|aga (1/2/3/4)');
+        else includes.echoToChat('Invalid Command. /lac fwd nuke|aga (1/2/3/4)');
         end
     else includes.HandleCommands(args);
     end
@@ -492,7 +492,7 @@ function DoNuke(nukeTier)
     end
 
     if (nukeDowngrade) then
-        includes.echoToChat('Spell being downgraded: ', reason)
+        includes.echoToChat('Spell being downgraded: ' .. reason)
     end
 
     if (tier == 4) then tier = ' IV';
@@ -505,23 +505,23 @@ end
 
 function DoSleep()
 	local player = gData.GetPlayer()
-	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(253);
+	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(259);
 
-    if (player.MainJobSync < 41 or recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep" <t>');	
-    else
+    if (player.MainJobSync >= 41 and recast1 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep II" <t>');
+    else
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleep" <t>');	
     end
 end
 
 function DoSleepga()
 	local player = gData.GetPlayer()
-	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(273);
+	local recast1 = AshitaCore:GetMemoryManager():GetRecast():GetSpellTimer(274);
 
-    if (player.MainJobSync < 56 or recast1 == 0) then
-        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga" <t>');	
-    else
+    if (player.MainJobSync >= 56 and recast1 == 0) then
         AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga II" <t>');
+    else
+        AshitaCore:GetChatManager():QueueCommand(1, '/ma "Sleepga" <t>');	
     end
 end
 
